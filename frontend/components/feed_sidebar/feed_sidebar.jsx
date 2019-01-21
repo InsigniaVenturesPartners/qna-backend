@@ -1,0 +1,58 @@
+import React from 'react';
+import {Link} from 'react-router-dom';
+import TopicSearchContainer from '../topic_search/topic_search_container';
+
+
+class FeedSidebar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {searchOpen: false}
+    this.closeSearch = this.closeSearch.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.requestTopics();
+    this.props.updateFilter("topicQuery", "");
+  }
+
+  closeSearch() {
+    this.setState({searchOpen: false});
+  }
+
+  topicSearch() {
+    if(this.state.searchOpen) {
+      return <TopicSearchContainer closeSearch={this.closeSearch}/>
+    }
+  }
+
+  render() {
+    const {topics} = this.props;
+    let buttonTxt = "Search";
+    if(this.state.searchOpen) {
+      buttonTxt = "Done";
+    }
+    const topicItems = topics.map( topic => (
+      <li key={ "topic-" + topic.id }><Link to={`/topics/${topic.id}`}>{topic.name}</Link>
+</li>
+      ));
+    return(
+        <div className="feed-sidebar">
+          <div className="feed-sidebar-header">
+            <div className= "feed-sidebar-fixed">
+              <h2>Feeds</h2>
+              <button onClick={()=>this.setState({searchOpen: !this.state.searchOpen})}>{buttonTxt}</button>
+            </div>
+            {this.topicSearch()}
+          </div>
+
+
+
+          <ul className="sidebar-topic-list">
+            {topicItems}
+          </ul>
+        </div>
+    );
+  }
+}
+
+export default FeedSidebar;
