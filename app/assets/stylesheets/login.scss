@@ -1,7 +1,7 @@
 .background {
   width: 100%;
   height: 100%;
-  background: url("https://qph.ec.quoracdn.net/main-qimg-53fa8c2c3b3944c91a49b1e9c30970cd");
+  background-image: asset-data-url("three.jpg");
   background-size: cover;
 }
 
@@ -49,7 +49,7 @@
   margin-bottom: 155px;
 }
 
-.two-forms {
+.login-forms {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -63,7 +63,7 @@
 
 .login h1 {
   text-align: center;
-  color: #B92B27;
+  color: #ce4f00fc;
   font-size: 80px;
   font-weight: bold;
   font-family: "Palatino", sans-serif;
@@ -80,7 +80,7 @@
   color: #999;
 }
 
-.leftlogin {
+.auth-login {
   width: 100%;
   padding-right: 20px;
 }
@@ -156,7 +156,7 @@ label[for="user_login"] {
   cursor: pointer;
 }
 
-.leftlogin a, .leftlogin button {
+.auth-login a, .auth-login button {
   font-size: 15px;
   font-weight: 500;
   color: white;
@@ -172,36 +172,41 @@ label[for="user_login"] {
   text-decoration: none;
 }
 
-.leftlogin a {
+.auth-login a {
   width: 238px;
-  background: #507cc0;
+  //background: #507cc0;
+  background: #dc4d28;
 }
 
-.leftlogin button {
+.auth-login open-contacts-dialog-btn {
+  background: #dc4d28;
+}
+
+.auth-login button {
   width: 271px;
   text-align: left;
   background: #DF4930;
 }
 
-.leftlogin button:focus {outline:0;}
+.auth-login button:focus {outline:0;}
 
-.leftlogin a:before {
-  content: "\f082";
+.auth-login a:before {
+  content: "\f0d5";
 }
 
-.leftlogin button:before {
+.auth-login button:before {
   content: "\f2c4";
 }
 
-.leftlogin button:hover, .leftlogin a:hover{
+.auth-login button:hover, .auth-login a:hover{
   opacity: .6;
 }
 
-.leftlogin button:hover {
+.auth-login button:hover {
   cursor: pointer;
 }
 
-.leftlogin a:before, .leftlogin button:before {
+.auth-login a:before, .auth-login button:before {
 
   font-family: FontAwesome;
   font-style: normal;

@@ -32,7 +32,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :validatable
   # devise :rememberable
-  devise :omniauthable, :omniauth_providers => [:facebook]
+  devise :omniauthable, :omniauth_providers => [:google_oauth2]
   devise :confirmable
   # validates :username, :firstname, :lastname, :email, :pro_pic_url, :password_digest, :session_token, presence: true
   # validates :username, :email, :session_token, uniqueness: true
@@ -137,32 +137,42 @@ class User < ApplicationRecord
 
   #rather than storing the access_token and accessing fb data every time I need to render, I just store the initial name, propic, and will pull from my database when I want to render.  Could change this and write methods so that it pulls the data, but this is fine for now
   def self.find_or_create_by_facebook_oauth(auth)
-   user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
-   unless user
-     access_token = auth.credentials.token
-     graph = Koala::Facebook::API.new(access_token)
-     me = graph.get_object("me")
+    unless user
+      access_token = auth.credentials.token
+      graph = Koala::Facebook::API.new(access_token)
+      me = graph.get_object("me")
 
-     fb_id = me["id"]
-     pro_pic_url = "http://graph.facebook.com/#{fb_id}/picture"
+      fb_id = me["id"]
+      pro_pic_url = "http://graph.facebook.com/#{fb_id}/picture"
 
-     user = User.create!(
-     provider: auth.provider,
-     uid: auth.uid,
-     email: auth.info.email,
-     password: Devise.friendly_token[0,20],
-     name: me["name"],
-     fb_id: fb_id,
-     pro_pic_url: pro_pic_url
-   )
-   end
-  user
-end
+      user = User.create!(
+        provider: auth.provider,
+        uid: auth.uid,
+        email: auth.info.email,
+        password: Devise.friendly_token[0,20],
+        name: me["name"],
+        fb_id: fb_id,
+        pro_pic_url: pro_pic_url
+      )
+    end
+    user
+  end
 
-
-
-
+  def self.find_or_create_from_google_auth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.first_name + " " + auth.info.last_name
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.pro_pic_url = auth.info.image
+      
+      user.confirm unless user.confirmed?
+      user.save!
+    end
+  end
 
   # after_initialize :ensure_session_token
   # attr_reader :password

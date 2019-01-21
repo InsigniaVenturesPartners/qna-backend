@@ -69,7 +69,7 @@ class NavBar extends React.Component {
         <ul className="nav-bar-items">
           <li id="nav-logo">
             <Link to={`/`}>
-              Quera
+              Insignia Community
             </Link>
             </li>
 

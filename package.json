@@ -1,5 +1,5 @@
 {
-  "name": "quora",
+  "name": "insignia-community",
   "private": true,
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -34,13 +34,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tkettle220/quora-clone.git"
+    "url": "git+https://github.com/InsigniaVenturesPartners/qna-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tkettle220/quora-clone/issues"
+    "url": "https://github.com/InsigniaVenturesPartners/qna-backend/issues"
   },
-  "homepage": "https://github.com/tkettle220/quora-clone#readme"
+  "homepage": "https://github.com/InsigniaVenturesPartners/qna-backend#readme"
 }

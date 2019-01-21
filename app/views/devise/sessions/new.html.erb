@@ -1,42 +1,12 @@
 <div class="background">
   <div class="login">
       <div class="logo">
-        <h1>Quera</h1>
+        <h1>Insignia Community</h1>
         <h2>A place to share knowledge and better understand the world</h2>
       </div>
-    <div class="two-forms">
-      <div class="leftlogin">
+    <div class="login-forms">
+      <div class="auth-login">
         <%= render "devise/shared/links" %>
-      </div>
-      <div class="rightlogin">
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field">
-          <%= f.label :login %><br />
-          <%= f.email_field :email, autofocus: true, placeholder: "Email" %>
-        </div>
-
-        <div class="field">
-          <!-- <%#= f.label :password %><br /> -->
-          <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
-        </div>
-
-        <% if devise_mapping.rememberable? -%>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-        </div>
-        <% end -%>
-        <div class="form_bottom">
-          <%= link_to "Forgot Password?", new_password_path(resource_name) %>
-          <div class="actions">
-            <%= f.submit "Login" %>
-          </div>
-        </div>
-
-
-
-        <% end %>
-
       </div>
     </div>
   </div>
