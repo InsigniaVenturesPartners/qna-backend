@@ -166,8 +166,11 @@ class User < ApplicationRecord
       user.uid = auth.uid
       user.name = auth.info.first_name + " " + auth.info.last_name
       user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
       user.pro_pic_url = auth.info.image
+      
+      if user.encrypted_password.blank?
+        user.password = Devise.friendly_token[0,20]
+      end
       
       user.confirm unless user.confirmed?
       user.save!

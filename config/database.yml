@@ -23,11 +23,11 @@ default: &default
 
 development:
   <<: *default
-  database: quora_development
+  database: qna_development
 
 test:
   <<: *default
-  database: quora_test
+  database: qna_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,6 +50,6 @@ test:
 #
 production:
   <<: *default
-  database: quora_production
-  username: quora
+  database: qna_production
+  username: qna
   password: <%= ENV['QUORA_DATABASE_PASSWORD'] %>
