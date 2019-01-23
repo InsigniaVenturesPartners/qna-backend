@@ -33,7 +33,6 @@ gem 'acts_as_votable', '~> 0.10.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'pry-rails'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'devise'
