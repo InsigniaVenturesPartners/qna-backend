@@ -11,29 +11,35 @@ class TopicListItem extends React.Component {
   render () {
     const { topic } = this.props;
 
-    if(Object.keys(topic).length === 0) {
-      return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
-    } else {
-      const { name, description, num_followers, question_ids} = topic;
+    // if(Object.keys(topic).length === 0) {
+    //   return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
+    // } else {
+      // const { name, description, num_followers, question_ids} = topic;
+      const { questions } = this.props;
 
-      const questionItems = question_ids.map(id => (
+      const questionItems = questions.map(question => (
         <QuestionItemContainer
-          key={ "question-" + id }
-          id={id}
+          key={ "question-" + question.id }
+          id={question.id}
           />
         ));
 
       return (
         <li className="topic-list-item">
+          {/*
+            TODO
           <h2 className="topic-header"><Link to={`/topics/${topic.id}`} >{name}</Link></h2>
+          */}
           <ul className="question-list">{questionItems}</ul>
+          {/*
           <footer className="topic-list-item-footer">
             <Link to={`/topics/${topic.id}`} >View All</Link>
           </footer>
+          */}
         </li>
       );
 
-    }
+    // }
 
   }
 }

@@ -68,9 +68,14 @@ class NavBar extends React.Component {
       <div className="nav-bar">
         <ul className="nav-bar-items">
           <li id="nav-logo">
+            {/*
+            TODO 
+
+           
             <Link to={`/`}>
               Insignia Community
             </Link>
+            */}
             </li>
 
           <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/" ? "highlighted" : "")} >
@@ -147,7 +152,7 @@ class NavBar extends React.Component {
             <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
 
 
-          </Modal>
+        </Modal>
       </div>
     );
   }
