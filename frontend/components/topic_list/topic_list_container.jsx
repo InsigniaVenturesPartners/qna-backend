@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestTopics: () => dispatch(fetchTopics()),
+  requestQuestions: () => dispatch(fetchQuestions()),
 });
 
 export default connect(

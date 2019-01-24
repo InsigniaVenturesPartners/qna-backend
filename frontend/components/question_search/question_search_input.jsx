@@ -7,7 +7,7 @@ const handleChange = (filter, updateFilter) => e => {
 }
 
 const QuestionSearchInput = ({ query, updateFilter}) => (
-  <input type="text" className="question-search-bar" rows="1" placeholder="Search Quera" value={query} onChange={handleChange('query', updateFilter)}></input>
+  <input type="text" className="question-search-bar" rows="1" placeholder="Search" value={query} onChange={handleChange('query', updateFilter)}></input>
 );
 
 export default QuestionSearchInput;
