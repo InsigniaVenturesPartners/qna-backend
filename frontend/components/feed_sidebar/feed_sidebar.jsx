@@ -37,6 +37,8 @@ class FeedSidebar extends React.Component {
       ));
     return(
         <div className="feed-sidebar">
+          
+          {/*
           <div className="feed-sidebar-header">
             <div className= "feed-sidebar-fixed">
               <h2>Feeds</h2>
@@ -45,11 +47,12 @@ class FeedSidebar extends React.Component {
             {this.topicSearch()}
           </div>
 
-
+          
 
           <ul className="sidebar-topic-list">
             {topicItems}
           </ul>
+          */}
         </div>
     );
   }
