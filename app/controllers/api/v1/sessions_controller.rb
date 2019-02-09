@@ -14,7 +14,6 @@ class Api::V1::SessionsController < Api::V1::BaseController
   end
 
   def google_auth
-    byebug
     jsonfile = Rails.env.production??
     'client_secret_258885665996-8jqtfretgtag60q93047fq8jdqlmitmt.apps.googleusercontent.com.json' :
     'client_secret_1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com.json'
