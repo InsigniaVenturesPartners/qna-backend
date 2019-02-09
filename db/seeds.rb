@@ -10,16 +10,15 @@ QuestionsTopic.destroy_all
 TopicsUser.destroy_all
 
 User.destroy_all
-demo_user = User.create(email: "tkilmer95@gmail.com", password: "password", name: "Thomas Kilmer", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/18034061_1531797440172887_116146999122184063_n.jpg?oh=53e0fedb702ac8cd4e951281723a8011&oe=5A426750")
-user2 = User.create(email: "sgullapalli@gmail.com", password: "password", name: "Sachith Gullapalli", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14642433_10154649038393035_50739788996994746_n.jpg?oh=532a963328339ecddfec271190e6175a&oe=5A39FFA4")
-user3 = User.create(email: "kbuterbaugh@hotmail.com", password: "password", name: "Kelsey Elizabeth", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14322733_1092137124157114_3666551548457846592_n.jpg?oh=5fa1a49520550adf607fc3b6be89c1cb&oe=5A8027EB")
-user4 = User.create(email: "dtandon@vision.com", password: "password", name: "Devansh Tandon", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/c11.0.50.50/p50x50/17800343_10212311731050854_7713970108060183435_n.jpg?oh=3b07f29b9167e74437059fc74566b8b9&oe=5A53F81D")
-user5 = User.create(email: "gyi1493@gmail.com", password: "password", name: "Grace Yi", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/17424732_10211736914474596_8965113432441232848_n.jpg?oh=dc6c974845bc9044b30362cf6e64f513&oe=5A4D4822")
-user6 = User.create(email: "bkxuupthebum@gamertag.net", password: "password", name: "Will Xu", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/17952972_10155238754978829_6171178937828086766_n.jpg?oh=d1bd2b6555ebcb13479addf2874a0f83&oe=5A4A61E8")
+demo_user = User.create(email: "tkilmer95@gmail.com", password: "password", name: "Thomas Kilmer", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/10407686_1509727909267384_2527226215364191004_n.jpg?_nc_cat=110&_nc_ht=scontent-sin2-2.xx&oh=739c54efffdf3db9c95781854db4a955&oe=5CFB561C")
+user2 = User.create(email: "sgullapalli@gmail.com", password: "password", name: "Sachith Gullapalli", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/11214708_10153331886023035_9028656343497896862_n.jpg?_nc_cat=111&_nc_ht=scontent-sin2-2.xx&oh=c043c3ce5e48e4de02f3b458a83d7cc7&oe=5CFA29D0")
+user3 = User.create(email: "kbuterbaugh@hotmail.com", password: "password", name: "Kelsey Elizabeth", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/21314347_10210007271525714_5765655945253284869_n.jpg?_nc_cat=109&_nc_ht=scontent-sin2-2.xx&oh=ae6368df16ad3efa73e80c4e75817be6&oe=5CFC95DF")
+user4 = User.create(email: "dtandon@vision.com", password: "password", name: "Devansh Tandon", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t31.0-8/26173426_1963683897224971_673272170434390574_o.jpg?_nc_cat=100&_nc_ht=scontent-sin2-2.xx&oh=c2bc60ba775b46630ff75190d46612e2&oe=5CB4BB20")
+user5 = User.create(email: "gyi1493@gmail.com", password: "password", name: "Grace Yi", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/20246250_102677567084948_3817779415774579443_n.jpg?_nc_cat=100&_nc_ht=scontent-sin2-2.xx&oh=401c5665101baff7a489fbb5c0ea294c&oe=5CF77583")
+user6 = User.create(email: "bkxuupthebum@gamertag.net", password: "password", name: "Will Xu", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t31.0-8/17390401_10210235138169750_8819297820031454239_o.jpg?_nc_cat=103&_nc_ht=scontent-sin2-2.xx&oh=c03a47199d3fe49a1c4c01813b045834&oe=5CBED3AC")
+user7 = User.create(email: "cosmic_dance_of_bursting_decadence@gmail.com", password: "password", name: "Christopher Buterbaugh", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t31.0-8/10604519_916931681709802_5343725456541603719_o.jpg?_nc_cat=105&_nc_ht=scontent-sin2-2.xx&oh=80514c2321657e782ef5d26357247e5f&oe=5D0076A0")
 
-user7 = User.create(email: "cosmic_dance_of_bursting_decadence@gmail.com", password: "password", name: "Christopher Buterbaugh", pro_pic_url: "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/18033410_1275862162483417_2400862978869561180_n.jpg?oh=fd3e7e0a55619d2b4dfcf56b4665ba4b&oe=5A3E109F")
-
-user9 = User.create(email: "becca_stone@hotmail.com", password: "password", name: "Rebecca Stone", pro_pic_url: "https://static.pexels.com/photos/324030/pexels-photo-324030.jpeg")
+user9 = User.create(email: "becca_stone@hotmail.com", password: "password", name: "Rebecca Stone", pro_pic_url: "https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/12039616_10153687602514524_4805177288005921541_n.jpg?_nc_cat=102&_nc_ht=scontent-sin2-2.xx&oh=dae28bc3367f8eff9b3a4482e614125f&oe=5CC2AD2D")
 
 
 

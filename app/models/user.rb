@@ -29,11 +29,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :trackable, :validatable
   # devise :rememberable
   devise :omniauthable, :omniauth_providers => [:google_oauth2]
-  devise :confirmable
   # validates :username, :firstname, :lastname, :email, :pro_pic_url, :password_digest, :session_token, presence: true
   # validates :username, :email, :session_token, uniqueness: true
   # validates :password, length: {minimum: 6}, allow_nil: true
@@ -77,6 +74,8 @@ class User < ApplicationRecord
     primary_key: :id,
     foreign_key: :user_id,
     class_name: :Comment
+
+  has_many :partner_auths
 
   acts_as_voter
   #I don't think there's an easy way to cancle a vote which is scoped, so follows are scoped, with a positive vote meaning follow, and a negative or nil vote meaning unfollowed.  Up and downvotes are not scoped, allowing us to use the built-in unliked by
@@ -129,89 +128,24 @@ class User < ApplicationRecord
     self.voted_up_on? entity, vote_scope: 'follow'
   end
 
-
-
-
-  # for oauth
-  # attr_accessor :provider, :uid
-
-  #rather than storing the access_token and accessing fb data every time I need to render, I just store the initial name, propic, and will pull from my database when I want to render.  Could change this and write methods so that it pulls the data, but this is fine for now
-  def self.find_or_create_by_facebook_oauth(auth)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
-
-    unless user
-      access_token = auth.credentials.token
-      graph = Koala::Facebook::API.new(access_token)
-      me = graph.get_object("me")
-
-      fb_id = me["id"]
-      pro_pic_url = "http://graph.facebook.com/#{fb_id}/picture"
-
-      user = User.create!(
-        provider: auth.provider,
-        uid: auth.uid,
-        email: auth.info.email,
-        password: Devise.friendly_token[0,20],
-        name: me["name"],
-        fb_id: fb_id,
-        pro_pic_url: pro_pic_url
-      )
-    end
-    user
-  end
-
   def self.find_or_create_from_google_auth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.name = auth.info.first_name + " " + auth.info.last_name
-      user.email = auth.info.email
-      user.pro_pic_url = auth.info.image
-      
-      if user.encrypted_password.blank?
-        user.password = Devise.friendly_token[0,20]
-      end
-      
-      user.confirm unless user.confirmed?
-      user.save!
+    where(google_id: auth[:google_id]).first_or_initialize.tap do |user|
+      user.update_attributes!(auth)
     end
   end
 
-  # after_initialize :ensure_session_token
-  # attr_reader :password
-  #
-  # def self.find_by_credentials(username, password)
-  #   user = User.find_by(username: username)
-  #   if user && user.is_password?(password)
-  #     user
-  #   else
-  #     nil
-  #   end
-  # end
-  #
-  # def password=(password)
-  #   @password = password
-  #   self.password_digest = BCrypt::Password.create(password)
-  # end
-  #
-  # def is_password?(password)
-  #   BCrypt::Password.new(self.password_digest).is_password?(password)
-  # end
-  #
-  # def reset_session_token!
-  #   generate_session_token
-  #   self.save!
-  #   self.session_token
-  # end
-  #
-  # private
-  #
-  # def ensure_session_token
-  #   generate_session_token unless self.session_token
-  # end
-  #
-  # def generate_session_token
-  #   self.session_token = SecureRandom.urlsafe_base64
-  #   self.session_token
-  # end
+  def partner_auth_map
+    res = {}
+    self.partner_auths.each do |auth|
+      res[auth.provider] = auth
+    end
+
+    return res
+  end
+  
+  def has_offline_access
+    return (self.partner_auth_map.key?("google") &&
+        JSON.parse(self.partner_auth_map['google'].auth_json).key?("refresh_token"))
+  end
+
 end
