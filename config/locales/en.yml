@@ -32,4 +32,4 @@
 en:
   omniauth_callbacks:
     google_oauth2:
-      contact_administrator: "Please contact the administrator"
+      contact_administrator: "Please send an email to hello@insignia.vc for access"
