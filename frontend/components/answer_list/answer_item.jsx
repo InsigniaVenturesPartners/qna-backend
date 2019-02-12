@@ -45,7 +45,7 @@ class AnswerItem extends React.Component {
       let answerBody;
 
       if(downvoted) {
-        answerBody = <div><h2></h2>You downvoted this answer.<h3>Downvoting low-quality content improves Quera for everyone.</h3></div>
+        answerBody = <div><h2></h2>You downvoted this answer.<h3>Downvoting low-quality content improves Insignia Community for everyone.</h3></div>
       } else {
         answerBody = ReactHtmlParser(body)
       }
