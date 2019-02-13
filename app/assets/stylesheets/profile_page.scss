@@ -1,0 +1,37 @@
+.profile-question-list>h1 {
+  height: 225px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+
+//need li to be more specific than .navbar li
+li .profile-question-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 15px;
+  padding: 8px 12px;
+  padding-right: 10px;
+  font-weight: 400;
+  border-bottom: 1px solid #e2e2e2;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  a {
+    width: 100%;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+li .profile-question-list-item:hover {
+  background-color: #ececec;
+  text-decoration: none;
+  color: #2b6dad;
+
+}
