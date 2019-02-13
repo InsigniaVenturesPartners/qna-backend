@@ -17,7 +17,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "webpack": "^3.6.0"
+    "webpack": "^4.2.0"
   },
   "engines": {
     "node": "8.4.0",
@@ -43,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/InsigniaVenturesPartners/qna-backend/issues"
   },
-  "homepage": "https://github.com/InsigniaVenturesPartners/qna-backend#readme"
+  "homepage": "https://github.com/InsigniaVenturesPartners/qna-backend#readme",
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
+  }
 }
