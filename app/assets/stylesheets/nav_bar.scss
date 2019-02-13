@@ -1,3 +1,5 @@
+@import "modules/mixins.scss";
+
 .nav-bar {
   background: white;
   width: 100%;
@@ -6,6 +8,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.mobile-only {
+    @include respond-to(desktop) {
+      display: none;
+    }
+  }
+
+  &.desktop-only {
+    display: none;
+    @include respond-to(desktop) {
+      display: initial;
+    }
+  }
 }
 
 .nav-bar-items {
