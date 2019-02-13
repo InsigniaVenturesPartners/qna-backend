@@ -27,6 +27,7 @@ class Api::QuestionsController < ApplicationController
   end
 
   def create
+    byebug
     @question = Question.new do |que|
       que.body = question_params[:body]
       que.author = current_user
