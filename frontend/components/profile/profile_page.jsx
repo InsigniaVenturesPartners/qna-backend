@@ -8,34 +8,10 @@ import FollowTopicButtonContainer from '../follow_topic_button/follow_topic_butt
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {searchOpen: false}
-    this.closeSearch = this.closeSearch.bind(this);
-  }
-
-  componentWillMount() {
-    this.props.requestTopics();
-    // this.props.requestQuestion(this.props.id);
-  }
-
-  closeSearch() {
-    this.setState({searchOpen: false});
-  }
-
-  topicSearch() {
-    if(this.state.searchOpen) {
-      return <TopicSearchContainer closeSearch={this.closeSearch}/>
-    }
   }
 
   render () {
     const { user, topics } = this.props;
-
-
-    let buttonTxt = "Search";
-    if(this.state.searchOpen) {
-      buttonTxt = "Done";
-    }
 
     const topicItems = topics.map( topic => (
       <li key={ "topic-" + topic.id }>
