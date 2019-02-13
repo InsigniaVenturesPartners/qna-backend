@@ -38,7 +38,7 @@ class Api::QuestionsController < ApplicationController
         @question.topics += [t] if t.present?
       end
     end
-    
+
     render :show
   end
 
