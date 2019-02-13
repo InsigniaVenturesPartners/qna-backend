@@ -4,7 +4,6 @@ class Api::TopicsController < ApplicationController
 
   #index assumes a current_user and returns JUST their subscribed topics
   def index
-
     if params[:topicQuery]
       ##if it's empty, we want to fetch random topics to show
       if params[:topicQuery] == ""
@@ -23,7 +22,7 @@ class Api::TopicsController < ApplicationController
       end
 
     else
-      @topics = current_user.followed_topics
+      @topics = Topic.order("name ASC")
       render :index
     end
   end

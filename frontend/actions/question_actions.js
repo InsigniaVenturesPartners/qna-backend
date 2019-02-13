@@ -47,8 +47,8 @@ export const fetchQuestion = id => dispatch => (
   ))
 );
 
-export const createQuestion = (body) => dispatch => (
-  APIUtil.createQuestion(body).then(
+export const createQuestion = (body, topics) => dispatch => (
+  APIUtil.createQuestion(body, topics).then(
     question=>(dispatch(receiveQuestion(question))
   ))
 );

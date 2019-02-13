@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import {Link} from 'react-router-dom';
 
+import Checkbox from 'muicss/lib/react/checkbox';
+
 export const customStyles = {
     overlay : {
     position          : 'fixed',
@@ -20,6 +22,7 @@ export const customStyles = {
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
     width                 : '623px',
+    heigth                : '204px',
     padding : '0'  }
 };
 
@@ -53,12 +56,14 @@ class CreateQuestionForm extends React.Component {
       createModalIsOpen: false,
       successModalIsOpen: false,
       question: "",
-      asked_question: {}
+      asked_question: {},
+      checkedTopics: new Map()
     };
 
     this.setQuestion = this.setQuestion.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -90,19 +95,30 @@ class CreateQuestionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.createQuestion(this.state.question).then(
+    this.props.createQuestion(this.state.question, Array.from(this.state.checkedTopics.keys())).then(
       question => this.handleSuccessfulSubmit(question.question)
     );
   }
 
   handleSuccessfulSubmit(question) {
     this.closeModal("create");
-    this.setState({asked_question: question, question: ""})
+    this.setState({asked_question: question, question: "", checkedTopics: new Map()})
     this.openModal("success")
   }
 
+  handleChange(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({ checkedItems: prevState.checkedTopics.set(item, isChecked) }));
+  }
+
   render() {
-    const {user} = this.props
+    const {user, topics} = this.props
+
+    const topicItems = topics.map( topic => (
+        <Checkbox name={topic.name} label={topic.name} checked={this.state.checkedTopics.get(topic.name)} onChange={this.handleChange}/>
+      ));
+
     return (
       <div className="greeting">
         <div className="greeting-header">
@@ -126,7 +142,18 @@ class CreateQuestionForm extends React.Component {
         </div>
 
 
-        <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question}/>
+        <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question} autoFocus={true}/>
+        <div className="topic-modal">
+          <div className="topic-modal-header">
+            <h1>Select any topics that describe your question</h1>
+          </div>
+
+          <div className="topic-modal-list">
+            <div className="question-form-topic-list">
+              {topicItems}
+            </div>
+          </div>
+        </div>
 
         <div className="question-modal-footer">
           <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>

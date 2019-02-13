@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import { allTopics } from '../../reducers/selectors';
 import FeedSidebar from './feed_sidebar';
 
 // Actions
 import { fetchTopics } from '../../actions/topic_actions';
 import { updateFilter } from '../../actions/filter_actions';
+
+import { allTopics } from '../../reducers/selectors';
 
 const mapStateToProps = state => ({
   topics: allTopics(state),

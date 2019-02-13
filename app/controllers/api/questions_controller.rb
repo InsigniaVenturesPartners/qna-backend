@@ -27,9 +27,18 @@ class Api::QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.author = current_user
-    @question.save
+    @question = Question.create do |que|
+      que.body = question_params[:body]
+      que.author = current_user
+    end
+  
+    if(question_params[:topics])
+      question_params[:topics].each do |topic|
+        t = Topic.find_by(name: topic)
+        @question.topics += [t] if t.present?
+      end
+    end
+
     render :show
   end
 
@@ -62,7 +71,7 @@ class Api::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:body)
+    params.require(:question).permit(:body, :topics => [])
   end
 
 end
