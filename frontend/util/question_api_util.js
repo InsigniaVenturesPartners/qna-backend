@@ -14,12 +14,13 @@ export const fetchQuestion = (id) => (
   })
 );
 
-export const createQuestion = (body) => (
+export const createQuestion = (body, topics) => (
   $.ajax({
     method: 'POST',
     url: `api/questions`,
     data: {
       question: {
+        topics: topics,
         body
       }
     }

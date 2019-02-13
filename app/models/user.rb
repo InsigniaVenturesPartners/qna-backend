@@ -135,46 +135,25 @@ class User < ApplicationRecord
   # for oauth
   # attr_accessor :provider, :uid
 
-  #rather than storing the access_token and accessing fb data every time I need to render, I just store the initial name, propic, and will pull from my database when I want to render.  Could change this and write methods so that it pulls the data, but this is fine for now
-  def self.find_or_create_by_facebook_oauth(auth)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+  def self.find_or_create_from_google_auth(auth)
+    user = find_by(provider: auth.provider, uid: auth.uid)
 
     unless user
-      access_token = auth.credentials.token
-      graph = Koala::Facebook::API.new(access_token)
-      me = graph.get_object("me")
-
-      fb_id = me["id"]
-      pro_pic_url = "http://graph.facebook.com/#{fb_id}/picture"
-
-      user = User.create!(
-        provider: auth.provider,
-        uid: auth.uid,
-        email: auth.info.email,
-        password: Devise.friendly_token[0,20],
-        name: me["name"],
-        fb_id: fb_id,
-        pro_pic_url: pro_pic_url
-      )
-    end
-    user
-  end
-
-  def self.find_or_create_from_google_auth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.name = auth.info.first_name + " " + auth.info.last_name
-      user.email = auth.info.email
-      user.pro_pic_url = auth.info.image
-      
-      if user.encrypted_password.blank?
-        user.password = Devise.friendly_token[0,20]
+      return unless UserWhitelist.find_by(email: auth.info.email)
+      user = User.new do |u|
+        u.provider = auth.provider
+        u.uid = auth.uid
+        u.email = auth.info.email
+        u.password = Devise.friendly_token[0,20]
       end
-      
       user.confirm unless user.confirmed?
-      user.save!
     end
+
+    user.name = auth.info.first_name + " " + auth.info.last_name
+    user.pro_pic_url = auth.info.image
+    
+    user.save!
+    user
   end
 
   # after_initialize :ensure_session_token

@@ -8,13 +8,12 @@ class TopicList extends React.Component {
   }
 
   componentWillMount() {
+    this.props.requestTopics();
     this.props.requestQuestions();
   }
 
   render() {
-    // const {topics, voteOnAnswer, questions } = this.props;
-    const topics = [];
-    const voteOnAnswer = 0;
+    const {topics, voteOnAnswer} = this.props;
     const questions = this.props.questions;
 
     const topicItems = <TopicListItem key={ "question-1" } questions={questions}/>
