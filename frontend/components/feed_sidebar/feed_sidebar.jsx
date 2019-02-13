@@ -12,7 +12,7 @@ class FeedSidebar extends React.Component {
 
   componentWillMount() {
     this.props.requestTopics();
-    this.props.updateFilter("topicQuery", "");
+    // this.props.updateFilter("topicQuery", "");
   }
 
   closeSearch() {
@@ -27,32 +27,35 @@ class FeedSidebar extends React.Component {
 
   render() {
     const {topics} = this.props;
-    let buttonTxt = "Search";
-    if(this.state.searchOpen) {
-      buttonTxt = "Done";
-    }
+    console.log("asdasd");
+    console.log(topics);
+    // let buttonTxt = "Search";
+    // if(this.state.searchOpen) {
+    //   buttonTxt = "Done";
+    // }
     const topicItems = topics.map( topic => (
       <li key={ "topic-" + topic.id }><Link to={`/topics/${topic.id}`}>{topic.name}</Link>
 </li>
       ));
+
     return(
         <div className="feed-sidebar">
           
-          {/*
           <div className="feed-sidebar-header">
             <div className= "feed-sidebar-fixed">
-              <h2>Feeds</h2>
+              <h2>Topics</h2>
+              {/*
               <button onClick={()=>this.setState({searchOpen: !this.state.searchOpen})}>{buttonTxt}</button>
+            */}
             </div>
-            {this.topicSearch()}
+            {/*this.topicSearch()*/}
           </div>
 
-          
 
           <ul className="sidebar-topic-list">
             {topicItems}
           </ul>
-          */}
+          
         </div>
     );
   }

@@ -19,11 +19,9 @@ const App = () => (
     <Route path="/signup" component={SessionFormContainer} />
     <Route path="/" component={NavBarContainer} />
     <div id="main-page">
-      {/*
       <div className="sidebar">
         <Route path="/" component={FeedSidebarContainer} />
       </div>
-      */}
       <Switch>
         <div className="main-col">
           <Route exact path="/" component={CreateQuestionFormContainer} />
