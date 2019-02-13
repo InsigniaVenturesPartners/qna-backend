@@ -21,7 +21,8 @@ export const customStyles = {
     bottom                : 'auto',
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
-    width                 : '623px',
+    width                 : '100%',
+    maxWidth              : '623px',
     heigth                : '204px',
     padding : '0'  }
 };
@@ -42,7 +43,8 @@ export const cancelStyles = {
     bottom                : 'auto',
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
-    width                 : '300px',
+    width                 : '100%',
+    maxWidth              : '300px',
     background            :  '#FFF4C8',
 
     padding : '10px'  }
