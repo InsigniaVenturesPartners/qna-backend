@@ -30,7 +30,6 @@ class TopicDetailItem extends React.Component {
       <div className="topic-detail-item">
         <div className="topic-header">
           <h1>{name}</h1>
-          <h2>{description}</h2>
 
           <FollowTopicButtonContainer id={id} followerIds={follower_ids} followed={followed}/>
           </div>

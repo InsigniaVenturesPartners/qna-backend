@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import {Link} from 'react-router-dom';
 
 import Checkbox from 'muicss/lib/react/checkbox';
+import FeedSidebarContainer from '../feed_sidebar/feed_sidebar_container';
 
 export const customStyles = {
     overlay : {
@@ -111,7 +112,7 @@ class CreateQuestionForm extends React.Component {
     const isChecked = e.target.checked;
     this.setState(prevState => ({ checkedItems: prevState.checkedTopics.set(item, isChecked) }));
   }
-  
+
   render() {
     const {user, topics} = this.props
 
@@ -120,7 +121,10 @@ class CreateQuestionForm extends React.Component {
       ));
 
     return (
+      <div>
+
       <div className="greeting">
+
         <div className="greeting-header">
           <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />
           <span>{user.name}</span>
@@ -135,30 +139,29 @@ class CreateQuestionForm extends React.Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-
-        <div className="question-modal-header">
-          <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />
-          <span id="modal-username">{user.name} asks</span>
-        </div>
-
-
-        <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question}/>
-        <div className="topic-modal">
-          <div className="topic-modal-header">
-            <h1>Select any topics that describe your question</h1>
+          <div className="question-modal-header">
+            <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />
+            <span id="modal-username">{user.name} asks</span>
           </div>
 
-          <div className="topic-modal-list">
-            <div className="question-form-topic-list">
-              {topicItems}
+
+          <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question}/>
+          <div className="topic-modal">
+            <div className="topic-modal-header">
+              <h1>Select any topics that describe your question</h1>
+            </div>
+
+            <div className="topic-modal-list">
+              <div className="question-form-topic-list">
+                {topicItems}
+              </div>
             </div>
           </div>
-        </div>
-    
-        <div className="question-modal-footer">
-          <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
-          <button id="ask-question-button" onClick={this.handleSubmit}>Ask Question</button>
-        </div>
+
+          <div className="question-modal-footer">
+            <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
+            <button id="ask-question-button" onClick={this.handleSubmit}>Ask Question</button>
+          </div>
         </Modal>
 
 
@@ -173,10 +176,9 @@ class CreateQuestionForm extends React.Component {
           >
           <p>You asked: <Link onClick={()=>this.closeModal("success")} to={`/questions/${this.state.asked_question.id}`}>{this.state.asked_question.body}</Link>
           </p>
-            <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
-
-
-          </Modal>
+          <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
+        </Modal>
+      </div>
       </div>
     );
   }

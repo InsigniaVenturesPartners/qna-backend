@@ -84,9 +84,9 @@ class NavBar extends React.Component {
         <ul className="nav-bar-items">
           <li id="nav-logo">
             {/*
-            TODO 
+            TODO
 
-           
+
             <Link to={`/`}>
               Insignia Community
             </Link>
@@ -102,18 +102,20 @@ class NavBar extends React.Component {
 
 
 
-          <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-            <Link to={`/questions`}>
+          <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/answer" ? "highlighted" : "")}>
+            <Link to={`/answer`}>
               <i className="fa fa-pencil-square-o"></i>
               Answer</Link>
           </li>
 
           <li id="nav-search">
             <QuestionSearchContainer />
-            </li>
+          </li>
 
           <li id="nav-pro-pic">
-            <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+            <Link to={`/profile`}>
+              <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+            </Link>
           </li>
 
 
