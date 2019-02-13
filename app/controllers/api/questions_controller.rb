@@ -27,16 +27,16 @@ class Api::QuestionsController < ApplicationController
   end
 
   def create
-    byebug
-    @question = Question.new do |que|
+    @question = Question.create do |que|
       que.body = question_params[:body]
       que.author = current_user
     end
-    @question.save
-
-    question_params[:topics].each do |topic|
-      t = Topic.find_by(name: topic)
-      @question.topics += [t] if t.present?
+  
+    if(question_params[:topics])
+      question_params[:topics].each do |topic|
+        t = Topic.find_by(name: topic)
+        @question.topics += [t] if t.present?
+      end
     end
 
     render :show
