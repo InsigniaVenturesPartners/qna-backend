@@ -111,7 +111,7 @@ class CreateQuestionForm extends React.Component {
     const isChecked = e.target.checked;
     this.setState(prevState => ({ checkedItems: prevState.checkedTopics.set(item, isChecked) }));
   }
-  
+
   render() {
     const {user, topics} = this.props
 
@@ -142,7 +142,7 @@ class CreateQuestionForm extends React.Component {
         </div>
 
 
-        <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question}/>
+        <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question} autoFocus={true}/>
         <div className="topic-modal">
           <div className="topic-modal-header">
             <h1>Select any topics that describe your question</h1>
@@ -154,7 +154,7 @@ class CreateQuestionForm extends React.Component {
             </div>
           </div>
         </div>
-    
+
         <div className="question-modal-footer">
           <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
           <button id="ask-question-button" onClick={this.handleSubmit}>Ask Question</button>
