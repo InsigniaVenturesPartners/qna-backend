@@ -56,8 +56,6 @@ class NavBar extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.question);
-    console.log(Array.from(this.state.checkedTopics.keys()));
     this.props.createQuestion(this.state.question, Array.from(this.state.checkedTopics.keys())).then(
       question => this.handleSuccessfulSubmit(question.question)
     );
