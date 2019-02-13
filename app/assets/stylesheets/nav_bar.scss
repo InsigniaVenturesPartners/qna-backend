@@ -1,19 +1,31 @@
+@import "modules/mixins.scss";
+
 .nav-bar {
   background: white;
   width: 100%;
-  min-width: 900px;
   border-bottom: 1px solid #ddd;
-  padding-left: 8px;
-  padding-right: 8px;
   height: 52px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.mobile-only {
+    @include respond-to(desktop) {
+      display: none;
+    }
+  }
+
+  &.desktop-only {
+    display: none;
+    @include respond-to(desktop) {
+      display: initial;
+    }
+  }
 }
 
 .nav-bar-items {
   background: white;
-  width: 1000px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
