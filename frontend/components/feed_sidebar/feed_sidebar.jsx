@@ -27,8 +27,6 @@ class FeedSidebar extends React.Component {
 
   render() {
     const {topics} = this.props;
-    console.log("asdasd");
-    console.log(topics);
     // let buttonTxt = "Search";
     // if(this.state.searchOpen) {
     //   buttonTxt = "Done";
