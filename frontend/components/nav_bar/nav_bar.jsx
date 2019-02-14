@@ -187,7 +187,7 @@ class NavBar extends React.Component {
               </Link>
             </li>
             <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-              <Link to={`/questions`}>
+              <Link to={`/answer`}>
                 <i className="fa fa-pencil-square-o"></i>
                 Answer</Link>
             </li>
