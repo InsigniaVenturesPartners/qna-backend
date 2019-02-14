@@ -101,10 +101,8 @@ class NavBar extends React.Component {
               </Link>
             </li>
 
-
-
-            <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-              <Link to={`/questions`}>
+            <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/answer" ? "highlighted" : "")}>
+              <Link to={`/answer`}>
                 <i className="fa fa-pencil-square-o"></i>
                 Answer</Link>
             </li>
@@ -114,9 +112,10 @@ class NavBar extends React.Component {
             </li>
 
             <li id="nav-pro-pic">
-              <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+              <Link to={`/profile`}>
+                <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+              </Link>
             </li>
-
 
             <li id="nav-ask-question"><button onClick={()=>this.openModal("create")}>Ask Question</button></li>
 

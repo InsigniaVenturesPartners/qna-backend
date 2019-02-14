@@ -16,8 +16,6 @@ class ProfilePage extends React.Component {
 
   render () {
     const { user, topics } = this.props;
-    console.log("topics 123");
-    console.log(topics);
 
     const topicItems = topics.map( topic => (
       <li className="profile-question-list-item" key={ "topic-" + topic.id }>
@@ -38,7 +36,7 @@ class ProfilePage extends React.Component {
 
           </div>
 
-           <li className="topic-list-item">
+           <li className="profile-topic-list-item">
             <h2>Following Topics</h2>
             <ul className="profile-question-list">{topicItems}</ul>
 

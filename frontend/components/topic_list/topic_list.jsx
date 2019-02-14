@@ -17,7 +17,7 @@ class TopicList extends React.Component {
     const questions = this.props.questions;
 
     const topicItems = <TopicListItem key={ "question-1" } questions={questions}/>
-      
+
     return(
       <div id="topics-container">
         <ul className="topic-list">
