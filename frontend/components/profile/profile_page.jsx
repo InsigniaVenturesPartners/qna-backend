@@ -27,7 +27,7 @@ class ProfilePage extends React.Component {
     return (
       <div id="topics-container">
         <ul className="topic-list">
-          <div className="greeting">
+          <div className="profile-greeting">
 
             <div className="profile-header">
               <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />

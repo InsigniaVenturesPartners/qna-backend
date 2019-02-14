@@ -55394,7 +55394,7 @@ var NavBar = function (_React$Component) {
                 _react2.default.createElement(
                   'h1',
                   null,
-                  'Select any topics that describe your question'
+                  'Select any topics that describe your question:'
                 )
               ),
               _react2.default.createElement(
@@ -61181,7 +61181,7 @@ var ProfilePage = function (_React$Component) {
           { className: 'topic-list' },
           _react2.default.createElement(
             'div',
-            { className: 'greeting' },
+            { className: 'profile-greeting' },
             _react2.default.createElement(
               'div',
               { className: 'profile-header' },
