@@ -32,8 +32,16 @@ class FeedSidebar extends React.Component {
     //   buttonTxt = "Done";
     // }
     const topicItems = topics.map( topic => (
-      <li key={ "topic-" + topic.id }><Link to={`/topics/${topic.id}`}>{topic.name}</Link>
-</li>
+      <li key={ "topic-" + topic.id }>
+        <Link to={`/topics/${topic.id}`}>
+          <div className="feed-sidebar-topic-pic">
+            <img src={topic.pic_url} />
+          </div>
+          <div className="feed-sidebar-topic-label">
+            {topic.name}
+          </div>
+        </Link>
+      </li>
       ));
 
     return(

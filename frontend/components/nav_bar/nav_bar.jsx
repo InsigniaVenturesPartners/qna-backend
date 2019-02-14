@@ -200,7 +200,9 @@ class NavBar extends React.Component {
               <QuestionSearchContainer />
             </li>
             <li id="nav-pro-pic">
-              <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+              <Link to={`/profile`}>
+                <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+              </Link>
             </li>
             <li id="nav-sign-out">
               <form name="sign-out" method="POST" action="/users/sign_out">
