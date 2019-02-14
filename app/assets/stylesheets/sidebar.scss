@@ -1,8 +1,12 @@
 @import "modules/mixins.scss";
 
 .sidebar {
-  margin-left: 32px;
-  width: 142px;
+  width: 100%;
+
+  @include respond-to(desktop) {
+    margin-left: 32px;
+    width: 142px;
+  }
 }
 
 .sidebar-topic-list {
@@ -15,21 +19,24 @@
     display: inline;
     font-size: 12px;
     color: #666666;
-    margin-bottom: 10px;
 
     @include respond-to(desktop) {
       display: block;
+      margin-bottom: 10px;
     }
 
-    a:hover {
-      text-decoration: none;
-      color: #2b6dad;
+    a {
+      padding: 0 0.5em;
+      &:hover {
+        text-decoration: none;
+        color: #2b6dad;
+      }
     }
   }
 }
 
 .feed-sidebar {
-  margin-top: 8px;
+  margin: 0.5em 0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   display: flex;
   flex-direction: row;
@@ -42,11 +49,15 @@
 }
 
 .feed-sidebar-header {
-  border-bottom: 1px solid #e2e2e2;
-  margin-bottom: 16px;
-  height: 30px;
-  font-size: 15px;
   font-weight: 500;
+  padding: 0 0.5em;
+
+  @include respond-to(desktop) {
+    height: 30px;
+    border-bottom: 1px solid #e2e2e2;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
 
   .feed-sidebar-fixed {
     display: flex;
