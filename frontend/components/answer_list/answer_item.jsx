@@ -61,15 +61,10 @@ class AnswerItem extends React.Component {
             </div>
           </div>
           <div className="answer-body">
-           <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
-                {answerBody}
-          </ReadMore>
-
+            <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
+              {answerBody}
+            </ReadMore>
           </div>
-
-
-
-
 
           <div className="answer-buttons">
             <AnswerVoteButtonContainer id={id} upvoterIds={upvoter_ids} upvoted={upvoted} downvoted={downvoted}/>
