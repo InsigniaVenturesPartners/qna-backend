@@ -32,13 +32,21 @@ class FeedSidebar extends React.Component {
     //   buttonTxt = "Done";
     // }
     const topicItems = topics.map( topic => (
-      <li key={ "topic-" + topic.id }><Link to={`/topics/${topic.id}`}>{topic.name}</Link>
-</li>
+      <li key={ "topic-" + topic.id }>
+        <Link to={`/topics/${topic.id}`}>
+          <div className="feed-sidebar-topic-pic">
+            <img src={topic.pic_url} />
+          </div>
+          <div className="feed-sidebar-topic-label">
+            {topic.name}
+          </div>
+        </Link>
+      </li>
       ));
 
     return(
         <div className="feed-sidebar">
-          
+
           <div className="feed-sidebar-header">
             <div className= "feed-sidebar-fixed">
               <h2>Topics</h2>
@@ -53,7 +61,7 @@ class FeedSidebar extends React.Component {
           <ul className="sidebar-topic-list">
             {topicItems}
           </ul>
-          
+
         </div>
     );
   }
