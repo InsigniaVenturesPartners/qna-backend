@@ -1,4 +1,4 @@
-json.extract! topic, :id, :name, :description, :num_followers
+json.extract! topic, :id, :name, :description, :num_followers, :pic_url
 
 
 json.question_ids topic.questions.map{|question| question.id}
