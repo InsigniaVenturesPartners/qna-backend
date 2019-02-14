@@ -98,7 +98,7 @@
 }
 
 .feed-sidebar-topic-pic {
-  max-width: 1.5rem;
+  width: 1.5rem;
   img {
     max-width: 100%;
     @include respond-to(desktop) {
