@@ -27,12 +27,12 @@
     <% else %>
 
       <% if provider.to_s == 'google_oauth2' %>
-        <%= link_to "Continue with Google", omniauth_authorize_path(resource_name, provider) %>
+        <%= link_to '<button type="button">Continue with Google</button>'.html_safe, omniauth_authorize_path(resource_name, provider) %>
       <% else %>
         <%= link_to "Continue with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %>
       <% end %>
 
-      
+
     <% end %>
     <br />
 

@@ -10,7 +10,7 @@ class TopicDetailItem extends React.Component {
 
   render () {
     const { topic } = this.props;
-    const { id, name, description, num_followers, question_ids, follower_ids, followed} = topic;
+    const { id, name, description, num_followers, question_ids, follower_ids, followed, pic_url} = topic;
 
     let questionItems = question_ids.map(id => (
       <QuestionItemContainer
@@ -24,15 +24,14 @@ class TopicDetailItem extends React.Component {
       questionItems = [<div className="no-topic-questions">No questions have been written for this topic yet </div>];
     }
 
-
-
     return (
       <div className="topic-detail-item">
         <div className="topic-header">
+          <img src={pic_url} alt={`${topic.name}'s picture`}  className="user-pro-pic" />
           <h1>{name}</h1>
-
           <FollowTopicButtonContainer id={id} followerIds={follower_ids} followed={followed}/>
-          </div>
+
+        </div>
 
         <ul className="question-list">{questionItems}</ul>
       </div>

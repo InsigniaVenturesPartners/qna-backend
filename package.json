@@ -24,6 +24,8 @@
     "npm": "5.4.1"
   },
   "scripts": {
+    "watch": "webpack --d --watch",
+    "dev": "webpack-dev-server --open",
     "build": "webpack"
   },
   "description": "",
@@ -43,5 +45,9 @@
   "bugs": {
     "url": "https://github.com/InsigniaVenturesPartners/qna-backend/issues"
   },
-  "homepage": "https://github.com/InsigniaVenturesPartners/qna-backend#readme"
+  "homepage": "https://github.com/InsigniaVenturesPartners/qna-backend#readme",
+  "devDependencies": {
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
 }

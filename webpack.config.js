@@ -9,7 +9,7 @@ module.exports = {
     filename: "bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /node_modules/,
@@ -28,11 +28,6 @@ module.exports = {
   new webpack.DefinePlugin({
     'process.env':{
       'NODE_ENV': JSON.stringify('production')
-    }
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    compress:{
-      warnings: true
     }
   })
 ]

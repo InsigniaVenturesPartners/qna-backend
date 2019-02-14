@@ -16,8 +16,6 @@ class ProfilePage extends React.Component {
 
   render () {
     const { user, topics } = this.props;
-    console.log("topics 123");
-    console.log(topics);
 
     const topicItems = topics.map( topic => (
       <li className="profile-question-list-item" key={ "topic-" + topic.id }>
@@ -33,12 +31,12 @@ class ProfilePage extends React.Component {
 
             <div className="profile-header">
               <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />
-              <span>{user.name}</span>
+              <h2>{user.name}</h2>
             </div>
 
           </div>
 
-           <li className="topic-list-item">
+           <li className="profile-topic-list-item">
             <h2>Following Topics</h2>
             <ul className="profile-question-list">{topicItems}</ul>
 
