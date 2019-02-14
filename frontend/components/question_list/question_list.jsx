@@ -13,8 +13,6 @@ class QuestionList extends React.Component {
 
   render() {
     const {questions} = this.props;
-    console.log("QuestionList")
-    console.log(this.props)
     if(Object.keys(questions).length === 0) {
       return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
     } else {
