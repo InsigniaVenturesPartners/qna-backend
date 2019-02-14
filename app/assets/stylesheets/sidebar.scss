@@ -55,6 +55,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  overflow: auto;
+  overflow-y: hidden;
 
   @include respond-to(desktop) {
     flex-direction: column;
