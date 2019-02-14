@@ -146,7 +146,7 @@ class NavBar extends React.Component {
           <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question} autoFocus={true}/>
           <div className="topic-modal">
             <div className="topic-modal-header">
-              <h1>Select any topics that describe your question:</h1>
+              <h1>Select any topics that describe your question</h1>
             </div>
 
             <div className="topic-modal-list">
@@ -187,7 +187,7 @@ class NavBar extends React.Component {
               </Link>
             </li>
             <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-              <Link to={`/questions`}>
+              <Link to={`/answer`}>
                 <i className="fa fa-pencil-square-o"></i>
                 Answer</Link>
             </li>

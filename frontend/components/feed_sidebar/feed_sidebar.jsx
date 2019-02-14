@@ -48,13 +48,7 @@ class FeedSidebar extends React.Component {
         <div className="feed-sidebar">
 
           <div className="feed-sidebar-header">
-            <div className= "feed-sidebar-fixed">
-              <h2>Topics</h2>
-              {/*
-              <button onClick={()=>this.setState({searchOpen: !this.state.searchOpen})}>{buttonTxt}</button>
-            */}
-            </div>
-            {/*this.topicSearch()*/}
+
           </div>
 
 

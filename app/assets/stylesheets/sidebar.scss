@@ -29,7 +29,6 @@
     margin-right: 0.5em;
 
     @include respond-to(desktop) {
-      width: 100%;
       display: block;
       margin-bottom: 10px;
       margin-left: 5em;
@@ -68,7 +67,6 @@
 
   @include respond-to(desktop) {
     height: 30px;
-    border-bottom: 1px solid #e2e2e2;
     margin-bottom: 16px;
     font-size: 15px;
   }
