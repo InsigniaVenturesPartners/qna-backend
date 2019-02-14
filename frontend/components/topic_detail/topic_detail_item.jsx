@@ -27,7 +27,9 @@ class TopicDetailItem extends React.Component {
     return (
       <div className="topic-detail-item">
         <div className="topic-header">
-          <img src={pic_url} alt={`${topic.name}'s picture`}  className="user-pro-pic" />
+          <div className="topic-header-pic">
+            <img src={pic_url} alt={`${topic.name}'s picture`}  className="user-pro-pic" />
+          </div>
           <h1>{name}</h1>
           <FollowTopicButtonContainer id={id} followerIds={follower_ids} followed={followed}/>
 
