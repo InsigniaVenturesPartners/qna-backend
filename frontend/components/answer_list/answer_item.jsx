@@ -6,7 +6,7 @@ import AnswerVoteButtonContainer from '../answer_vote_button/answer_vote_button_
 import CommentListContainer from '../comment_list/comment_list_container';
 import CommentFormContainer from '../comment_form/comment_form_container';
 
-
+import {ReadMore} from 'react-read-more';
 
 class AnswerItem extends React.Component {
   constructor(props) {
@@ -60,7 +60,17 @@ class AnswerItem extends React.Component {
               <h2>Answered {time_posted_ago}</h2>
             </div>
           </div>
-          <div className="answer-body">{answerBody}</div>
+          <div className="answer-body">
+           <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
+                {answerBody}
+          </ReadMore>
+
+          </div>
+
+
+
+
+
           <div className="answer-buttons">
             <AnswerVoteButtonContainer id={id} upvoterIds={upvoter_ids} upvoted={upvoted} downvoted={downvoted}/>
             <button className="comments-button" onClick={()=>this.setState({commentOpen: !this.state.commentOpen})}>Comments {commentIds.length}</button>
