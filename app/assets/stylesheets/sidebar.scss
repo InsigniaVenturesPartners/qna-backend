@@ -97,7 +97,7 @@
 }
 
 .feed-sidebar-topic-pic {
-  max-width: 1rem;
+  max-width: 1.5rem;
   img {
     max-width: 100%;
     @include respond-to(desktop) {
@@ -108,11 +108,8 @@
 }
 
 .feed-sidebar-topic-label {
-  padding-left: 0.5em;
-  @include respond-to(desktop) {
-    padding-left: 1.5em;
-    font-size: 1.25em;
-  }
+  padding-left: 0.25em;
+  font-size: 1.3em;
 }
 
 .topic-search {
