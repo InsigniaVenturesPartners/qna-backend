@@ -129,8 +129,10 @@ class User < ApplicationRecord
     self.voted_up_on? entity, vote_scope: 'follow'
   end
 
-
-
+  def self.is_whitelisted(email)
+    return (email.end_with? '@insignia.vc') ||
+      UserWhitelist.find_by(email: email)
+  end
 
   # for oauth
   # attr_accessor :provider, :uid
@@ -139,7 +141,7 @@ class User < ApplicationRecord
     user = find_by(provider: auth.provider, uid: auth.uid)
 
     unless user
-      return unless UserWhitelist.find_by(email: auth.info.email)
+      return unless self.is_whitelisted(auth.info.email)
       user = User.new do |u|
         u.provider = auth.provider
         u.uid = auth.uid
@@ -151,7 +153,7 @@ class User < ApplicationRecord
 
     user.name = auth.info.first_name + " " + auth.info.last_name
     user.pro_pic_url = auth.info.image
-    
+
     user.save!
     user
   end
