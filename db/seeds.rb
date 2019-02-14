@@ -6,8 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-demo_user = User.find_or_create_by(email: "htekayadi@gmail.com", password: "password", name: "Hendrik Tekayadi", pro_pic_url: "https://media.licdn.com/dms/image/C5103AQFAqlxQSZu0tA/profile-displayphoto-shrink_200_200/0?e=1555545600&v=beta&t=MlW4D4Ksi0wD-251j_FDkQPLsiGIYP4-xR-6j2F5b7Q")
-
 w1 = UserWhitelist.find_or_create_by(email: "yinglan@insignia.vc")
 w2 = UserWhitelist.find_or_create_by(email: "ridy@insignia.vc")
 w3 = UserWhitelist.find_or_create_by(email: "aldi@insignia.vc")
