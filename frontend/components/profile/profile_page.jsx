@@ -19,6 +19,9 @@ class ProfilePage extends React.Component {
 
     const topicItems = topics.map( topic => (
       <li className="profile-question-list-item" key={ "topic-" + topic.id }>
+        <div>
+          <img src={topic.pic_url} />
+        </div>
         <Link to={`/topics/${topic.id}`}>{topic.name}</Link>
         <FollowTopicButtonContainer id={topic.id} followerIds={topic.follower_ids} followed={topic.followed}/>
       </li>
