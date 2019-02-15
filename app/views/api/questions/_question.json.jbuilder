@@ -5,6 +5,7 @@ json.author do
 end
 
 json.time_posted_ago question.time_posted_ago
+json.updated_at question.updated_at
 
 json.answer_ids question.answers.map{|answer| answer.id}
 
