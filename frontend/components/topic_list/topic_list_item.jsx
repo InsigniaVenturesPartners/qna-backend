@@ -16,7 +16,11 @@ class TopicListItem extends React.Component {
       // const { name, description, num_followers, question_ids} = topic;
       const { questions } = this.props;
 
-      const questionItems = questions.map(question => (
+      const questionItems = questions.sort(function(a, b) {
+        a = new Date(a.updated_at);
+        b = new Date(b.updated_at);
+        return a>b ? -1 : a<b ? 1 : 0;
+      }).map(question => (
         <QuestionItemContainer
           key={ "question-" + question.id }
           id={question.id}
