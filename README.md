@@ -4,6 +4,15 @@
 ## Overview
 Insignia Community is a discussion forum made with Ruby on Rails, React, and Redux.
 
+## Getting Started
+1. Ensure you have installed [Node.js](https://nodejs.org/en/download/) and [Bundler](https://bundler.io/)
+2. ``bundle install``
+3. ``rake db:migrate``
+4. ``rake db:seed``
+5. ``npm install``
+6. To run the server, run ``rails server``. The web app will run on ``localhost:3000``
+7. To make webpack watch files, open a new terminal tab, then run ``npm run watch``
+
 ## Key Features
 
 #### Questions
