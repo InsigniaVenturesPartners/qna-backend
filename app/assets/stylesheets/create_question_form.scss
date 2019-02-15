@@ -101,12 +101,12 @@
 
   div.question-form-topic-list {
     display: flex;
-    flex-direction: row;
     color: #999999;
     font-size: 1.2rem;
 
     @include respond-to(desktop) {
       flex-direction: column;
+      padding-bottom: 0.5em;
     }
 
     .mui-checkbox {
@@ -114,6 +114,7 @@
       padding-right: 1em;
 
       label {
+        display: flex;
         flex-direction: row;
         align-items: center;
         font-size: 16px;
