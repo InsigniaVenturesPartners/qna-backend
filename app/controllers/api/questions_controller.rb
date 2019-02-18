@@ -9,11 +9,11 @@ class Api::QuestionsController < ApplicationController
       @keywords = params[:query].downcase.split(" ")
       questions = []
       @keywords.each do |keyword|
-        questions += Question.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
+        questions += questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
       end
       @questions = questions.uniq
     else
-      @questions = Question.take(20)
+      @questions = questions.take(20)
     end
     render :index
   end
@@ -31,7 +31,7 @@ class Api::QuestionsController < ApplicationController
       que.body = question_params[:body]
       que.author = current_user
     end
-  
+
     if(question_params[:topics])
       question_params[:topics].each do |topic|
         t = Topic.find_by(name: topic)

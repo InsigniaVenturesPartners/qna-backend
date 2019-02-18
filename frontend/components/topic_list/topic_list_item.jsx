@@ -17,9 +17,16 @@ class TopicListItem extends React.Component {
       const { questions } = this.props;
 
       const questionItems = questions.sort(function(a, b) {
-        a = new Date(a.updated_at);
-        b = new Date(b.updated_at);
-        return a>b ? -1 : a<b ? 1 : 0;
+        const answerCount1 =  a.answer_ids.length;
+        const answerCount2 =  b.answer_ids.length;
+
+        if((answerCount1>0 && answerCount2>0) || (answerCount1===0 && answerCount2===0)) {
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        } else if(answerCount1>answerCount2) {
+          return -1;
+        } else {
+          return 1;
+        }
       }).map(question => (
         <QuestionItemContainer
           key={ "question-" + question.id }
