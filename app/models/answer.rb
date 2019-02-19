@@ -17,6 +17,8 @@ class Answer < ApplicationRecord
   acts_as_votable
   acts_as_commentable
 
+  after_save :set_question_updated_at
+
   def upvoter_ids
     #add a number of nil values to inflate upvote number and simulate more realistic lookup times
     get_likes.reject{|v| v.vote_scope}.map{|v| v.voter_id} + Array.new(self.num_initial_upvotes)
@@ -34,14 +36,18 @@ class Answer < ApplicationRecord
     get_likes.reject{|v| v.vote_scope}.count
   end
 
-    #code for time posted ago from github.com/katrinalui
-    include ActionView::Helpers::DateHelper
+  #code for time posted ago from github.com/katrinalui
+  include ActionView::Helpers::DateHelper
 
-    def time_posted_ago
-      time_ago_in_words(created_at) + " ago"
-    end
+  def time_posted_ago
+    time_ago_in_words(created_at) + " ago"
+  end
 
-    def post_day
-      created_at.strftime("%B %d, %Y")
-    end
+  def post_day
+    created_at.strftime("%B %d, %Y")
+  end
+
+  def set_question_updated_at
+    question.update_attribute(:updated_at, updated_at)
+  end
 end
