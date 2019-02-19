@@ -8,7 +8,7 @@ class QuestionList extends React.Component {
   }
 
   componentWillMount() {
-    this.props.requestQuestions();
+    this.props.requestTopQuestions();
   }
 
   render() {

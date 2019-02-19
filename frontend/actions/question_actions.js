@@ -34,6 +34,12 @@ export const fetchQuestions = () => dispatch => (
   ))
 );
 
+export const fetchTopQuestions = () => dispatch => (
+  APIUtil.fetchTopQuestions().then(
+    questions=>(dispatch(receiveQuestions(questions))
+  ))
+);
+
 export const fetchSearchQuestions = (filters) => dispatch => (
   APIUtil.fetchQuestions(filters).then(
     questions=>(dispatch(receiveSearchQuestions(questions, filters))

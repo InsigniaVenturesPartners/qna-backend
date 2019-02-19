@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :answers, only: [:index, :show, :create, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
 
+    get  'top/questions', :to => 'questions#top'
     post 'questions/vote', :to => 'questions#vote'
     post 'questions/follow', :to => 'questions#follow'
     post 'questions/unfollow', :to => 'questions#unfollow'
