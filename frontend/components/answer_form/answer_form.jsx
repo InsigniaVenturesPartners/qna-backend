@@ -7,20 +7,28 @@ import Autolinker from 'autolinker';
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
-
-    const options = {
-      urls: { tldMatches: false }
-    };
-    this.autoLinker = new Autolinker(options);
     this.state = { text: '', open: false };
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
+    this.customLinkReplace = this.customLinkReplace.bind(this)
   }
 
   handleChange(value) {
-   const newValue = this.autoLinker.link(value)
+   const newValue = Autolinker.link(value, {
+    urls: { tldMatches: false },
+    stripPrefix: false,
+    replaceFn: this.customLinkReplace.bind(this, value)
+   })
    this.setState({ text: newValue })
+ }
+
+ customLinkReplace (value, match) {
+  const offset = match.getOffset()
+  const length = match.getAnchorText().length
+  const whitespaceIdx = value[offset + length]
+  //Check if user has press space/tab after typing the URL
+  return (/\s+/.test(whitespaceIdx))
  }
 
  successfulSubmit({answer}) {
