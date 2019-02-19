@@ -1,11 +1,17 @@
 import React from 'react';
 
 import ReactQuill from 'react-quill';
+import Autolinker from 'autolinker';
 
 
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
+
+    const options = {
+      urls: { tldMatches: false }
+    };
+    this.autoLinker = new Autolinker(options);
     this.state = { text: '', open: false };
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
@@ -13,7 +19,8 @@ class AnswerForm extends React.Component {
   }
 
   handleChange(value) {
-   this.setState({ text: value })
+   const newValue = this.autoLinker.link(value)
+   this.setState({ text: newValue })
  }
 
  successfulSubmit({answer}) {
