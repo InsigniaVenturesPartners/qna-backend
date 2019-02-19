@@ -1,6 +1,12 @@
 @import "modules/mixins.scss";
 @import "variables.scss";
 
+.nav-bar-mobile-wrapper {
+  width: 100%;
+  position: fixed;
+  z-index: $navbar-z-index;
+}
+
 .nav-bar {
   background: white;
   width: 100%;
@@ -17,6 +23,8 @@
   }
 
   &.desktop-only {
+    position: fixed;
+    z-index: $navbar-z-index;
     display: none;
     @include respond-to(desktop) {
       display: initial;
