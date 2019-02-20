@@ -17,6 +17,7 @@ class AnswerForm extends React.Component {
   handleChange(value) {
    const newValue = Autolinker.link(value, {
     stripPrefix: false,
+    stripTrailingSlash: false,
     replaceFn: this.customLinkReplace.bind(this, value)
    })
    this.setState({ text: newValue })
@@ -26,7 +27,7 @@ class AnswerForm extends React.Component {
   const offset = match.getOffset()
   const length = match.getAnchorText().length
   const whitespaceIdx = value[offset + length]
-  //Check if user has press space/tab after typing the URL
+  // Generate link when user adds space after typing the URL
   return (/\s+/.test(whitespaceIdx))
  }
 
