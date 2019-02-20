@@ -13,8 +13,10 @@ class AnswerItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = { commentOpen: false, editOpen: false};
-    this.handleEdit = this.handleEdit.bind(this);
     this.comments = this.comments.bind(this);
+
+    this.openEditForm = this.openEditForm.bind(this);
+    this.closeEditForm = this.closeEditForm.bind(this);
   }
 
   componentWillMount() {
@@ -27,8 +29,12 @@ class AnswerItem extends React.Component {
     }
   }
 
-  handleEdit(body, answerId) {
+  openEditForm(body, answerId) {
     this.setState({editOpen: true});
+  }
+
+  closeEditForm() {
+    this.setState({editOpen: false});
   }
 
   comments(id, commentIds) {
@@ -53,7 +59,7 @@ class AnswerItem extends React.Component {
         answerBody = <div><h2></h2>You downvoted this answer.<h3>Downvoting low-quality content improves Insignia Community for everyone.</h3></div>
       } else {
         if(this.state.editOpen) {
-          answerBody = <AnswerEditFormContainer answerId={id} body={body}/>
+          answerBody = <AnswerEditFormContainer answerId={id} body={body} closeEditForm={this.closeEditForm}/>
         } else {
           answerBody = <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
                         {ReactHtmlParser(body)}
@@ -61,7 +67,7 @@ class AnswerItem extends React.Component {
         }
       }
       const editButton = answer.author.id === user.id ?
-        <button className="edit-answer-button" onClick={()=>this.handleEdit(body, answer.id)}>
+        <button className="edit-answer-button" onClick={()=>this.openEditForm(body, answer.id)}>
           <div className="edit-answer-text">Update Answer</div>
         </button> : null;
 

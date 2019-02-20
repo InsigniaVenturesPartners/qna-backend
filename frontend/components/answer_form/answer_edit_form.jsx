@@ -6,7 +6,7 @@ import Autolinker from 'autolinker';
 class AnswerEditForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: props.body, open: true };
+    this.state = { text: props.body, open: false };
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
@@ -30,8 +30,8 @@ class AnswerEditForm extends React.Component {
     return (/\s+/.test(whitespaceIdx))
   }
 
-  successfulSubmit({answer}) {
-    this.props.history.push(`/answers/${answer.id}`);
+  successfulSubmit() {
+    this.props.closeEditForm();
   }
 
   submitAnswer() {
@@ -41,7 +41,6 @@ class AnswerEditForm extends React.Component {
   }
 
   render () {
-    const author = this.props.current_user;
     return (
       <div className="answer-form-container">
         <div className="answer-form">
@@ -59,7 +58,6 @@ class AnswerEditForm extends React.Component {
     );
   }
 }
-
 
 const modules = {
   toolbar: [
