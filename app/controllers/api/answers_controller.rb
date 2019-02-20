@@ -43,6 +43,13 @@ class Api::AnswersController < ApplicationController
     end
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+
+    render :show
+  end
+
   def vote
     @answer = Answer.find_by_id(params[:answer_id])
     type = params[:type]

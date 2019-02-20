@@ -23,6 +23,18 @@ export const fetchAnswers = () => (
   })
 );
 
+export const editAnswer = (body, answer_id) => (
+  $.ajax({
+    method: 'PATCH',
+    url: `api/answers/${answer_id}`,
+    data: {
+      answer: {
+        body
+      }
+    }
+  })
+);
+
 export const voteOnAnswer = (id, type) => (
   $.ajax({
     method: 'POST',

@@ -5,25 +5,32 @@ import AnswerVoteButtonContainer from '../answer_vote_button/answer_vote_button_
 
 import CommentListContainer from '../comment_list/comment_list_container';
 import CommentFormContainer from '../comment_form/comment_form_container';
+import AnswerEditFormContainer from '../answer_form/answer_edit_form_container';
 
 import {ReadMore} from 'react-read-more';
+import ReactQuill from 'react-quill';
+import Autolinker from 'autolinker';
 
 class AnswerItem extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {commentOpen: false};
-    this.comments = this.comments.bind(this)
+    this.state = { commentOpen: false, editOpen: false};
+    this.handleEdit = this.handleEdit.bind(this);
+    this.comments = this.comments.bind(this);
   }
 
   componentWillMount() {
     this.props.requestAnswer(this.props.id);
   }
 
-
   componentWillReceiveProps(nextProps) {
     if(this.props.comments != nextProps.comments) {
       this.props.requestAnswer(this.props.id);
     }
+  }
+
+  handleEdit(body, answerId) {
+    this.setState({editOpen: true});
   }
 
   comments(id, commentIds) {
@@ -37,7 +44,7 @@ class AnswerItem extends React.Component {
   }
 
   render () {
-    const { answer, voteOnAnswer } = this.props;
+    const { answer, voteOnAnswer, user } = this.props;
     if (Object.keys(answer).length === 0) {
       return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
     } else {
@@ -47,9 +54,18 @@ class AnswerItem extends React.Component {
       if(downvoted) {
         answerBody = <div><h2></h2>You downvoted this answer.<h3>Downvoting low-quality content improves Insignia Community for everyone.</h3></div>
       } else {
-        answerBody = ReactHtmlParser(body)
+        if(this.state.editOpen) {
+          answerBody = <AnswerEditFormContainer answerId={id} body={body}/>
+        } else {
+          answerBody = <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
+                        {ReactHtmlParser(body)}
+                       </ReadMore>
+        }
       }
-
+      const editButton = answer.author.id === user.id ?
+        <button className="edit-answer-button" onClick={()=>this.handleEdit(body, answer.id)}>
+          <div className="edit-answer-text">Update Answer</div>
+        </button> : null;
 
       return (
         <li className="answer-item">
@@ -61,14 +77,14 @@ class AnswerItem extends React.Component {
             </div>
           </div>
           <div className="answer-body">
-            <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
               {answerBody}
-            </ReadMore>
           </div>
 
           <div className="answer-buttons">
             <AnswerVoteButtonContainer id={id} upvoterIds={upvoter_ids} upvoted={upvoted} downvoted={downvoted}/>
             <button className="comments-button" onClick={()=>this.setState({commentOpen: !this.state.commentOpen})}>Comments {commentIds.length}</button>
+
+            {editButton}
           </div>
           {this.comments(id, commentIds)}
         </li>

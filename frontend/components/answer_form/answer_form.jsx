@@ -3,7 +3,6 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import Autolinker from 'autolinker';
 
-
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
@@ -21,24 +20,24 @@ class AnswerForm extends React.Component {
     replaceFn: this.customLinkReplace.bind(this, value)
    })
    this.setState({ text: newValue })
- }
+  }
 
- customLinkReplace (value, match) {
-  const offset = match.getOffset()
-  const length = match.getAnchorText().length
-  const whitespaceIdx = value[offset + length]
-  // Generate link when user adds space after typing the URL
-  return (/\s+/.test(whitespaceIdx))
- }
+  customLinkReplace (value, match) {
+    const offset = match.getOffset()
+    const length = match.getAnchorText().length
+    const whitespaceIdx = value[offset + length]
+    // Generate link when user adds space after typing the URL
+    return (/\s+/.test(whitespaceIdx))
+  }
 
- successfulSubmit({answer}) {
-   this.props.history.push(`/answers/${answer.id}`);
- }
+  successfulSubmit({answer}) {
+    this.props.history.push(`/answers/${answer.id}`);
+  }
 
- submitAnswer() {
-   this.props.createAnswer(this.state.text, this.props.questionId).then(
-     this.successfulSubmit
-   );
+  submitAnswer() {
+    this.props.createAnswer(this.state.text, this.props.questionId).then(
+      this.successfulSubmit
+    );
   }
 
   render () {
@@ -71,9 +70,7 @@ class AnswerForm extends React.Component {
         <button className="write-answer-button" onClick={()=>this.setState({open: true})}>Answer</button>
       );
     }
-
   }
-
 }
 
 

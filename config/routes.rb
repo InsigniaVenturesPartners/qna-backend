@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     resource :session, only: [:create, :destroy]
-    resources :questions, only: [:index, :show, :create, :update, :destroy]
-    resources :topics, only: [:index, :show, :create, :update, :destroy]
-    resources :answers, only: [:index, :show, :create, :destroy]
+    resources :questions, only: [:index, :show, :create, :destroy]
+    resources :topics, only: [:index, :show, :create, :destroy]
+    resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
 
     get  'top/questions', :to => 'questions#top'
