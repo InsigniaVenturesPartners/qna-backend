@@ -81,6 +81,7 @@ class NavBar extends React.Component {
 
     return(
       <div>
+        <div className="ribbon">BETA</div>
         <div className="nav-bar desktop-only">
           <ul className="nav-bar-items">
             <li id="nav-logo">
