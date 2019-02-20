@@ -7,6 +7,14 @@ export const fetchQuestions = data => (
   })
 );
 
+export const fetchTopQuestions = data => (
+  $.ajax({
+    method: 'GET',
+    url: 'api/top/questions',
+    data
+  })
+);
+
 export const fetchQuestion = (id) => (
   $.ajax({
     method: 'GET',

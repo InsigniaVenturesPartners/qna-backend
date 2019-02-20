@@ -16,6 +16,20 @@ export const allQuestions = ({ questions }) => {
    return returnQuestions;
 };
 
+export const allTopQuestions = ({ questions }) => {
+  const returnQuestions = Object.values(questions) || [];
+
+  if(returnQuestions.length > 0) {
+    return returnQuestions.sort(function(a, b) {
+      const answerCount1 =  a.answer_ids.length;
+      const answerCount2 =  b.answer_ids.length;
+        return answerCount2 - answerCount1;
+    });
+  }
+
+  return returnQuestions;
+};
+
 export const allAnswers = ({ answers }) => {
    const returnAnswers = Object.values(answers) || [];
    return returnAnswers;

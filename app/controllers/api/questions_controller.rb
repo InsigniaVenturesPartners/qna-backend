@@ -18,6 +18,12 @@ class Api::QuestionsController < ApplicationController
     render :index
   end
 
+  def top
+    questions = Question.all.includes(:author)
+    @questions = questions.reject {|que| que.answers.where("author_id = ?", current_user.id).any?}
+    render :index
+  end
+
   def show
     @question = Question.find(params[:id])
     unless @question
