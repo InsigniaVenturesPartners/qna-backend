@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ReactQuill from 'react-quill';
+import Autolinker from 'autolinker';
 
 
 class AnswerForm extends React.Component {
@@ -10,10 +11,24 @@ class AnswerForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
+    this.customLinkReplace = this.customLinkReplace.bind(this)
   }
 
   handleChange(value) {
-   this.setState({ text: value })
+   const newValue = Autolinker.link(value, {
+    stripPrefix: false,
+    stripTrailingSlash: false,
+    replaceFn: this.customLinkReplace.bind(this, value)
+   })
+   this.setState({ text: newValue })
+ }
+
+ customLinkReplace (value, match) {
+  const offset = match.getOffset()
+  const length = match.getAnchorText().length
+  const whitespaceIdx = value[offset + length]
+  // Generate link when user adds space after typing the URL
+  return (/\s+/.test(whitespaceIdx))
  }
 
  successfulSubmit({answer}) {
