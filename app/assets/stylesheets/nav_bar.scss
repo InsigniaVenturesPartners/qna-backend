@@ -118,26 +118,6 @@
   color: #f29648;
 }
 
-.ribbon {
-  display: none;
-  @include respond-to(large-desktop) {
-    display: initial;
-    position: absolute;
-    top: 30px;
-    right: -100px;
-    transform: rotate(45deg);
-    width: 300px;
-    z-index: 3;
-    background: red;
-    color: white;
-    box-shadow: 0 5px 15px 2px rgba(0,0,0,.1);
-
-    text-align: center;
-    font-family: "Source Sans Pro", Helvetica, "sans-serif";
-    font-size: 2em;
-  }
-}
-
 li#nav-search {
   margin: 0 0.5em;
   justify-content: flex-start;
