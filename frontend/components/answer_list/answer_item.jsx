@@ -8,8 +8,6 @@ import CommentFormContainer from '../comment_form/comment_form_container';
 import AnswerEditFormContainer from '../answer_form/answer_edit_form_container';
 
 import {ReadMore} from 'react-read-more';
-import ReactQuill from 'react-quill';
-import Autolinker from 'autolinker';
 
 class AnswerItem extends React.Component {
   constructor(props) {
