@@ -16,7 +16,6 @@ class AnswerForm extends React.Component {
 
   handleChange(value) {
    const newValue = Autolinker.link(value, {
-    urls: { tldMatches: false },
     stripPrefix: false,
     replaceFn: this.customLinkReplace.bind(this, value)
    })
