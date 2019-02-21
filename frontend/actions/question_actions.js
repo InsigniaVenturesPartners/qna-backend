@@ -59,6 +59,12 @@ export const createQuestion = (body, topics) => dispatch => (
   ))
 );
 
+export const editQuestion = (body, questionId) => dispatch => (
+  APIUtil.editQuestion(body, questionId).then(
+    question=>(dispatch(updateQuestion(question))
+  ))
+);
+
 export const voteOnQuestion = (id, type) => dispatch => (
   APIUtil.voteOnQuestion(id, type).then(
     question=>(dispatch(updateQuestion(question))

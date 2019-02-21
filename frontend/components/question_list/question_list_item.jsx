@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import AnswerFormContainer from '../answer_form/answer_form_container';
+import EditQuestionContainer from '../question/edit_question_form_container';
 
 class QuestionListItem extends React.Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class QuestionListItem extends React.Component {
   }
 
   render () {
-    const { question } = this.props;
+    const { question, user } = this.props;
 
     if (Object.keys(question).length === 0) {
       return (
@@ -23,17 +25,31 @@ class QuestionListItem extends React.Component {
       } else {
         questionHead = [<h3>Question asked · {time_posted_ago}</h3>];
       }
+
+      const editButton = question.author.id === user.id ? <EditQuestionContainer questionId={question.id} body={question.body}/> : null;
+
       return (
         <li className="question-list-item">
           {questionHead}
           <Link to={`/questions/${question.id}`} >{body}</Link>
 
           <h3>Last asked {time_posted_ago} · <Link to={`/questions/${question.id}`} >{num_answers}</Link></h3>
-          <AnswerFormContainer questionId={id}/>
+          <div className="question-buttons">
+            <AnswerFormContainer questionId={id}/>
+            {editButton}
+          </div>
         </li>
       );
     }
   }
 }
 
-export default QuestionListItem;
+const mapStateToProps = (state) => {
+  return {
+    user: state.session.currentUser
+  }
+};
+
+export default connect(
+  mapStateToProps
+)(QuestionListItem);
