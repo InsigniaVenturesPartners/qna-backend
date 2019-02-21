@@ -41,6 +41,12 @@ export const fetchAnswer = id => dispatch => (
   ))
 );
 
+export const editAnswer = (body, answerId) => dispatch => (
+  APIUtil.editAnswer(body, answerId).then(
+    answer=>(dispatch(updateAnswer(answer))
+  ))
+);
+
 export const voteOnAnswer = (id, type) => dispatch => (
   APIUtil.voteOnAnswer(id, type).then(
     answer=>(dispatch(updateAnswer(answer))
