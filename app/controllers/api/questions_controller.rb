@@ -48,6 +48,13 @@ class Api::QuestionsController < ApplicationController
     render :show
   end
 
+  def update
+    @question = Question.find(params[:id])
+    @question.update(question_params)
+
+    render :show
+  end
+
   def vote
     @question = Question.find_by_id(params[:question_id])
     type = params[:type]

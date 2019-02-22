@@ -35,6 +35,18 @@ export const createQuestion = (body, topics) => (
   })
 );
 
+export const editQuestion = (body, question_id) => (
+  $.ajax({
+    method: 'PATCH',
+    url: `api/questions/${question_id}`,
+    data: {
+      question: {
+        body
+      }
+    }
+  })
+);
+
 export const voteOnQuestion = (id, type) => (
   $.ajax({
     method: 'POST',

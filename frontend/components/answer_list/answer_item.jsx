@@ -68,7 +68,7 @@ class AnswerItem extends React.Component {
       }
       const editButton = answer.author.id === user.id ?
         <button className="edit-answer-button" onClick={()=>this.openEditForm(body, answer.id)}>
-          <div className="edit-answer-text">Update Answer</div>
+          <div className="edit-answer-text">Edit Answer</div>
         </button> : null;
 
       return (

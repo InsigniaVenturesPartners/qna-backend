@@ -33,7 +33,7 @@ Insignia Community is a discussion forum made with Ruby on Rails, React, and Red
 
 #### User Authentication
 
-  Users sign up for Insignia Community by linking their Google account. After confirming their email, users can simply click the "Continue with Google" button to log in. Users may also choose and reset their password if they wish to manually log in.
+  Users sign up for Insignia Community by linking their Google account. Users can simply click the "Continue with Google" button to log in.
 
 
 ## Technology Used
