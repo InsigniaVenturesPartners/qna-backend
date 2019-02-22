@@ -7,7 +7,7 @@ import CommentListContainer from '../comment_list/comment_list_container';
 import CommentFormContainer from '../comment_form/comment_form_container';
 import AnswerEditFormContainer from '../answer_form/answer_edit_form_container';
 
-import {ReadMore} from 'react-read-more';
+import TruncateMarkup from 'react-truncate-markup';
 
 class AnswerItem extends React.Component {
   constructor(props) {
@@ -61,9 +61,12 @@ class AnswerItem extends React.Component {
         if(this.state.editOpen) {
           answerBody = <AnswerEditFormContainer answerId={id} body={body} closeEditForm={this.closeEditForm}/>
         } else {
-          answerBody = <ReadMore lines={3} onShowMore={this.props.onChange} text="(more)">
-                        {ReactHtmlParser(body)}
-                       </ReadMore>
+          const parsedHTML = ReactHtmlParser(body)
+          answerBody = <TruncateMarkup lines={3}>
+                          <div>
+                            {parsedHTML}
+                          </div>
+                       </TruncateMarkup>
         }
       }
       const editButton = answer.author.id === user.id ?
@@ -82,6 +85,7 @@ class AnswerItem extends React.Component {
           </div>
           <div className="answer-body">
               {answerBody}
+              <span>(more)</span>
           </div>
 
           <div className="answer-buttons">
