@@ -12,11 +12,12 @@ import TruncateMarkup from 'react-truncate-markup';
 class AnswerItem extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { commentOpen: false, editOpen: false};
+    this.state = { commentOpen: false, editOpen: false, needTruncation: false, isExpanded: false};
     this.comments = this.comments.bind(this);
 
     this.openEditForm = this.openEditForm.bind(this);
     this.closeEditForm = this.closeEditForm.bind(this);
+    this.handleAnswerExpand = this.handleAnswerExpand.bind(this);
   }
 
   componentWillMount() {
@@ -47,6 +48,10 @@ class AnswerItem extends React.Component {
     return null;
   }
 
+  handleAnswerExpand() {
+    this.setState({ isExpanded: true })
+  }
+
   render () {
     const { answer, voteOnAnswer, user } = this.props;
     if (Object.keys(answer).length === 0) {
@@ -62,11 +67,21 @@ class AnswerItem extends React.Component {
           answerBody = <AnswerEditFormContainer answerId={id} body={body} closeEditForm={this.closeEditForm}/>
         } else {
           const parsedHTML = ReactHtmlParser(body)
-          answerBody = <TruncateMarkup lines={3}>
-                          <div>
-                            {parsedHTML}
-                          </div>
-                       </TruncateMarkup>
+          if (this.state.isExpanded) {
+            answerBody = parsedHTML
+          }
+          else {
+            answerBody = (
+              <div>
+                <TruncateMarkup lines={3} onAfterTruncate={(wasTruncated)=>this.setState({ needTruncation: wasTruncated })}>
+                  <div>
+                    {parsedHTML}
+                  </div>
+                </TruncateMarkup>
+                {this.state.needTruncation && <a onClick={()=>this.handleAnswerExpand()}>(more)</a>}
+              </div>
+            )
+          }
         }
       }
       const editButton = answer.author.id === user.id ?
@@ -85,7 +100,6 @@ class AnswerItem extends React.Component {
           </div>
           <div className="answer-body">
               {answerBody}
-              <span>(more)</span>
           </div>
 
           <div className="answer-buttons">
