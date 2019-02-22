@@ -1,7 +1,8 @@
 module ApplicationHelper
 
   def self.get_base64_image(string)
-
+    matches = string.scan(/src="data:image\/([^;]+);base64,([^"]+)"/i)
+    return matches
   end
 
   def self.convert_base64_image(image_url)
