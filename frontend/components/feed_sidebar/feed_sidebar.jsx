@@ -27,10 +27,6 @@ class FeedSidebar extends React.Component {
 
   render() {
     const {topics} = this.props;
-    // let buttonTxt = "Search";
-    // if(this.state.searchOpen) {
-    //   buttonTxt = "Done";
-    // }
     const topicItems = topics.map( topic => (
       <li key={ "topic-" + topic.id }>
         <Link to={`/topics/${topic.id}`}>
@@ -44,20 +40,20 @@ class FeedSidebar extends React.Component {
       </li>
       ));
 
-    return(
+    const pathname = this.props.location.pathname;
+    if(pathname === "/" || pathname.startsWith("/topics")) {
+      return(
         <div className="feed-sidebar">
-
           <div className="feed-sidebar-header">
-
           </div>
-
-
           <ul className="sidebar-topic-list">
             {topicItems}
           </ul>
-
         </div>
-    );
+      );
+    } else {
+      return null
+    }
   }
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Checkbox from 'muicss/lib/react/checkbox';
 
 import { customStyles, cancelStyles } from '../create_question_form/create_question_form';
 import QuestionSearchContainer from '../question_search/question_search_container';
 
-class NavBar extends React.Component {
+class AdminNavBar extends React.Component {
   constructor(props) {
     super(props)
 
@@ -28,6 +28,12 @@ class NavBar extends React.Component {
     this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentWillMount() {
+    if (this.props.user.role !== "admin") {
+      this.props.history.push('/');
+    }
   }
 
   openModal(modalName) {
@@ -74,52 +80,26 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {user, topics} = this.props
-    const topicItems = topics.map( topic => (
-      <Checkbox name={topic.name} label={topic.name} checked={this.state.checkedTopics.get(topic.name)} onChange={this.handleChange}/>
-    ));
-
+    const {user} = this.props
+    debugger;
     return(
       <div>
         <div className="ribbon ribbon-main">BETA</div>
         <div className="nav-bar desktop-only">
           <ul className="nav-bar-items">
-            <li id="nav-logo">
-              {/*
-              TODO
-
-
-              <Link to={`/`}>
-                Insignia Community
-              </Link>
-              */}
-              </li>
-
-            <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/" ? "highlighted" : "")} >
-              <Link to={`/`}>
-                <i className="fa fa-home"></i>
-                Home
+            <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/admin" ? "highlighted" : "")} >
+              <Link to={`/admin/whitelist`}>
+                <i className="fa fa-user"></i>
+                Whitelist
               </Link>
             </li>
 
-            <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/answer" ? "highlighted" : "")}>
-              <Link to={`/answer`}>
-                <i className="fa fa-pencil-square-o"></i>
-                Answer</Link>
-            </li>
-
-            <li id="nav-search">
-              <QuestionSearchContainer />
-            </li>
 
             <li id="nav-pro-pic">
-              <Link to={`/profile`}>
+              <Link to={`/admin`}>
                 <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
               </Link>
             </li>
-
-            <li id="nav-ask-question"><button onClick={()=>this.openModal("create")}>Ask Question</button></li>
-
 
             <li id="nav-sign-out">
               <form name="sign-out" method="POST" action="/users/sign_out">
@@ -130,80 +110,24 @@ class NavBar extends React.Component {
               </form>
             </li>
           </ul>
-          <Modal
-            isOpen={this.state.createModalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={()=>this.closeModal("create")}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
 
-          <div className="question-modal-header">
-            <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="user-pro-pic" />
-            <span id="modal-username">{user.name} asks</span>
-          </div>
-
-
-          <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question} autoFocus={true}/>
-          <div className="topic-modal">
-            <div className="topic-modal-header">
-              <h1>Select any topics that describe your question</h1>
-            </div>
-
-            <div className="topic-modal-list">
-              <div className="question-form-topic-list">
-                {topicItems}
-              </div>
-            </div>
-          </div>
-
-          <div className="question-modal-footer">
-            <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
-            <button id="ask-question-button" onClick={this.handleSubmit}>Ask Question</button>
-          </div>
-          </Modal>
-
-
-          <Modal
-              id="cancel-modal"
-              className="cancel-modal"
-              isOpen={this.state.successModalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={()=>this.closeModal("success")}
-              style={cancelStyles}
-              contentLabel="Example Modal"
-            >
-            <p>
-              You asked: <Link onClick={()=>this.closeModal("success")} to={`/questions/${this.state.asked_question.id}`}>{this.state.asked_question.body}</Link>
-            </p>
-            <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
-          </Modal>
         </div>
         <div className="nav-bar-mobile-wrapper">
           <div className="nav-bar mobile-only">
             <ul className="nav-bar-items">
-              <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/" ? "highlighted" : "")} >
+              <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/admin" ? "highlighted" : "")} >
                 <Link to={`/`}>
-                  <i className="fa fa-home"></i>
-                  Home
+                  <i className="fa fa-user"></i>
+                  Whitelist
                 </Link>
               </li>
-              <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-                <Link to={`/answer`}>
-                  <i className="fa fa-pencil-square-o"></i>
-                  Answer</Link>
-              </li>
-              <li id="nav-ask-question"><button onClick={()=>this.openModal("create")}>Ask Question</button></li>
             </ul>
           </div>
 
           <div className="nav-bar mobile-only">
             <ul className="nav-bar-items">
-              <li id="nav-search">
-                <QuestionSearchContainer />
-              </li>
               <li id="nav-pro-pic">
-                <Link to={`/profile`}>
+                <Link to={`/admin/whitelist`}>
                   <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
                 </Link>
               </li>
@@ -223,4 +147,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default NavBar;
+export default withRouter(AdminNavBar);

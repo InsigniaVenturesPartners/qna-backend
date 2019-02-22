@@ -37,6 +37,8 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'devise'
 gem 'koala'
+gem 'cancancan'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

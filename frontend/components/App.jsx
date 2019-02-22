@@ -1,6 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Route, Redirect, Switch, Link, HashRouter} from 'react-router-dom';
+import { BrowserRouter, Route, Router, Redirect, Switch, Link, HashRouter} from 'react-router-dom';
+
+import { createBrowserHistory } from 'history'
+
+import AdminRoute from '../routers/admin';
 
 import SessionFormContainer from './session_form/session_form_container';
 import TopicListContainer from './topic_list/topic_list_container';
@@ -15,31 +19,33 @@ import ProfilePageContainer from './profile/profile_page_container';
 
 
 const App = () => (
-  <div>
-    <Route path="/login" component={SessionFormContainer} />
-    <Route path="/signup" component={SessionFormContainer} />
-    <Route path="/" component={NavBarContainer} />
-    <div id="main-page">
-      <div className="sidebar">
-        <Route exact path="/" component={FeedSidebarContainer} />
-        <Route path="/topics/" component={FeedSidebarContainer} />
-      </div>
 
-      <Switch>
-        <div className="main-col">
-          <Route exact path="/" component={CreateQuestionFormContainer} />
-          <Route exact path="/" component={TopicListContainer} />
-          <Route path="/topics/:topicId" component={TopicDetailContainer} />
-          <Route path="/questions/:questionId" component={QuestionDetailContainer} />
-          <Route path="/answers/:answerId" component={AnswerDetailContainer} />
-          <Route exact path="/answer" component={QuestionListContainer} />
-          <Route exact path="/profile" component={ProfilePageContainer} />
+      <div>
+        <Route path="/login" component={SessionFormContainer} />
+        <Route path="/" component={NavBarContainer} />
+        <div id="main-page">
+          <div className="sidebar">
+            <Route path="/" component={FeedSidebarContainer} />
+          </div>
+
+          <Switch>
+            <div className="main-col">
+              <Route exact path="/" component={CreateQuestionFormContainer} />
+              <Route exact path="/" component={TopicListContainer} />
+              <Route exact path="/topics/:topicId" component={TopicDetailContainer} />
+              <Route exact path="/questions/:questionId" component={QuestionDetailContainer} />
+              <Route exact path="/answers/:answerId" component={AnswerDetailContainer} />
+              <Route exact path="/answer" component={QuestionListContainer} />
+              <Route exact path="/profile" component={ProfilePageContainer} />
+
+              <Route path="/admin" component={ProfilePageContainer} />
+            </div>
+
+          </Switch>
 
         </div>
+      </div>
 
-      </Switch>
-    </div>
-  </div>
 );
 
 export default App;
