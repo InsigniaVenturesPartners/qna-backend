@@ -1,8 +1,19 @@
 module ApplicationHelper
 
   def self.get_base64_image(string)
-    matches = string.scan(/src="data:image\/([^;]+);base64,([^"]+)"/i)
-    return matches
+    matches = string.scan(/src="(data:image\/([^;]+);base64,([^"]+))"/i)
+    result = []
+    string.enum_for(:scan, /(data:image\/([^;]+);base64,([^"]+))/i)
+          .map {
+            match = Regexp.last_match.captures
+            result.push ({
+              start_index: Regexp.last_match.begin(0),
+              end_index: Regexp.last_match.end(0) - 1,
+              type: match[1],
+              data: match[2]
+            })
+          }
+    return result
   end
 
   def self.convert_base64_image(image_url)
