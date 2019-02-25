@@ -33,7 +33,7 @@ class UserWhitelist extends React.Component {
       page: 1,
       totalPages: 1,
       totalUsers: 0,
-      limit: 10,
+      limit: 20,
       createModalIsOpen: false,
       successModalIsOpen: false,
       user_whitelist: "",
@@ -47,11 +47,16 @@ class UserWhitelist extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.onPageChange = this.onPageChange.bind(this);
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.validateFromTo = this.validateFromTo.bind(this);
   }
 
   componentWillMount() {
-    this.props.requestUserWhitelists()
-    this.calculateTotalPages()
+    this.props.requestUserWhitelists().then(
+      () => this.calculateTotalPages()
+    );
   }
 
   openModal(modalName) {
@@ -88,16 +93,8 @@ class UserWhitelist extends React.Component {
     this.setState({requested_user_whitelist: user_whitelist, user_whitelist: ""})
   }
 
-  onPageChange(e) {
-    this.setState({ page: e.activePage })
-  }
-
-  onChangeJumpPage(e) {
-    this.setState({ page: e.value })
-  }
-
-  onChangeLimit(e) {
-    this.setState({ limit: e.value })
+  onPageChange(e, { activePage }) {
+    this.setState({ page: activePage })
   }
 
   onChangeSearchName(e) {
@@ -106,8 +103,18 @@ class UserWhitelist extends React.Component {
     })
   }
 
-  calculateTotalPages() {
+  filterUsers() {
     let users = this.props.user_whitelists
+    if (this.state.searchName.trim() !== '') {
+      users = users.filter((user) => {
+        return user.email.toLowerCase().includes(this.state.searchName.toLowerCase())
+      })
+    }
+    return users
+  }
+
+  calculateTotalPages() {
+    let users = this.filterUsers()
     let totalPages = Math.ceil(users.length / this.state.limit)
     let page = this.state.page
     if (page > totalPages) {
@@ -119,117 +126,118 @@ class UserWhitelist extends React.Component {
     this.setState({ page: page, totalPages: totalPages, totalUsers: users.length })
   }
 
+  validateFromTo(number) {
+    if (number < 0) {
+      return 0
+    }
+    if (number > this.state.totalUsers) {
+      return this.state.totalUsers
+    }
+    return number
+  }
+
   render () {
-    const { user_whitelists } = this.props;
-    if (Object.keys(user_whitelists).length === 0) {
+    let user_whitelists = this.filterUsers();
+    user_whitelists = user_whitelists.slice((this.state.page - 1) * this.state.limit, (this.state.page - 1) * this.state.limit + this.state.limit)
 
-      return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
-    } else {
+    let fromPage = this.validateFromTo((this.state.page - 1) * this.state.limit + 1);
+    let toPage = this.validateFromTo(this.state.page * this.state.limit);
 
-      let optionLimit = [
-        { key: 'litmi-10', value: 10, text: 10 },
-        { key: 'litmi-15', value: 15, text: 15 },
-        { key: 'litmi-20', value: 20, text: 20 },
-        { key: 'litmi-50', value: 50, text: 50 }
-      ]
+    let optionLimit = [
+      { key: 'litmi-10', value: 10, text: 10 },
+      { key: 'litmi-15', value: 15, text: 15 },
+      { key: 'litmi-20', value: 20, text: 20 },
+      { key: 'litmi-50', value: 50, text: 50 }
+    ]
 
-      return (
-        <div id="questions-container">
-        <Container>
-          <Grid columns={2} className='mt-2'>
-            <Grid.Column>
-              <Header as='h1'>Insignia User Whitelist</Header>
-            </Grid.Column>
+    return (
+      <div id="user-whitelist-container">
+      <Container>
+        <Grid columns={2} className='mt-2'>
+          <Grid.Column>
+            <Header as='h1'>Insignia User Whitelist</Header>
+          </Grid.Column>
 
-            <button onClick={()=>this.openModal("create")}>Add New</button>
+          <Grid.Column textAlign='right'>
+            <Button onClick={()=>this.openModal("create")}>Add New</Button>
+          </Grid.Column>
 
-            <Modal
-              isOpen={this.state.createModalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={()=>this.closeModal("create")}
-              style={customStyles}
-              contentLabel="Example Modal"
-            >
-              <input onChange={this.setUserWhitelist} placeholder="User Email" value={this.state.user_whitelist} autoFocus={true}/>
+          <Modal
+            isOpen={this.state.createModalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={()=>this.closeModal("create")}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <input onChange={this.setUserWhitelist} placeholder="User Email" value={this.state.user_whitelist} autoFocus={true}/>
 
-              <div className="question-modal-footer">
-                <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
-                <button id="ask-question-button" onClick={this.handleSubmit}>Add</button>
-              </div>
-            </Modal>
-          </Grid>
+            <div className="question-modal-footer">
+              <button id="cancel-button" onClick={()=>this.closeModal("create")}>Cancel</button>
+              <button id="ask-question-button" onClick={this.handleSubmit}>Add</button>
+            </div>
+          </Modal>
+        </Grid>
 
-          {/* TODO
-          <Grid>
-            <Grid.Column mobile={16} tablet={8} computer={6}>
-              <Input icon='search' placeholder='Search...' style={{ width: '100%' }} value={this.state.searchName} onChange={this.onChangeSearchName} />
-            </Grid.Column>
 
-          </Grid>
-          */}
-          <Grid style={{ marginTop: '0px' }}>
-            <Grid.Column>
-              <Table compact celled>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Email</Table.HeaderCell>
-                    <Table.HeaderCell />
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {
-                    user_whitelists.map((user_whitelist, index) => {
+        <Grid>
+          <Grid.Column mobile={16} tablet={8} computer={6}>
+            <Input placeholder='Search...' style={{ width: '100%' }} value={this.state.searchName} onChange={this.onChangeSearchName} />
+          </Grid.Column>
 
-                      return (
-                        <Table.Row key={`user_whitelists${user_whitelist.id}`}>
-                          <Table.Cell>
-                            {user_whitelist.email}
-                          </Table.Cell>
+        </Grid>
 
-                          <Table.Cell collapsing>
-                            <Button as={Link} to={`/admin/user/detail/${user_whitelist.id}`} primary icon='eye' title='Detail' />
-
-                          </Table.Cell>
-                        </Table.Row>
-                      )
-                    })
-                  }
-                </Table.Body>
-                <Table.Footer>
+        <Grid style={{ marginTop: '0px' }}>
+          <Grid.Column>
+            <Table compact celled>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
                 {
-                  (this.state.totalPages > 1) && (
-                    <Table.Row>
-                      <Table.HeaderCell colSpan='4'>
-                        Jump to page:
-                        {this.renderJumpToPage()}
-                      </Table.HeaderCell>
-                      <Table.HeaderCell colSpan='5' textAlign='right' style={{ borderLeft: 'none' }}>
-                        <Pagination
-                          size='tiny'
-                          activePage={this.state.page}
-                          onPageChange={this.onPageChange}
-                          totalPages={this.state.totalPages}
-                        />
-                      </Table.HeaderCell>
-                    </Table.Row>
-                  )
+                  user_whitelists.map((user_whitelist, index) => {
+
+                    return (
+                      <Table.Row key={`user_whitelists${user_whitelist.id}`}>
+                        <Table.Cell>
+                          {user_whitelist.email}
+                        </Table.Cell>
+                      </Table.Row>
+                    )
+                  })
                 }
+              </Table.Body>
+              <Table.Footer>
+
+              {
+                (this.state.totalPages > 1) && (
                   <Table.Row>
                     <Table.HeaderCell colSpan='5' textAlign='right' style={{ borderLeft: 'none' }}>
-
+                      <Pagination
+                        size='tiny'
+                        activePage={this.state.page}
+                        onPageChange={this.onPageChange}
+                        totalPages={this.state.totalPages}
+                      />
                     </Table.HeaderCell>
                   </Table.Row>
-                </Table.Footer>
-              </Table>
-            </Grid.Column>
-          </Grid>
-        </Container>
-        </div>
+                )
+              }
 
-      );
+                <Table.Row>
+                  <Table.HeaderCell colSpan='5' textAlign='right' style={{ borderLeft: 'none' }}>
+                    Displaying data from {fromPage} to {toPage} (Total: {this.state.totalUsers})
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Footer>
+            </Table>
+          </Grid.Column>
+        </Grid>
+      </Container>
+      </div>
 
-    }
-
+    );
   }
 }
 

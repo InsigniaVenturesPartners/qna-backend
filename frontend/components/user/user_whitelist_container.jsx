@@ -5,7 +5,7 @@ import UserWhitelist from './user_whitelist';
 // Actions
 import { fetchUserWhitelists, createUserWhitelist } from '../../actions/user_whitelist_actions';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   user_whitelists: allUserWhitelists(state),
   errors: state.errors
 });
