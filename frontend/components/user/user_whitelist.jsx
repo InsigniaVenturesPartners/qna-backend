@@ -192,6 +192,7 @@ class UserWhitelist extends React.Component {
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -200,9 +201,11 @@ class UserWhitelist extends React.Component {
 
                     return (
                       <Table.Row key={`user_whitelists${user_whitelist.id}`}>
-                        <Table.Cell>
+                        <Table.Cell colSpan='2'>
                           {user_whitelist.email}
                         </Table.Cell>
+
+
                       </Table.Row>
                     )
                   })
@@ -226,8 +229,11 @@ class UserWhitelist extends React.Component {
               }
 
                 <Table.Row>
-                  <Table.HeaderCell colSpan='5' textAlign='right' style={{ borderLeft: 'none' }}>
-                    Displaying data from {fromPage} to {toPage} (Total: {this.state.totalUsers})
+                  <Table.HeaderCell>
+                    Displaying data from {fromPage} to {toPage}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign='right' style={{ borderLeft: 'none' }}>
+                    Total data: {this.state.totalUsers}
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
