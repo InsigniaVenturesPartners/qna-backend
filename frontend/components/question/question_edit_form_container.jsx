@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { allTopics } from '../../reducers/selectors';
-import EditQuestionForm from './edit_question_form';
+import QuestionEditForm from './question_edit_form';
 
 // Actions
 import { editQuestion } from '../../actions/question_actions';
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditQuestionForm);
+)(QuestionEditForm);

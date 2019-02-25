@@ -81,14 +81,14 @@ class AdminNavBar extends React.Component {
 
   render() {
     const {user} = this.props
-    debugger;
+
     return(
       <div>
         <div className="ribbon ribbon-main">BETA</div>
         <div className="nav-bar desktop-only">
           <ul className="nav-bar-items">
             <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/admin" ? "highlighted" : "")} >
-              <Link to={`/admin/whitelist`}>
+              <Link to={`/admin`}>
                 <i className="fa fa-user"></i>
                 Whitelist
               </Link>
@@ -127,7 +127,7 @@ class AdminNavBar extends React.Component {
           <div className="nav-bar mobile-only">
             <ul className="nav-bar-items">
               <li id="nav-pro-pic">
-                <Link to={`/admin/whitelist`}>
+                <Link to={`/admin`}>
                   <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
                 </Link>
               </li>

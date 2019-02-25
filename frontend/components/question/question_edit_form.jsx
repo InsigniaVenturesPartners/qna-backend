@@ -50,7 +50,7 @@ export const cancelStyles = {
     padding : '10px'  }
 };
 
-class EditQuestionForm extends React.Component {
+class QuestionEditForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -158,4 +158,4 @@ class EditQuestionForm extends React.Component {
   }
 }
 
-export default EditQuestionForm
+export default QuestionEditForm

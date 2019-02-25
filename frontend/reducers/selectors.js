@@ -31,26 +31,30 @@ export const allTopQuestions = ({ questions }) => {
 };
 
 export const allAnswers = ({ answers }) => {
-   const returnAnswers = Object.values(answers) || [];
-   return returnAnswers;
+  const returnAnswers = Object.values(answers) || [];
+  return returnAnswers;
 };
 
+export const allUserWhitelists = ({ userWhitelists }) => {
+  const returnUserWhitelists = Object.values(userWhitelists) || [];
+  return returnUserWhitelists;
+};
 
 export const selectQuestion = ({ questions }, id) => {
-   const question = questions[id] || {};
-   return question
+  const question = questions[id] || {};
+  return question
 };
 
 export const selectAnswer = ({ answers }, id) => {
-   const answer = answers[id] || {};
-   return answer
+  const answer = answers[id] || {};
+  return answer
 };
 
 export const selectComments = ({ comments }, commentIds) => {
-   const allComments = Object.values(getState().comments)
-   const selectComments = allComments.filter((comment)=>commentIds.includes(comment.id))
+  const allComments = Object.values(getState().comments)
+  const selectComments = allComments.filter((comment)=>commentIds.includes(comment.id))
 
-   return selectComments
+  return selectComments
 };
 
 //I filter here, since I might not have the query elsewhere

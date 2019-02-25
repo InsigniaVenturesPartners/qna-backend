@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
+    resources :user_whitelists, only: [:index, :create]
 
     get  'top/questions', :to => 'questions#top'
     post 'questions/vote', :to => 'questions#vote'
