@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AnswerFormContainer from '../answer_form/answer_form_container';
-import EditQuestionContainer from '../question/edit_question_form_container';
+import QuestionEditContainer from '../question/question_edit_form_container';
 
 class QuestionListItem extends React.Component {
   constructor(props) {

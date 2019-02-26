@@ -1,22 +1,29 @@
-import { connect } from 'react-redux';
-import NavBar from './nav_bar';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-import { createQuestion } from '../../actions/question_actions';
+import AdminNavBarContainer from './admin_nav_bar_container';
+import UserNavBarContainer from './user_nav_bar_container';
 
-import { allTopics } from '../../reducers/selectors';
+class NavBarContainer extends React.Component {
+  constructor() {
+    super()
+  }
 
-// Actions
+  render() {
+    const {user} = this.props
 
-const mapStateToProps = (state, ownProps) => ({
-  user: state.session.currentUser,
-  topics: allTopics(state)
-});
+    const pathname = this.props.location.pathname;
 
-const mapDispatchToProps = dispatch => ({
-  createQuestion: (body, topics) => dispatch(createQuestion(body, topics))
-});
+    if(pathname.startsWith("/admin")) {
+      return (
+        <AdminNavBarContainer/>
+      );
+    } else {
+      return (
+        <UserNavBarContainer />
+      );
+    }
+  }
+}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NavBar);
+export default withRouter(NavBarContainer);

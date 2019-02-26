@@ -79,6 +79,9 @@ class User < ApplicationRecord
     class_name: :Comment
 
   acts_as_voter
+
+  ROLES = %w[admin user moderator author banned].freeze
+
   #I don't think there's an easy way to cancle a vote which is scoped, so follows are scoped, with a positive vote meaning follow, and a negative or nil vote meaning unfollowed.  Up and downvotes are not scoped, allowing us to use the built-in unliked by
   def follow(entity)
     entity.vote_by :voter => self, :vote_scope => 'follow'
@@ -158,41 +161,7 @@ class User < ApplicationRecord
     user
   end
 
-  # after_initialize :ensure_session_token
-  # attr_reader :password
-  #
-  # def self.find_by_credentials(username, password)
-  #   user = User.find_by(username: username)
-  #   if user && user.is_password?(password)
-  #     user
-  #   else
-  #     nil
-  #   end
-  # end
-  #
-  # def password=(password)
-  #   @password = password
-  #   self.password_digest = BCrypt::Password.create(password)
-  # end
-  #
-  # def is_password?(password)
-  #   BCrypt::Password.new(self.password_digest).is_password?(password)
-  # end
-  #
-  # def reset_session_token!
-  #   generate_session_token
-  #   self.save!
-  #   self.session_token
-  # end
-  #
-  # private
-  #
-  # def ensure_session_token
-  #   generate_session_token unless self.session_token
-  # end
-  #
-  # def generate_session_token
-  #   self.session_token = SecureRandom.urlsafe_base64
-  #   self.session_token
-  # end
+  def role?(base_role)
+    ROLES.index(base_role.to_s) <= ROLES.index(role)
+  end
 end

@@ -178,7 +178,7 @@ class CreateQuestionForm extends React.Component {
             <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
 
 
-          </Modal>
+        </Modal>
       </div>
     );
   }
