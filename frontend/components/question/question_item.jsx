@@ -11,8 +11,6 @@ class QuestionItem extends React.Component {
     this.props.requestQuestion(this.props.id);
   }
 
-
-
   render () {
     const { question } = this.props;
     if (Object.keys(question).length === 0) {

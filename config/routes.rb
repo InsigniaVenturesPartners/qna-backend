@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :show, :create, :destroy]
     resources :user_whitelists, only: [:index, :create]
 
+    get  'profile/questions', :to => 'questions#profile_questions'
+    get  'profile/answers', :to => 'questions#profile_answers'
+
     get  'top/questions', :to => 'questions#top'
     post 'questions/vote', :to => 'questions#vote'
     post 'questions/follow', :to => 'questions#follow'
@@ -24,7 +27,5 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks", :registrations => "registrations" }
-
-
 
 end

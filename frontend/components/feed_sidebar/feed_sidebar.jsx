@@ -6,23 +6,10 @@ import TopicSearchContainer from '../topic_search/topic_search_container';
 class FeedSidebar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {searchOpen: false}
-    this.closeSearch = this.closeSearch.bind(this);
   }
 
   componentWillMount() {
     this.props.requestTopics();
-    // this.props.updateFilter("topicQuery", "");
-  }
-
-  closeSearch() {
-    this.setState({searchOpen: false});
-  }
-
-  topicSearch() {
-    if(this.state.searchOpen) {
-      return <TopicSearchContainer closeSearch={this.closeSearch}/>
-    }
   }
 
   render() {
@@ -48,6 +35,27 @@ class FeedSidebar extends React.Component {
           </div>
           <ul className="sidebar-topic-list">
             {topicItems}
+          </ul>
+        </div>
+      );
+    } else if(pathname.startsWith("/profile")) {
+      const sideBarList = ["topics", "questions"];
+      const sideBarItems = sideBarList.map(sideBarItem => (
+        <li key={sideBarItem}>
+          <Link to={`/profile/${sideBarItem}`}>
+            <div className="feed-sidebar-topic-label">
+              {sideBarItem.charAt(0).toUpperCase() + sideBarItem.slice(1)}
+            </div>
+          </Link>
+        </li>
+      ));
+
+      return(
+        <div className="feed-sidebar">
+          <div className="feed-sidebar-header">
+          </div>
+          <ul className="sidebar-topic-list">
+            {sideBarItems}
           </ul>
         </div>
       );

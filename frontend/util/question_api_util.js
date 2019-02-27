@@ -7,11 +7,25 @@ export const fetchQuestions = data => (
   })
 );
 
-export const fetchTopQuestions = data => (
+export const fetchTopQuestions = () => (
   $.ajax({
     method: 'GET',
-    url: 'api/top/questions',
-    data
+    url: 'api/top/questions'
+  })
+);
+
+
+export const fetchProfileQuestions = () => (
+  $.ajax({
+    method: 'GET',
+    url: 'api/profile/questions'
+  })
+);
+
+export const fetchProfileAnswers = () => (
+  $.ajax({
+    method: 'GET',
+    url: 'api/profile/answers'
   })
 );
 

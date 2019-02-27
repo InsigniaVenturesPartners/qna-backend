@@ -16,6 +16,11 @@ export const allQuestions = ({ questions }) => {
    return returnQuestions;
 };
 
+export const allAnsweredQuestions = ({ questions }) => {
+   const returnQuestions = Object.values(questions) || [];
+   return returnQuestions;
+};
+
 export const allTopQuestions = ({ questions }) => {
   const returnQuestions = Object.values(questions) || [];
 
