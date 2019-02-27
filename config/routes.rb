@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :show, :create, :destroy]
     resources :user_whitelists, only: [:index, :create]
 
-    get  'profile/questions', :to => 'questions#profile_questions'
-    get  'profile/answers', :to => 'questions#profile_answers'
+    get  'profile/questions', :to => 'questions#profile'
+    get  'profile/answers', :to => 'answers#profile'
 
     get  'top/questions', :to => 'questions#top'
     post 'questions/vote', :to => 'questions#vote'

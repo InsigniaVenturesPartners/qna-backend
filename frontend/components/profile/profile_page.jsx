@@ -10,22 +10,8 @@ class ProfilePage extends React.Component {
     super(props)
   }
 
-  componentWillMount() {
-    this.props.requestTopics();
-  }
-
   render () {
-    const { user, topics } = this.props;
-
-    const topicItems = topics.map( topic => (
-      <li className="profile-question-list-item" key={ "topic-" + topic.id }>
-        <div>
-          <img src={topic.pic_url} />
-        </div>
-        <Link to={`/topics/${topic.id}`}>{topic.name}</Link>
-        <FollowTopicButtonContainer id={topic.id} followerIds={topic.follower_ids} followed={topic.followed}/>
-      </li>
-    ));
+    const { user } = this.props;
 
     return (
       <div id="topics-container">

@@ -39,7 +39,7 @@ class FeedSidebar extends React.Component {
         </div>
       );
     } else if(pathname.startsWith("/profile")) {
-      const sideBarList = ["topics", "questions"];
+      const sideBarList = ["topics", "questions", "answers"];
       const sideBarItems = sideBarList.map(sideBarItem => (
         <li key={sideBarItem}>
           <Link to={`/profile/${sideBarItem}`}>

@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 import ProfileQuestion from './profile_question';
 
 // Actions
-import { fetchProfileQuestions } from '../../actions/question_actions';
+import { fetchProfileQuestions } from '../../actions/profile_actions';
 
-import { allQuestions } from '../../reducers/selectors';
+import { allProfileQuestions } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
-  questions: allQuestions(state),
+  questions: allProfileQuestions(state),
   errors: state.errors
 });
 

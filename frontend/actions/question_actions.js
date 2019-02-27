@@ -1,19 +1,12 @@
 import * as APIUtil from '../util/question_api_util'
 
-
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
-export const RECEIVE_ANSWERED_QUESTIONS = 'RECEIVE_ANSWERED_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_SEARCH_QUESTIONS = 'RECEIVE_SEARCH_QUESTIONS';
 export const UPDATE_QUESTION = 'UPDATE_QUESTION';
 
 export const receiveQuestions = questions => ({
   type: RECEIVE_QUESTIONS,
-  questions
-});
-
-export const receiveAnsweredQuestions = questions => ({
-  type: RECEIVE_ANSWERED_QUESTIONS,
   questions
 });
 
@@ -43,18 +36,6 @@ export const fetchQuestions = () => dispatch => (
 export const fetchTopQuestions = () => dispatch => (
   APIUtil.fetchTopQuestions().then(
     questions=>(dispatch(receiveQuestions(questions))
-  ))
-);
-
-export const fetchProfileQuestions = () => dispatch => (
-  APIUtil.fetchProfileQuestions().then(
-    questions=>(dispatch(receiveQuestions(questions))
-  ))
-);
-
-export const fetchProfileAnswers = () => dispatch => (
-  APIUtil.fetchProfileAnswers().then(
-    questions=>(dispatch(receiveAnsweredQuestions(questions))
   ))
 );
 

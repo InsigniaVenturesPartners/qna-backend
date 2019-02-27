@@ -2,17 +2,17 @@ import { connect } from 'react-redux';
 import ProfileAnswer from './profile_answer';
 
 // Actions
-import { fetchProfileAnswers } from '../../actions/question_actions';
+import { fetchProfileAnswers } from '../../actions/profile_actions';
 
-import { allQuestions } from '../../reducers/selectors';
+import { allProfileAnswers } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
-  questions: allQuestions(state),
+  answers: allProfileAnswers(state),
   errors: state.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-	requestQuestions: () => dispatch(fetchProfileAnswers())
+	requestAnswers: () => dispatch(fetchProfileAnswers())
 });
 
 export default connect(

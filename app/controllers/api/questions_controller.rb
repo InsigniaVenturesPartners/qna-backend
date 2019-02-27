@@ -24,14 +24,8 @@ class Api::QuestionsController < ApplicationController
     render :index
   end
 
-  def profile_questions
+  def profile
     @questions = Question.where("author_id = ?", current_user.id)
-
-    render :index
-  end
-
-  def profile_answers
-    @questions = Question.joins(:answers).where(:answers => {:author_id => current_user.id})
 
     render :index
   end

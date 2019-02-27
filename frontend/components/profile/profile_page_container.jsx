@@ -9,14 +9,11 @@ import { allTopics } from '../../reducers/selectors';
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.session.currentUser,
-  topics: allTopics(state),
   id: ownProps.id,
   errors: state.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-	requestTopics: () => dispatch(fetchTopics())
-  // requestQuestion: (id) => dispatch(fetchQuestion(id)),
 });
 
 export default connect(
