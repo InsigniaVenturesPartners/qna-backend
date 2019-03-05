@@ -3,6 +3,8 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import Autolinker from 'autolinker';
 
+import QuestionEditContainer from '../question/question_edit_form_container';
+
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
@@ -41,11 +43,17 @@ class AnswerForm extends React.Component {
   }
 
   render () {
+    const { questionId, body, authorId } = this.props
+    const author = this.props.current_user;
+    const editButton = authorId === author.id ? <QuestionEditContainer questionId={questionId} body={body}/> : null;
+
     if (this.state.open) {
-      const author = this.props.current_user;
       return (
         <div className="answer-form-container">
-          <button className="write-answer-button" onClick={()=>this.setState({open: true})}>Answer</button>
+          <div className="answer-form-button">
+            <button className="write-answer-button" onClick={()=>this.setState({open: true})}>Answer</button>
+            {editButton}
+          </div>
           <div className="answer-form">
             <div className="answer-header">
               <img src={author.pro_pic_url} alt={`${author.name}'s picture`}  className="answerer-pro-pic" />
@@ -67,12 +75,15 @@ class AnswerForm extends React.Component {
       );
     } else {
       return (
-        <button className="write-answer-button" onClick={()=>this.setState({open: true})}>Answer</button>
+        <div className="answer-form-button">
+          <button className="write-answer-button" onClick={()=>this.setState({open: true})}>Answer</button>
+          {editButton}
+        </div>
+
       );
     }
   }
 }
-
 
 const modules = {
   toolbar: [
@@ -83,4 +94,6 @@ const modules = {
   ]
 };
 
+
 export default AnswerForm;
+
