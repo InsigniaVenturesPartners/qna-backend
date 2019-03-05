@@ -11,6 +11,7 @@ import AnswersReducer from './answers_reducer';
 import FiltersReducer from './filters_reducer';
 import CommentsReducer from './comments_reducer';
 import UserWhitelistsReducer from './user_whitelists_reducer';
+import ProfileReducer from './profile_reducer';
 
 const RootReducer = combineReducers({
   session: SessionReducer,
@@ -23,7 +24,8 @@ const RootReducer = combineReducers({
   searchQuestions: SearchQuestionsReducer,
   searchTopics: SearchTopicsReducer,
   comments: CommentsReducer,
-  userWhitelists: UserWhitelistsReducer
+  userWhitelists: UserWhitelistsReducer,
+  profile: ProfileReducer
 });
 
 export default RootReducer;

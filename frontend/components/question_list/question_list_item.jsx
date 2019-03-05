@@ -26,7 +26,7 @@ class QuestionListItem extends React.Component {
         questionHead = [<h3>Question asked · {time_posted_ago}</h3>];
       }
 
-      const editButton = question.author.id === user.id ? <EditQuestionContainer questionId={question.id} body={question.body}/> : null;
+      const editButton = question.author.id === user.id ? <QuestionEditContainer questionId={question.id} body={question.body}/> : null;
 
       return (
         <li className="question-list-item">

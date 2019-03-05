@@ -14,6 +14,9 @@ import QuestionDetailContainer from './question_detail/question_detail_container
 import QuestionListContainer from './question_list/question_list_container';
 import AnswerDetailContainer from './answer_detail/answer_detail_container';
 import ProfilePageContainer from './profile/profile_page_container';
+import ProfileTopicContainer from './profile/profile_topic_container';
+import ProfileQuestionContainer from './profile/profile_question_container';
+import ProfileAnswerContainer from './profile/profile_answer_container';
 import UserWhitelistContainer from './user/user_whitelist_container';
 
 const App = () => (
@@ -34,7 +37,11 @@ const App = () => (
               <Route exact path="/questions/:questionId" component={QuestionDetailContainer} />
               <Route exact path="/answers/:answerId" component={AnswerDetailContainer} />
               <Route exact path="/answer" component={QuestionListContainer} />
-              <Route exact path="/profile" component={ProfilePageContainer} />
+              <Route path="/profile" component={ProfilePageContainer} />
+              <Route exact path="/profile" component={ProfileTopicContainer} />
+              <Route exact path="/profile/topics" component={ProfileTopicContainer} />
+              <Route exact path="/profile/questions" component={ProfileQuestionContainer} />
+              <Route exact path="/profile/answers" component={ProfileAnswerContainer} />
 
               <Route path="/admin" component={UserWhitelistContainer} />
             </div>

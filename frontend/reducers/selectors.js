@@ -1,19 +1,31 @@
 export const allTopics = ({ topics }) => Object.values(topics);
 
 export const selectTopic = ({ topics }, id) => {
-   const topic = topics[id] || {};
-   return topic
+  const topic = topics[id] || {};
+  return topic
 };
 
 export const selectDetailTopic = ({ detailTopic }, id) => {
-   const topic = detailTopic[id] || {};
-   return topic
+  const topic = detailTopic[id] || {};
+  return topic
 };
 
 
 export const allQuestions = ({ questions }) => {
-   const returnQuestions = Object.values(questions) || [];
-   return returnQuestions;
+  const returnQuestions = Object.values(questions) || [];
+  return returnQuestions;
+};
+
+export const allProfileQuestions = ({ profile }) => {
+  if(!profile.hasOwnProperty("questions")) return []
+  const returnQuestions = Object.values(profile.questions) || [];
+  return returnQuestions;
+};
+
+export const allProfileAnswers = ({ profile }) => {
+  if(!profile.hasOwnProperty("answers")) return []
+  const returnQuestions = Object.values(profile.answers) || [];
+  return returnQuestions;
 };
 
 export const allTopQuestions = ({ questions }) => {

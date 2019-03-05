@@ -8,6 +8,7 @@ import { fetchQuestion } from '../../actions/question_actions';
 const mapStateToProps = (state, ownProps) => ({
   question: selectQuestion(state, ownProps.id),
   id: ownProps.id,
+  answerId: ownProps.answerId,
   errors: state.errors
 });
 

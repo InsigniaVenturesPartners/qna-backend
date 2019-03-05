@@ -7,11 +7,10 @@ export const fetchQuestions = data => (
   })
 );
 
-export const fetchTopQuestions = data => (
+export const fetchTopQuestions = () => (
   $.ajax({
     method: 'GET',
-    url: 'api/top/questions',
-    data
+    url: 'api/top/questions'
   })
 );
 
