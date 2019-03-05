@@ -7,11 +7,11 @@ class Api::QuestionsController < ApplicationController
     questions = Question.all.includes(:author)
     if params[:query]
       @keywords = params[:query].downcase.split(" ")
-      questions = []
+      que = []
       @keywords.each do |keyword|
-        questions += questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
+        que += questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
       end
-      @questions = questions.uniq
+      @questions = que.uniq
     else
       @questions = questions.take(20)
     end
