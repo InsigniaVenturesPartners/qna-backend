@@ -19,6 +19,8 @@ class QuestionListItem extends React.Component {
       );
     } else {
       const { id, body, time_posted_ago, topic, num_answers } = question;
+      const isDraft = question.draft_author_ids.includes(this.props.current_user.id);
+
       let questionHead;
       if(topic) {
         questionHead = [<h3>Question asked · {topic.name} · {time_posted_ago}</h3>];
@@ -33,11 +35,19 @@ class QuestionListItem extends React.Component {
 
           <h3>Last asked {time_posted_ago} · <Link to={`/questions/${question.id}`} >{num_answers}</Link></h3>
 
-          <AnswerFormContainer questionId={id} body={body} authorId={question.author.id}/>
+          <AnswerFormContainer questionId={id} body={body} authorId={question.author.id} isDraft={isDraft}/>
         </li>
       );
     }
   }
 }
 
-export default QuestionListItem;
+const mapStateToProps = (state) => ({
+  current_user: state.session.currentUser
+
+});
+
+export default connect(
+  mapStateToProps
+)(QuestionListItem);
+

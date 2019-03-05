@@ -31,6 +31,11 @@ class Question < ApplicationRecord
     foreign_key: :question_id,
     class_name: :Answer
 
+  has_many :drafts,
+    primary_key: :id,
+    foreign_key: :question_id,
+    class_name: :Draft
+
   acts_as_votable
   acts_as_commentable
 
@@ -41,6 +46,10 @@ class Question < ApplicationRecord
   def upvoter_ids
     #to inflate likes, can just add a bunch of extra stuff to this array that isn't a number
     get_likes.reject{|v| v.vote_scope}.map{|v| v.voter_id}
+  end
+
+  def draft_author_ids
+    self.drafts.map{|draft| draft.author.id}
   end
 
   def commentIds

@@ -38,7 +38,7 @@ export const editAnswer = (body, answer_id) => (
 export const voteOnAnswer = (id, type) => (
   $.ajax({
     method: 'POST',
-    url: `api/answers/vote`,
+    url: 'api/answers/vote',
     data: {
       answer_id: id,
       type
@@ -49,7 +49,7 @@ export const voteOnAnswer = (id, type) => (
 export const createAnswer = (body, question_id) => (
   $.ajax({
     method: 'POST',
-    url: `api/answers`,
+    url: 'api/answers',
     data: {
       answer: {
         body

@@ -8,6 +8,7 @@ json.time_posted_ago question.time_posted_ago
 json.updated_at question.updated_at
 
 json.answer_ids question.answers.map{|answer| answer.id}
+json.draft_author_ids question.draft_author_ids
 
 json.topic question.topics.first
 json.tags question.topics.map{|topic| [topic.id, topic.name]}

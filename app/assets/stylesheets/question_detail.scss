@@ -80,6 +80,11 @@
     top: 6px;
   }
 
+  #answer-save-draft {
+    position: absolute;
+    left: 82px;
+    top: 6px;
+  }
 }
 
 .quill {
@@ -108,5 +113,15 @@ div.ql-toolbar.ql-snow, div.ql-container.ql-snow {
 
     padding: 10px;
     background-color: #F6F6F6;
+
   }
 }
+
+.answer-form-footer .draft-link {
+
+  padding: 10px;
+  background-color: #F6F6F6;
+
+}
+
+
