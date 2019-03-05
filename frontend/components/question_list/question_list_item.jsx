@@ -11,7 +11,7 @@ class QuestionListItem extends React.Component {
   }
 
   render () {
-    const { question } = this.props;
+    const { question, user } = this.props;
 
     if (Object.keys(question).length === 0) {
       return (
@@ -19,7 +19,7 @@ class QuestionListItem extends React.Component {
       );
     } else {
       const { id, body, time_posted_ago, topic, num_answers } = question;
-      const isDraft = question.draft_author_ids.includes(this.props.current_user.id);
+      const isDraft = question.draft_author_ids.includes(user.id);
 
       let questionHead;
       if(topic) {
@@ -43,8 +43,7 @@ class QuestionListItem extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  current_user: state.session.currentUser
-
+  user: state.session.currentUser
 });
 
 export default connect(
