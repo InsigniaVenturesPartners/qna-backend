@@ -48,10 +48,6 @@ class Question < ApplicationRecord
     get_likes.reject{|v| v.vote_scope}.map{|v| v.voter_id}
   end
 
-  def draft_author_ids
-    self.drafts.map{|draft| draft.author.id}
-  end
-
   def commentIds
     self.comment_threads.map{|comment| comment.id}
   end
@@ -99,4 +95,7 @@ class Question < ApplicationRecord
     return matching_keywords/keywords.count.to_f
   end
 
+  def is_drafted_by(user)
+    self.drafts.map{|draft| draft.author = user}.any?
+  end
 end

@@ -8,7 +8,7 @@ import QuestionEditContainer from '../question/question_edit_form_container';
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', open: false };
+    this.state = { text: '', open: false, isDraft: props.isDraft };
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
@@ -52,14 +52,14 @@ class AnswerForm extends React.Component {
 
   submitDraft() {
     this.props.saveDraft(this.state.text, this.props.questionId)
-    this.setState({open: false})
+    this.setState({open: false, isDraft: true})
   }
 
   render () {
     const { questionId, body, authorId, isDraft } = this.props
     const author = this.props.current_user;
     const editButton = authorId === author.id ? <QuestionEditContainer questionId={questionId} body={body}/> : null;
-    const answerButtonText = isDraft ? "Edit Draft" : "Answer";
+    const answerButtonText = this.state.isDraft ? "Edit Draft" : "Answer";
 
     if (this.state.open) {
       return (

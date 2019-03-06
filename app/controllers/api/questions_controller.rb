@@ -21,6 +21,7 @@ class Api::QuestionsController < ApplicationController
   def top
     questions = Question.all.includes(:author)
     @questions = questions.reject {|que| que.answers.where("author_id = ?", current_user.id).any?}
+    @current_user = current_user
     render :index
   end
 

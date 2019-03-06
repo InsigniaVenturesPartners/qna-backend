@@ -19,7 +19,6 @@ class QuestionListItem extends React.Component {
       );
     } else {
       const { id, body, time_posted_ago, topic, num_answers } = question;
-      const isDraft = question.draft_author_ids.includes(user.id);
 
       let questionHead;
       if(topic) {
@@ -35,7 +34,7 @@ class QuestionListItem extends React.Component {
 
           <h3>Last asked {time_posted_ago} · <Link to={`/questions/${question.id}`} >{num_answers}</Link></h3>
 
-          <AnswerFormContainer questionId={id} body={body} authorId={question.author.id} isDraft={isDraft}/>
+          <AnswerFormContainer questionId={id} body={body} authorId={question.author.id} isDraft={question.is_draft}/>
         </li>
       );
     }
