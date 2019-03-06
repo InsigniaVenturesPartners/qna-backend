@@ -4,7 +4,6 @@ import Autolinker from 'autolinker';
 
 import QuestionEditContainer from '../question/question_edit_form_container';
 
-
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
