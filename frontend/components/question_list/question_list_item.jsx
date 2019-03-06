@@ -11,7 +11,7 @@ class QuestionListItem extends React.Component {
   }
 
   render () {
-    const { question, user } = this.props;
+    const { question } = this.props;
 
     if (Object.keys(question).length === 0) {
       return (
