@@ -12,15 +12,11 @@ class AnswerForm extends React.Component {
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
     this.customLinkReplace = this.customLinkReplace.bind(this)
+    this.openAnswerForm = this.openAnswerForm.bind(this)
   }
 
   componentWillMount() {
-    if(this.props.isDraft) {
-      this.props.fetchQuestionDraft(this.props.questionId).then(response => {
-        const draft = response.draft
-        this.setState({ text: draft.body, timePostedAgo: draft.time_posted_ago })
-      });
-    }
+
   }
 
   getDraft() {
@@ -31,6 +27,7 @@ class AnswerForm extends React.Component {
       });
     }
   }
+
   handleChange(value) {
    const newValue = Autolinker.link(value, {
     stripPrefix: false,
@@ -48,6 +45,11 @@ class AnswerForm extends React.Component {
     return (/\s+/.test(whitespaceIdx))
   }
 
+  openAnswerForm() {
+    this.getDraft()
+    this.setState({open: true})
+  }
+
   successfulSubmit({answer}) {
     this.props.history.push(`/answers/${answer.id}`);
   }
@@ -60,7 +62,7 @@ class AnswerForm extends React.Component {
 
   submitDraft() {
     this.props.saveDraft(this.state.text, this.props.questionId)
-    this.setState({open: false, isDraft: true, timePostedAgo: 'less than a minute ago'})
+    this.setState({open: false, isDraft: true})
   }
 
   render () {
@@ -100,7 +102,7 @@ class AnswerForm extends React.Component {
     } else {
       return (
         <div className="answer-form-button">
-          <button className="write-answer-button" onClick={()=>this.setState({open: true})}>{answerButtonText}</button>
+          <button className="write-answer-button" onClick={this.openAnswerForm}>{answerButtonText}</button>
           {editButton}
         </div>
 
