@@ -69,8 +69,9 @@ class AnswerForm extends React.Component {
     const { questionId, body, authorId, isDraft } = this.props
     const author = this.props.current_user;
     const editButton = authorId === author.id ? <QuestionEditContainer questionId={questionId} body={body}/> : null;
-    const answerButtonText = this.state.isDraft ? "Edit Draft" : "Answer";
+    const answerButtonText = this.state.isDraft ? 'Edit Draft' : 'Answer';
     const lastSavedDraft = this.state.isDraft ? <p className="draft-time-posted">(Last saved {this.state.timePostedAgo})</p>  : '';
+
     if (this.state.open) {
       return (
         <div className="answer-form-container">
