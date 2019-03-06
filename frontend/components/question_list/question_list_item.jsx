@@ -11,7 +11,7 @@ class QuestionListItem extends React.Component {
   }
 
   render () {
-    const { question, user } = this.props;
+    const { question } = this.props;
 
     if (Object.keys(question).length === 0) {
       return (
@@ -26,30 +26,18 @@ class QuestionListItem extends React.Component {
         questionHead = [<h3>Question asked · {time_posted_ago}</h3>];
       }
 
-      const editButton = question.author.id === user.id ? <QuestionEditContainer questionId={question.id} body={question.body}/> : null;
-
       return (
         <li className="question-list-item">
           {questionHead}
           <Link to={`/questions/${question.id}`} >{body}</Link>
 
           <h3>Last asked {time_posted_ago} · <Link to={`/questions/${question.id}`} >{num_answers}</Link></h3>
-          <div className="question-buttons">
-            <AnswerFormContainer questionId={id}/>
-            {editButton}
-          </div>
+
+          <AnswerFormContainer questionId={id} body={body} authorId={question.author.id}/>
         </li>
       );
     }
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.session.currentUser
-  }
-};
-
-export default connect(
-  mapStateToProps
-)(QuestionListItem);
+export default QuestionListItem;
