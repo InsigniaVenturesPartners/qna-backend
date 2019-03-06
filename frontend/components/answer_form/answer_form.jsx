@@ -7,7 +7,7 @@ import QuestionEditContainer from '../question/question_edit_form_container';
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', open: false, isDraft: props.isDraft };
+    this.state = { text: '', open: false, isDraft: props.isDraft, timePostedAgo: '' };
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.successfulSubmit = this.successfulSubmit.bind(this);
@@ -17,18 +17,27 @@ class AnswerForm extends React.Component {
   componentWillMount() {
     if(this.props.isDraft) {
       this.props.fetchQuestionDraft(this.props.questionId).then(response => {
-        this.setState({ text: response.draft.body })
+        const draft = response.draft
+        this.setState({ text: draft.body, timePostedAgo: draft.time_posted_ago })
       });
     }
   }
 
+  getDraft() {
+    if(this.props.isDraft) {
+      this.props.fetchQuestionDraft(this.props.questionId).then(response => {
+        const draft = response.draft
+        this.setState({ text: draft.body, timePostedAgo: draft.time_posted_ago })
+      });
+    }
+  }
   handleChange(value) {
    const newValue = Autolinker.link(value, {
     stripPrefix: false,
     stripTrailingSlash: false,
     replaceFn: this.customLinkReplace.bind(this, value)
    })
-   this.setState({ text: newValue })
+   this.setState({ text: newValue, })
   }
 
   customLinkReplace (value, match) {
@@ -51,7 +60,7 @@ class AnswerForm extends React.Component {
 
   submitDraft() {
     this.props.saveDraft(this.state.text, this.props.questionId)
-    this.setState({open: false, isDraft: true})
+    this.setState({open: false, isDraft: true, timePostedAgo: 'less than a minute ago'})
   }
 
   render () {
@@ -59,7 +68,7 @@ class AnswerForm extends React.Component {
     const author = this.props.current_user;
     const editButton = authorId === author.id ? <QuestionEditContainer questionId={questionId} body={body}/> : null;
     const answerButtonText = this.state.isDraft ? "Edit Draft" : "Answer";
-
+    const lastSavedDraft = this.state.isDraft ? <p className="draft-time-posted">(Last saved {this.state.timePostedAgo})</p>  : '';
     if (this.state.open) {
       return (
         <div className="answer-form-container">
@@ -82,6 +91,7 @@ class AnswerForm extends React.Component {
             <div className="answer-form-footer">
               <button className="submit-button" onClick={()=>this.submitAnswer()}>Submit</button>
               <button id="answer-save-draft" className="draft-link-button" onClick={()=>this.submitDraft()}>Save Draft</button>
+              {lastSavedDraft}
             </div>
           </div>
         </div>
