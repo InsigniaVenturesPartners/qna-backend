@@ -13,6 +13,12 @@ Insignia Community is a discussion forum made with Ruby on Rails, React, and Red
 6. To run the server, run ``rails server``. The web app will run on ``localhost:3000``
 7. To make webpack watch files, open a new terminal tab, then run ``npm run watch``
 
+## Configuration
+#### Google Sign In for development
+``export GOOGLE_CLIENT_ID=1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com``
+``export GOOGLE_CLIENT_SECRET=Y1nYjF22M1udQWJtj2UmdyeP``
+
+
 ## Key Features
 
 #### Questions
