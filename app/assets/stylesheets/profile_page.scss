@@ -1,0 +1,64 @@
+@import "modules/mixins.scss";
+
+.profile-topic-list-item {
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #efefef;
+  border-bottom: 1px solid #e2e2e2;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.profile-topic-list-item h2 {
+  font-size: 20px;
+  margin-left: 11px;
+  margin-top: 11px;
+  margin-bottom: 11px;
+}
+
+.profile-question-list>h1 {
+  height: 225px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+
+//need li to be more specific than .navbar li
+li .profile-question-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 15px;
+  padding: 8px 12px;
+  padding-right: 10px;
+  font-weight: 400;
+  border-bottom: 1px solid #e2e2e2;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  a {
+    padding-left: 0.25em;
+    width: 70%;
+    @include respond-to(desktop) {
+      width: 30%;
+    }
+  }
+  a:hover {
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 32px;
+  }
+}
+
+li .profile-question-list-item:hover {
+  background-color: #ececec;
+  text-decoration: none;
+  color: #2b6dad;
+
+}

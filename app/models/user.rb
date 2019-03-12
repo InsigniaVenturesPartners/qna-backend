@@ -29,8 +29,11 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :trackable, :validatable
   # devise :rememberable
   devise :omniauthable, :omniauth_providers => [:google_oauth2]
+  devise :confirmable
   # validates :username, :firstname, :lastname, :email, :pro_pic_url, :password_digest, :session_token, presence: true
   # validates :username, :email, :session_token, uniqueness: true
   # validates :password, length: {minimum: 6}, allow_nil: true
@@ -75,9 +78,10 @@ class User < ApplicationRecord
     foreign_key: :user_id,
     class_name: :Comment
 
-  has_many :partner_auths
-
   acts_as_voter
+
+  ROLES = %w[admin user moderator author banned].freeze
+
   #I don't think there's an easy way to cancle a vote which is scoped, so follows are scoped, with a positive vote meaning follow, and a negative or nil vote meaning unfollowed.  Up and downvotes are not scoped, allowing us to use the built-in unliked by
   def follow(entity)
     entity.vote_by :voter => self, :vote_scope => 'follow'
@@ -128,24 +132,36 @@ class User < ApplicationRecord
     self.voted_up_on? entity, vote_scope: 'follow'
   end
 
+  def self.is_whitelisted(email)
+    return (email.end_with? '@insignia.vc') ||
+      UserWhitelist.find_by(email: email)
+  end
+
+  # for oauth
+  # attr_accessor :provider, :uid
+
   def self.find_or_create_from_google_auth(auth)
-    where(google_id: auth[:google_id]).first_or_initialize.tap do |user|
-      user.update_attributes!(auth)
+    user = find_by(provider: auth.provider, uid: auth.uid)
+
+    unless user
+      return unless self.is_whitelisted(auth.info.email)
+      user = User.new do |u|
+        u.provider = auth.provider
+        u.uid = auth.uid
+        u.email = auth.info.email
+        u.password = Devise.friendly_token[0,20]
+      end
+      user.confirm unless user.confirmed?
     end
+
+    user.name = auth.info.first_name + " " + auth.info.last_name
+    user.pro_pic_url = auth.info.image
+
+    user.save!
+    user
   end
 
-  def partner_auth_map
-    res = {}
-    self.partner_auths.each do |auth|
-      res[auth.provider] = auth
-    end
-
-    return res
+  def role?(base_role)
+    ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
-  
-  def has_offline_access
-    return (self.partner_auth_map.key?("google") &&
-        JSON.parse(self.partner_auth_map['google'].auth_json).key?("refresh_token"))
-  end
-
 end

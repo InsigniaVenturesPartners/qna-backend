@@ -30,4 +30,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  omniauth_callbacks:
+    google_oauth2:
+      contact_administrator: "For access, email hello@insignia.vc or WhatsApp +1978-743-9543"

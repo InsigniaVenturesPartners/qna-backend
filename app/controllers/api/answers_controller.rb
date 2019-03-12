@@ -25,6 +25,12 @@ class Api::AnswersController < ApplicationController
     end
   end
 
+  def profile
+    @answers = Answer.where("author_id = ?", current_user.id)
+
+    render :index
+  end
+
   #shows an answer
   def show
     @answer = Answer.find(params[:id])
@@ -41,6 +47,13 @@ class Api::AnswersController < ApplicationController
     else
       render json: @answer.errors.full_messages, status: 422
     end
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+
+    render :show
   end
 
   def vote

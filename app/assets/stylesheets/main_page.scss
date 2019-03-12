@@ -1,17 +1,22 @@
+@import "modules/mixins.scss";
+
 #main-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   background: #FAFAFA;
-  padding-left: 10px;
-  padding-top: 30px;
+  padding-top: $navbar-height * 2;
+
+  @include respond-to(desktop) {
+    flex-direction: row;
+    padding-top: $navbar-height;
+  }
 }
 
 .main-col {
-  width: 600px;
+  width: 100%;
   margin-right: 175px;
-  padding-left: 30px;
 }
 
 /*Fix sizing for small screens*/
@@ -24,13 +29,3 @@
     justify-content: flex-start;
   }
 }
-
-/*@media (max-width: 819px) {
-  .main-col {
-    margin-right: 0;
-  }
-
-  #main-page {
-    justify-content: flex-start;
-  }
-}*/

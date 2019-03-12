@@ -33,15 +33,15 @@ gem 'acts_as_votable', '~> 0.10.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'cancancan', '~> 2.0'
-gem 'devise'
-gem 'koala'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'google-api-client', '~> 0.18.0'
+gem 'devise'
+gem 'koala'
+gem 'cancancan'
 gem 'rack-cors'
-gem 'responders'
 
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
