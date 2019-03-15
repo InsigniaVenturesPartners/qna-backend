@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 20190222101244) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "partner_auths", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "provider"
+    t.text "auth_json"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "provider"], name: "index_partner_auths_on_user_id_and_provider", unique: true
+    t.index ["user_id"], name: "index_partner_auths_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "body", null: false
     t.integer "author_id", null: false
@@ -92,29 +102,17 @@ ActiveRecord::Schema.define(version: 20190222101244) do
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "provider"
-    t.string "uid"
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.string "name"
     t.string "pro_pic_url", default: "https://graph.facebook.com/123/picture"
     t.string "fb_id"
+    t.string "google_id"
+    t.string "given_name"
+    t.string "last_name"
+    t.string "access_token"
     t.string "role"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["google_id"], name: "index_users_on_google_id", unique: true
   end
 
   create_table "votes", force: :cascade do |t|
@@ -133,4 +131,5 @@ ActiveRecord::Schema.define(version: 20190222101244) do
     t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
   end
 
+  add_foreign_key "partner_auths", "users"
 end

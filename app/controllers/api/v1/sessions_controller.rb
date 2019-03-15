@@ -6,11 +6,11 @@ class Api::V1::SessionsController < Api::V1::BaseController
   def create
     if user_params[:google_id]
       user = User.find_or_create_from_google_auth(user_params)
-    
+
       render :json => user.to_json(:methods => :has_offline_access)
     else
       render :json => { error: "Please pass user's Google ID" }
-    end 
+    end
   end
 
   def google_auth

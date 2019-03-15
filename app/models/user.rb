@@ -1,42 +1,8 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  provider               :string
-#  uid                    :string
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :inet
-#  last_sign_in_ip        :inet
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
-#  name                   :string
-#  pro_pic_url            :string
-#  fb_id                  :string
-#
-
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :trackable, :validatable
-  # devise :rememberable
+  devise :database_authenticatable, :trackable
   devise :omniauthable, :omniauth_providers => [:google_oauth2]
-  devise :confirmable
-  # validates :username, :firstname, :lastname, :email, :pro_pic_url, :password_digest, :session_token, presence: true
-  # validates :username, :email, :session_token, uniqueness: true
-  # validates :password, length: {minimum: 6}, allow_nil: true
 
   #authored_questions
   has_many :authored_questions,
@@ -77,6 +43,8 @@ class User < ApplicationRecord
     primary_key: :id,
     foreign_key: :user_id,
     class_name: :Comment
+
+  has_many :partner_auths
 
   acts_as_voter
 
@@ -137,28 +105,30 @@ class User < ApplicationRecord
       UserWhitelist.find_by(email: email)
   end
 
-  # for oauth
-  # attr_accessor :provider, :uid
-
   def self.find_or_create_from_google_auth(auth)
-    user = find_by(provider: auth.provider, uid: auth.uid)
+    user = find_by(google_id: auth["google_id"])
 
-    unless user
-      return unless self.is_whitelisted(auth.info.email)
-      user = User.new do |u|
-        u.provider = auth.provider
-        u.uid = auth.uid
-        u.email = auth.info.email
-        u.password = Devise.friendly_token[0,20]
-      end
-      user.confirm unless user.confirmed?
+    if user
+      user.update_attributes!(auth)
+    else
+      user = User.create!(auth)
     end
 
-    user.name = auth.info.first_name + " " + auth.info.last_name
-    user.pro_pic_url = auth.info.image
-
-    user.save!
     user
+  end
+
+  def has_offline_access
+    return (self.partner_auth_map.key?("google") &&
+        JSON.parse(self.partner_auth_map['google'].auth_json).key?("refresh_token"))
+  end
+
+  def partner_auth_map
+    res = {}
+    self.partner_auths.each do |auth|
+      res[auth.provider] = auth
+    end
+
+    return res
   end
 
   def role?(base_role)

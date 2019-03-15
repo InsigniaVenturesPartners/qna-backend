@@ -25,9 +25,10 @@ Rails.application.routes.draw do
       post 'users/session', :to => 'sessions#create'
       post 'users/auth/google', :to => 'sessions#google_auth'
 
+      get 'topics', :to => 'topics#index'
     end
   end
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks", :registrations => "registrations" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
 end
