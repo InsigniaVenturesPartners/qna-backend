@@ -12,6 +12,12 @@ module Quora
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    config.action_dispatch.default_headers = {
+        'Access-Control-Allow-Origin' => '*',
+        'Access-Control-Request-Method' => %w{GET POST PUT OPTIONS DELETE}.join(","),
+        'Access-Control-Allow-Headers' => %w{Origin Content-Type X-Auth-Token}.join(","),
+    }
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
