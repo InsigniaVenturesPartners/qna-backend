@@ -17,7 +17,7 @@ class QuestionList extends React.Component {
       return(<img src="https://image.ibb.co/iYo1yw/Screen_Shot_2017_09_28_at_6_43_28_PM.png" alt={`loading-image`}  className="loading-image" />);
     } else {
       const questionItems = questions.map( question => (
-        <QuestionListItem key={ "question-" + question.id } question={question}/>
+        <QuestionListItem key={ "question-" + question.id } question={question} />
       )).reverse();
       return(
         <div id="questions-container">

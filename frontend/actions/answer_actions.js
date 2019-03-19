@@ -1,6 +1,5 @@
 import * as APIUtil from '../util/answer_api_util'
 
-
 export const RECEIVE_ANSWERS = 'RECEIVE_ANSWERS';
 export const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
 export const UPDATE_ANSWER = 'UPDATE_ANSWER';
@@ -58,3 +57,4 @@ export const createAnswer = (body, questionId) => dispatch => (
     answer=>(dispatch(receiveAnswer(answer))
   ))
 );
+

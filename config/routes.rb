@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :topics, only: [:index, :show, :create, :destroy]
     resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
+    resources :drafts, only: [:create]
     resources :comments, only: [:index, :show, :create, :destroy]
     resources :user_whitelists, only: [:index, :create]
 
@@ -19,6 +20,8 @@ Rails.application.routes.draw do
     post 'questions/unfollow', :to => 'questions#unfollow'
 
     post 'answers/vote', :to => 'answers#vote'
+
+    get  'drafts/me', :to => 'drafts#me'
 
     post 'topics/follow', :to => 'topics#follow'
     post 'topics/unfollow', :to => 'topics#unfollow'

@@ -13,6 +13,7 @@ json.topic question.topics.first
 json.tags question.topics.map{|topic| [topic.id, topic.name]}
 
 json.num_answers question.num_answers_str
+json.is_draft question.is_drafted_by(@current_user)
 keywords ||= []
 
 json.match_score question.match_score(keywords)

@@ -12,6 +12,7 @@ import FiltersReducer from './filters_reducer';
 import CommentsReducer from './comments_reducer';
 import UserWhitelistsReducer from './user_whitelists_reducer';
 import ProfileReducer from './profile_reducer';
+import DraftsReducer from './drafts_reducer';
 
 const RootReducer = combineReducers({
   session: SessionReducer,
@@ -25,7 +26,8 @@ const RootReducer = combineReducers({
   searchTopics: SearchTopicsReducer,
   comments: CommentsReducer,
   userWhitelists: UserWhitelistsReducer,
-  profile: ProfileReducer
+  profile: ProfileReducer,
+  drafts: DraftsReducer
 });
 
 export default RootReducer;
