@@ -1,8 +1,4 @@
 class Api::V1::TopicsController < Api::V1::BaseController
-  #modify index to only return current_user.questions or something like that
-  #do a before action ensure login
-
-  #index assumes a current_user and returns JUST their subscribed topics
   def index
     if params[:topicQuery]
       ##if it's empty, we want to fetch random topics to show

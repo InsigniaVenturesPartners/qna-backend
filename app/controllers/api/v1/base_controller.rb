@@ -5,6 +5,7 @@ class Api::V1::BaseController < ApplicationController
 
   include PaginateHelper
   include PresenterHelper
+  require 'google/apis/oauth2_v2'
 
   def current_user
     @user

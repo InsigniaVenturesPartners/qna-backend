@@ -37,6 +37,10 @@ module ResponseHelper
     render json: Oj.dump(content, mode: :compat), status: status
   end
 
+  def render_created(content, status = 201)
+    render_json(content, status = status)
+  end
+
   def error_messages(errors)
     case errors
     when Array

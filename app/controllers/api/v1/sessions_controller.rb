@@ -1,4 +1,3 @@
-require 'google/apis/oauth2_v2'
 require 'google/api_client/client_secrets'
 
 class Api::V1::SessionsController < Api::V1::BaseController
