@@ -12,7 +12,7 @@ class Api::V1::BaseController < ApplicationController
 
 
   def render_json_paginate(resources, root:, includes: [], context: {}, version: 1)
-    render_json(root => each_serializer(resources, includes: includes, version: version),
+    render_json(root => each_serializer(resources, includes: includes, context: context, version: version),
       meta: {
         total: resources.total_entries,
         current_page: resources.current_page,

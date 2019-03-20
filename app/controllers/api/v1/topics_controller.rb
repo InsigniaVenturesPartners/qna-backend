@@ -7,9 +7,9 @@ class Api::V1::TopicsController < Api::V1::BaseController
     if params[:topicQuery]
       ##if it's empty, we want to fetch random topics to show
       if params[:topicQuery] == ""
-        @topics = Topic.order("RANDOM()").limit(7)
+        topics = Topic.order("RANDOM()").limit(7)
         reject_topics = current_user.followed_topics
-        @topics = @topics.reject{|topic| reject_topics.include?(topic)}
+        topics = topics.reject{|topic| reject_topics.include?(topic)}
       else
         @keywords = params[:topicQuery].downcase.split(" ")
         topics = []
@@ -18,19 +18,20 @@ class Api::V1::TopicsController < Api::V1::BaseController
           topics += Topic.where("LOWER(name) LIKE ? ", "%#{keyword.downcase}%")
         end
 
-        @topics = topics.uniq
+        topics = topics.uniq
       end
 
     else
-      @topics = Topic.order("name ASC")
+      topics = Topic.order("name ASC")
     end
-    @topics = @topics.paginate(page: params[:page], per_page: params[:per_page] || 10)
-    render_json_paginate(@topics, root: :topics)
+    @keywords = "testing123"
+    topics = topics.paginate(page: params[:page], per_page: params[:per_page] || 10)
+    render_json_paginate(topics, root: :topics, context: { current_user: current_user})
   end
 
   def show
-    @topic = Topic.find(params[:id])
-    render json: @topic
+    topic = Topic.find(params[:id])
+    render_json(presenter_json(topic))
   end
 
   def create
