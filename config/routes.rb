@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
-    resources :user_whitelists, only: [:index, :create]
 
     get  'profile/questions', :to => 'questions#profile'
     get  'profile/answers', :to => 'answers#profile'
@@ -30,6 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-
+  # Catch all return 404
+  match "*path", to: -> (env) { [404, {}, ['{"error": "not_found"}']] }, via: :all
 end
