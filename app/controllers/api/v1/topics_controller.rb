@@ -27,13 +27,6 @@ class Api::V1::TopicsController < Api::V1::BaseController
     render_json_paginate(topics, root: :topics, context: { current_user: current_user, keywords: keywords})
   end
 
-  def health
-    health = {
-      "success" => true
-    }
-    render_json(health)
-  end
-
   def show
     topic = Topic.find(params[:id])
     render_json(presenter_json(topic))
