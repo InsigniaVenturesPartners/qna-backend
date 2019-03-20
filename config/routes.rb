@@ -29,6 +29,9 @@ Rails.application.routes.draw do
       post 'topics', :to => 'topics#create'
       post 'topics/follow', :to => 'topics#create'
       post 'topics/unfollow', :to => 'topics#create'
+
+
+      get 'health', :to => 'topics#health'
     end
   end
 
