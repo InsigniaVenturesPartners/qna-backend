@@ -26,7 +26,6 @@ Rails.application.routes.draw do
 
       get 'topics', :to => 'topics#index'
       get 'topics/:id', :to => 'topics#show'
-      post 'topics', :to => 'topics#create'
       post 'topics/follow', :to => 'topics#create'
       post 'topics/unfollow', :to => 'topics#create'
     end

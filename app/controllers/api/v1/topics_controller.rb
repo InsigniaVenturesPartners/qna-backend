@@ -32,21 +32,16 @@ class Api::V1::TopicsController < Api::V1::BaseController
     render_json(presenter_json(topic))
   end
 
-  def create
-    @topic = Topic.create!(topic_params)
-    render :show
-  end
-
   def follow
-    @topic = Topic.find(params[:topic_id])
-    current_user.follow(@topic)
-    render :show
+    topic = Topic.find(params[:topic_id])
+    current_user.follow(topic)
+    render_json(presenter_json(topic))
   end
 
   def unfollow
-    @topic = Topic.find(params[:topic_id])
-    current_user.unfollow(@topic)
-    render :show
+    topic = Topic.find(params[:topic_id])
+    current_user.unfollow(topic)
+    render_json(presenter_json(topic))
   end
 
   private
