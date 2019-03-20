@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
-    resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
 
@@ -26,9 +25,16 @@ Rails.application.routes.draw do
       get 'topics/:id', :to => 'topics#show'
       post 'topics/follow', :to => 'topics#follow'
       post 'topics/unfollow', :to => 'topics#unfollow'
+
+      get 'api/top/questions', :to => 'questions#top'
+
+      get 'questions', :to => 'questions#index'
+      get 'questions/:id', :to => 'questions#show'
+      post 'questions', :to => 'questions#create'
+      patch 'questions/:id', :to => 'questions#update'
     end
   end
 
   # Catch all return 404
-  match "*path", to: -> (env) { [404, {}, ['{"error": "not_found"}']] }, via: :all
+  match "*path", to: -> (env) { [404, {}, ['{"error": "not match url"}']] }, via: :all
 end

@@ -7,6 +7,9 @@ class V1::UserWhitelistPresenter < BasePresenter
     hash = {
       id: @resource.id,
       email: @resource.email,
+      name: @resource.name,
+      pro_pic_url: @resource.pro_pic_url,
+      role: @resource.role,
     }
 
     hash

@@ -1,6 +1,7 @@
 class Api::V1::TopicsController < Api::V1::BaseController
   def index
     if params[:topicQuery]
+      keywords = []
       ##if it's empty, we want to fetch random topics to show
       if params[:topicQuery] == ""
         topics = Topic.order("RANDOM()").limit(7)
@@ -24,7 +25,9 @@ class Api::V1::TopicsController < Api::V1::BaseController
   end
 
   def show
-    topic = Topic.find(params[:id])
+    topic = Topic.find_by_id(params[:id])
+    return render_not_found unless topic
+
     render_json(presenter_json(topic))
   end
 
