@@ -40,6 +40,8 @@ gem 'devise'
 gem 'koala'
 gem 'cancancan'
 gem 'rack-cors'
+gem 'will_paginate', '~> 3.1.0'
+gem 'oj', '~> 3.3', '>= 3.3.9'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

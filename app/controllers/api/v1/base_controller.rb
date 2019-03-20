@@ -1,9 +1,24 @@
 class Api::V1::BaseController < ApplicationController
   respond_to :json
-  before_action :authenticate
+  # before_action :authenticate
+
+
+  include PaginateHelper
+  include PresenterHelper
 
   def current_user
     @user
+  end
+
+
+  def render_json_paginate(resources, root:, includes: [], context: {}, version: 1)
+    render_json(root => each_serializer(resources, includes: includes, version: version),
+      meta: {
+        total: resources.total_entries,
+        current_page: resources.current_page,
+        num_pages: resources.total_pages,
+        per_page: resources.per_page,
+      }.merge(paginate_links(resources)))
   end
 
   protected

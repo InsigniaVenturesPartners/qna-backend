@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
     resource :session, only: [:create, :destroy]
-    resources :topics, only: [:index, :show, :create, :destroy]
     resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
@@ -27,6 +26,9 @@ Rails.application.routes.draw do
 
       get 'topics', :to => 'topics#index'
       get 'topics/:id', :to => 'topics#show'
+      post 'topics', :to => 'topics#create'
+      post 'topics/follow', :to => 'topics#create'
+      post 'topics/unfollow', :to => 'topics#create'
     end
   end
 

@@ -23,8 +23,9 @@ class Api::V1::TopicsController < Api::V1::BaseController
 
     else
       @topics = Topic.order("name ASC")
-      render json: @topics
     end
+    @topics = @topics.paginate(page: params[:page], per_page: params[:per_page] || 10)
+    render_json_paginate(@topics, root: :topics)
   end
 
   def show
@@ -47,7 +48,6 @@ class Api::V1::TopicsController < Api::V1::BaseController
     @topic = Topic.find(params[:topic_id])
     current_user.unfollow(@topic)
     render :show
-
   end
 
   private
