@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       post 'users/auth/google', :to => 'sessions#google_auth'
 
       get 'topics', :to => 'topics#index'
+      get 'topics/:id', :to => 'topics#show'
     end
   end
 
