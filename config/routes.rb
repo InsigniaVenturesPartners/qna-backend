@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
-    resource :session, only: [:create, :destroy]
     resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
@@ -17,12 +16,12 @@ Rails.application.routes.draw do
 
     post 'answers/vote', :to => 'answers#vote'
 
-    post 'topics/follow', :to => 'topics#follow'
-    post 'topics/unfollow', :to => 'topics#unfollow'
-
     namespace :v1 do
       post 'users/session', :to => 'sessions#create'
       post 'users/auth/google', :to => 'sessions#google_auth'
+
+      get 'user_whitelists', :to => 'user_whitelists#index'
+      post 'user_whitelists', :to => 'user_whitelists#create'
 
       get 'topics', :to => 'topics#index'
       get 'topics/:id', :to => 'topics#show'
