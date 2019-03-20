@@ -10,17 +10,17 @@ class V1::TopicPresenter < BasePresenter
       description: @resource.description,
       num_followers: @resource.num_followers,
       pic_url: @resource.pic_url,
-      follower_ids:  @resource.follower_ids
+      follower_ids:  @resource.follower_ids,
+      question_ids: @resource.questions.map{|question| question.id},
+      match_score: @resource.match_score(@context[:keywords]),
+      followed: is_followed?
     }
 
     hash
   end
+
+  def is_followed?
+    return false unless @context[:current_user]
+    @context[:current_user].followed?(@resource)
+  end
 end
-
-
-
-# json.question_ids topic.questions.map{|question| question.id}
-
-# json.followed current_user.followed?(topic)
-
-# json.match_score topic.match_score(keywords)

@@ -11,22 +11,20 @@ class Api::V1::TopicsController < Api::V1::BaseController
         reject_topics = current_user.followed_topics
         topics = topics.reject{|topic| reject_topics.include?(topic)}
       else
-        @keywords = params[:topicQuery].downcase.split(" ")
+        keywords = params[:topicQuery].downcase.split(" ")
         topics = []
 
-        @keywords.each do |keyword|
+        keywords.each do |keyword|
           topics += Topic.where("LOWER(name) LIKE ? ", "%#{keyword.downcase}%")
         end
 
         topics = topics.uniq
       end
-
     else
       topics = Topic.order("name ASC")
     end
-    @keywords = "testing123"
     topics = topics.paginate(page: params[:page], per_page: params[:per_page] || 10)
-    render_json_paginate(topics, root: :topics, context: { current_user: current_user})
+    render_json_paginate(topics, root: :topics, context: { current_user: current_user, keywords: keywords})
   end
 
   def health
