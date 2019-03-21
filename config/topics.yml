@@ -1,0 +1,16 @@
+---
+business:
+  name: "Business"
+  pic_url: "https://s3-ap-southeast-1.amazonaws.com/qna-resources/assets/business.png"
+hiring:
+  name: "Hiring"
+  pic_url: "https://s3-ap-southeast-1.amazonaws.com/qna-resources/assets/hiring.png"
+marketing:
+  name: "Marketing"
+  pic_url: "https://s3-ap-southeast-1.amazonaws.com/qna-resources/assets/marketing.png"
+product:
+  name: "Product"
+  pic_url: "https://s3-ap-southeast-1.amazonaws.com/qna-resources/assets/product.png"
+technology:
+  name: "Technology"
+  pic_url: "https://s3-ap-southeast-1.amazonaws.com/qna-resources/assets/technology.png"

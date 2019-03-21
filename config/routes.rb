@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
-    resource :session, only: [:create, :destroy]
-    resources :topics, only: [:index, :show, :create, :destroy]
-    resources :questions, only: [:index, :show, :create, :update, :destroy]
     resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
-    resources :user_whitelists, only: [:index, :create]
 
     get  'profile/questions', :to => 'questions#profile'
     get  'profile/answers', :to => 'answers#profile'
@@ -18,17 +14,27 @@ Rails.application.routes.draw do
 
     post 'answers/vote', :to => 'answers#vote'
 
-    post 'topics/follow', :to => 'topics#follow'
-    post 'topics/unfollow', :to => 'topics#unfollow'
-
     namespace :v1 do
       post 'users/session', :to => 'sessions#create'
       post 'users/auth/google', :to => 'sessions#google_auth'
 
+      get 'user_whitelists', :to => 'user_whitelists#index'
+      post 'user_whitelists', :to => 'user_whitelists#create'
+
       get 'topics', :to => 'topics#index'
+      get 'topics/:id', :to => 'topics#show'
+      post 'topics/follow', :to => 'topics#follow'
+      post 'topics/unfollow', :to => 'topics#unfollow'
+
+      get 'api/top/questions', :to => 'questions#top'
+
+      get 'questions', :to => 'questions#index'
+      get 'questions/:id', :to => 'questions#show'
+      post 'questions', :to => 'questions#create'
+      patch 'questions/:id', :to => 'questions#update'
     end
   end
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-
+  # Catch all return 404
+  match "*path", to: -> (env) { [404, {}, ['{"error": "not match url"}']] }, via: :all
 end
