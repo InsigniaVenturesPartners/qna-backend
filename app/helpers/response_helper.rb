@@ -1,11 +1,11 @@
 module ResponseHelper
-  NOT_FOUND={errors: 'not found', err_code: 1404}
-  FORBIDDEN_ERROR={errors: 'forbidden', err_code: 1404}
-  INTERNAL_ERROR={errors: 'internal server error', err_code: 1500}
-  UNAUTHORIZED_ACCESS = {errors: "Not authorized", err_code: 1401}
-  FORBIDDEN_ACCESS = {errors: "Forbidden", err_code: 1403}
+  PARAMETERS_ERROR = { error: 'missing parameters', err_code: 1400 }
+  UNAUTHORIZED_ACCESS = { error: "not authorized", err_code: 1401 }
+  FORBIDDEN_ERROR = { error: 'forbidden', err_code: 1403 }
+  NOT_FOUND = { error: 'Not Found', err_code: 1404 }
+  INTERNAL_ERROR = { error: 'internal server error', err_code: 1500 }
+  FORBIDDEN_ACCESS = { error: "forbidden", err_code: 1403 }
   SUCCESS_OK = { success: true }
-  PARAMETERS_ERROR={ errors: 'missing parameters', err_code: 1400 }
 
   def render_invalid(errors, err_code: nil)
     err_code = err_code || 1400

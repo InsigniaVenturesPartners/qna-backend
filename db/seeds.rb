@@ -43,6 +43,9 @@ q2.topics += [t1]
 c1 = Comment.build_from(a1, demo_user.id, "Hope this will be helpful")
 c2 = Comment.build_from(a2, demo_user.id, "Thank you for reading")
 
+c3 = Comment.build_from(q1, demo_user.id, "Hope this will be helpful")
+c4 = Comment.build_from(q2, demo_user.id, "Thank you for reading")
+
 [c1,c2].each{|c| c.save!}
 
 
