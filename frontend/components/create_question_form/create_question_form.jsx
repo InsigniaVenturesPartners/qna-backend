@@ -15,7 +15,7 @@ export const customStyles = {
     backgroundColor   : 'rgba(0, 0, 0, 0.65)'
   },
   content : {
-    top                   : '15%',
+    top                   : '50%',
     left                  : '50%',
     right                 : 'auto',
     bottom                : 'auto',
@@ -23,7 +23,7 @@ export const customStyles = {
     transform             : 'translate(-50%, -50%)',
     width                 : '100%',
     maxWidth              : '623px',
-    heigth                : '204px',
+    heigth                : '50%',
     padding : '0'  }
 };
 
@@ -178,7 +178,7 @@ class CreateQuestionForm extends React.Component {
             <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
 
 
-          </Modal>
+        </Modal>
       </div>
     );
   }

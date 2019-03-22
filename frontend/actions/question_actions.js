@@ -1,6 +1,5 @@
 import * as APIUtil from '../util/question_api_util'
 
-
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_SEARCH_QUESTIONS = 'RECEIVE_SEARCH_QUESTIONS';
@@ -34,6 +33,12 @@ export const fetchQuestions = () => dispatch => (
   ))
 );
 
+export const fetchTopQuestions = () => dispatch => (
+  APIUtil.fetchTopQuestions().then(
+    questions=>(dispatch(receiveQuestions(questions))
+  ))
+);
+
 export const fetchSearchQuestions = (filters) => dispatch => (
   APIUtil.fetchQuestions(filters).then(
     questions=>(dispatch(receiveSearchQuestions(questions, filters))
@@ -50,6 +55,12 @@ export const fetchQuestion = id => dispatch => (
 export const createQuestion = (body, topics) => dispatch => (
   APIUtil.createQuestion(body, topics).then(
     question=>(dispatch(receiveQuestion(question))
+  ))
+);
+
+export const editQuestion = (body, questionId) => dispatch => (
+  APIUtil.editQuestion(body, questionId).then(
+    question=>(dispatch(updateQuestion(question))
   ))
 );
 

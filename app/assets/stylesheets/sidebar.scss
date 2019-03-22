@@ -5,20 +5,28 @@
 
   @include respond-to(desktop) {
     margin-left: 32px;
-    width: 142px;
+    width: 25%;
   }
 }
 
 .sidebar-topic-list {
-  width: 142px;
+  display: flex;
+  flex-direction: row;
+
   margin-right: 30px;
   word-wrap: break-word;
   font-size: 14px;
 
+  @include respond-to(desktop) {
+    flex-direction: column;
+  }
+
   li {
     display: inline;
     font-size: 12px;
+    background: #ccecfa;
     color: #666666;
+    margin-right: 0.5em;
 
     @include respond-to(desktop) {
       display: block;
@@ -27,7 +35,11 @@
     }
 
     a {
-      padding: 0 0.5em;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      padding-right: 0.5em;
       &:hover {
         text-decoration: none;
         color: #2b6dad;
@@ -43,6 +55,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  overflow: auto;
+  overflow-y: hidden;
 
   @include respond-to(desktop) {
     flex-direction: column;
@@ -55,7 +69,6 @@
 
   @include respond-to(desktop) {
     height: 30px;
-    border-bottom: 1px solid #e2e2e2;
     margin-bottom: 16px;
     font-size: 15px;
   }
@@ -82,6 +95,22 @@
   button:focus {
     border: none;
   }
+}
+
+.feed-sidebar-topic-pic {
+  width: 1.5rem;
+  img {
+    max-width: 100%;
+    @include respond-to(desktop) {
+      max-width: initial;
+      width: 2em;
+    }
+  }
+}
+
+.feed-sidebar-topic-label {
+  padding-left: 0.25em;
+  font-size: 1.3em;
 }
 
 .topic-search {

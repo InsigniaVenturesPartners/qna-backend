@@ -1,6 +1,5 @@
 import * as APIUtil from '../util/answer_api_util'
 
-
 export const RECEIVE_ANSWERS = 'RECEIVE_ANSWERS';
 export const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
 export const UPDATE_ANSWER = 'UPDATE_ANSWER';
@@ -41,6 +40,12 @@ export const fetchAnswer = id => dispatch => (
   ))
 );
 
+export const editAnswer = (body, answerId) => dispatch => (
+  APIUtil.editAnswer(body, answerId).then(
+    answer=>(dispatch(updateAnswer(answer))
+  ))
+);
+
 export const voteOnAnswer = (id, type) => dispatch => (
   APIUtil.voteOnAnswer(id, type).then(
     answer=>(dispatch(updateAnswer(answer))
@@ -52,3 +57,4 @@ export const createAnswer = (body, questionId) => dispatch => (
     answer=>(dispatch(receiveAnswer(answer))
   ))
 );
+

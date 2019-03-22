@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Checkbox from 'muicss/lib/react/checkbox';
 
 import { customStyles, cancelStyles } from '../create_question_form/create_question_form';
 import QuestionSearchContainer from '../question_search/question_search_container';
 
-class NavBar extends React.Component {
+class UserNavBar extends React.Component {
   constructor(props) {
     super(props)
 
@@ -74,34 +74,24 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {user, topics} = this.props
+    const {user, topics, pathname} = this.props
     const topicItems = topics.map( topic => (
       <Checkbox name={topic.name} label={topic.name} checked={this.state.checkedTopics.get(topic.name)} onChange={this.handleChange}/>
     ));
 
     return(
       <div>
+        <div className="ribbon ribbon-main">BETA</div>
         <div className="nav-bar desktop-only">
           <ul className="nav-bar-items">
-            <li id="nav-logo">
-              {/*
-              TODO
-
-
-              <Link to={`/`}>
-                Insignia Community
-              </Link>
-              */}
-              </li>
-
-            <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/" ? "highlighted" : "")} >
+            <li id="nav-home" className={"nav-link " + (pathname == "/" ? "highlighted" : "")} >
               <Link to={`/`}>
                 <i className="fa fa-home"></i>
                 Home
               </Link>
             </li>
 
-            <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/answer" ? "highlighted" : "")}>
+            <li id="nav-answer" className={"nav-link " + (pathname == "/answer" ? "highlighted" : "")}>
               <Link to={`/answer`}>
                 <i className="fa fa-pencil-square-o"></i>
                 Answer</Link>
@@ -146,7 +136,7 @@ class NavBar extends React.Component {
           <input onChange={this.setQuestion} placeholder="What is your question?" value={this.state.question} autoFocus={true}/>
           <div className="topic-modal">
             <div className="topic-modal-header">
-              <h1>Select any topics that describe your question:</h1>
+              <h1>Select any topics that describe your question</h1>
             </div>
 
             <div className="topic-modal-list">
@@ -178,43 +168,48 @@ class NavBar extends React.Component {
             <i className="fa fa-times" onClick={()=>this.closeModal("success")}/>
           </Modal>
         </div>
-        <div className="nav-bar mobile-only">
-          <ul className="nav-bar-items">
-            <li id="nav-home" className={"nav-link " + (this.props.location.pathname == "/" ? "highlighted" : "")} >
-              <Link to={`/`}>
-                <i className="fa fa-home"></i>
-                Home
-              </Link>
-            </li>
-            <li id="nav-answer" className={"nav-link " + (this.props.location.pathname == "/questions" ? "highlighted" : "")}>
-              <Link to={`/questions`}>
-                <i className="fa fa-pencil-square-o"></i>
-                Answer</Link>
-            </li>
-            <li id="nav-ask-question"><button onClick={()=>this.openModal("create")}>Ask Question</button></li>
-          </ul>
-        </div>
-        <div className="nav-bar mobile-only">
-          <ul className="nav-bar-items">
-            <li id="nav-search">
-              <QuestionSearchContainer />
-            </li>
-            <li id="nav-pro-pic">
-              <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
-            </li>
-            <li id="nav-sign-out">
-              <form name="sign-out" method="POST" action="/users/sign_out">
-                <input type="hidden" name="_method" value="delete"/>
-                <label>
-                  <input name="submit2" type="submit" id="submit2" value="Sign out" />
-                </label>
-              </form>
-            </li>
-          </ul>
+        <div className="nav-bar-mobile-wrapper">
+          <div className="nav-bar mobile-only">
+            <ul className="nav-bar-items">
+              <li id="nav-home" className={"nav-link " + (pathname == "/" ? "highlighted" : "")} >
+                <Link to={`/`}>
+                  <i className="fa fa-home"></i>
+                  Home
+                </Link>
+              </li>
+              <li id="nav-answer" className={"nav-link " + (pathname == "/questions" ? "highlighted" : "")}>
+                <Link to={`/answer`}>
+                  <i className="fa fa-pencil-square-o"></i>
+                  Answer</Link>
+              </li>
+              <li id="nav-ask-question"><button onClick={()=>this.openModal("create")}>Ask Question</button></li>
+            </ul>
+          </div>
+
+          <div className="nav-bar mobile-only">
+            <ul className="nav-bar-items">
+              <li id="nav-search">
+                <QuestionSearchContainer />
+              </li>
+              <li id="nav-pro-pic">
+                <Link to={`/profile`}>
+                  <img src={user.pro_pic_url} alt={`${user.name}'s picture`}  className="nav-pro-pic" />
+                </Link>
+              </li>
+              <li id="nav-sign-out">
+                <form name="sign-out" method="POST" action="/users/sign_out">
+                  <input type="hidden" name="_method" value="delete"/>
+                  <label>
+                    <input name="submit2" type="submit" id="submit2" value="Sign out" />
+                  </label>
+                </form>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default NavBar;
+export default withRouter(UserNavBar);

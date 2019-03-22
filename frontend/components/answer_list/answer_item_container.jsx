@@ -4,17 +4,19 @@ import AnswerItem from './answer_item';
 
 
 // Actions
-import { fetchAnswer, voteOnAnswer } from '../../actions/answer_actions';
+import { fetchAnswer, editAnswer, voteOnAnswer } from '../../actions/answer_actions';
 
 const mapStateToProps = (state, ownProps) => ({
   answer: selectAnswer(state, ownProps.id),
   id: ownProps.id,
   errors: state.errors,
-  comments: state.comments
+  comments: state.comments,
+  user: state.session.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
   requestAnswer: (id) => dispatch(fetchAnswer(id)),
+  editAnswer: (body, answerId) => dispatch(editAnswer(body, answerId)),
   voteOnAnswer: (id, type) => dispatch(voteOnAnswer(id, type))
 });
 

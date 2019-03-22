@@ -7,14 +7,27 @@ class Api::QuestionsController < ApplicationController
     questions = Question.all.includes(:author)
     if params[:query]
       @keywords = params[:query].downcase.split(" ")
-      questions = []
+      que = []
       @keywords.each do |keyword|
-        questions += Question.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
+        que += questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
       end
-      @questions = questions.uniq
+      @questions = que.uniq
     else
-      @questions = Question.take(20)
+      @questions = questions.take(20)
     end
+    render :index
+  end
+
+  def top
+    questions = Question.all.includes(:author)
+    @questions = questions.reject {|que| que.answers.where("author_id = ?", current_user.id).any?}
+    @current_user = current_user
+    render :index
+  end
+
+  def profile
+    @questions = Question.where("author_id = ?", current_user.id)
+
     render :index
   end
 
@@ -31,13 +44,20 @@ class Api::QuestionsController < ApplicationController
       que.body = question_params[:body]
       que.author = current_user
     end
-  
+
     if(question_params[:topics])
       question_params[:topics].each do |topic|
         t = Topic.find_by(name: topic)
         @question.topics += [t] if t.present?
       end
     end
+
+    render :show
+  end
+
+  def update
+    @question = Question.find(params[:id])
+    @question.update(question_params)
 
     render :show
   end

@@ -31,6 +31,11 @@ class Question < ApplicationRecord
     foreign_key: :question_id,
     class_name: :Answer
 
+  has_many :drafts,
+    primary_key: :id,
+    foreign_key: :question_id,
+    class_name: :Draft
+
   acts_as_votable
   acts_as_commentable
 
@@ -90,4 +95,7 @@ class Question < ApplicationRecord
     return matching_keywords/keywords.count.to_f
   end
 
+  def is_drafted_by(user)
+    self.drafts.map{|draft| draft.author = user}.any?
+  end
 end

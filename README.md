@@ -4,6 +4,21 @@
 ## Overview
 Insignia Community is a discussion forum made with Ruby on Rails, React, and Redux.
 
+## Getting Started
+1. Ensure you have installed [Node.js](https://nodejs.org/en/download/) and [Bundler](https://bundler.io/)
+2. ``bundle install``
+3. ``rake db:migrate``
+4. ``rake db:seed``
+5. ``npm install``
+6. To run the server, run ``rails server``. The web app will run on ``localhost:3000``
+7. To make webpack watch files, open a new terminal tab, then run ``npm run watch``
+
+## Configuration
+#### Google Sign In for development
+1. ``export GOOGLE_CLIENT_ID=1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com``
+2. ``export GOOGLE_CLIENT_SECRET=Y1nYjF22M1udQWJtj2UmdyeP``
+
+
 ## Key Features
 
 #### Questions
@@ -24,7 +39,7 @@ Insignia Community is a discussion forum made with Ruby on Rails, React, and Red
 
 #### User Authentication
 
-  Users sign up for Insignia Community by linking their Google account. After confirming their email, users can simply click the "Continue with Google" button to log in. Users may also choose and reset their password if they wish to manually log in.
+  Users sign up for Insignia Community by linking their Google account. Users can simply click the "Continue with Google" button to log in.
 
 
 ## Technology Used

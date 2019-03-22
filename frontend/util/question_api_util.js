@@ -7,6 +7,13 @@ export const fetchQuestions = data => (
   })
 );
 
+export const fetchTopQuestions = () => (
+  $.ajax({
+    method: 'GET',
+    url: 'api/top/questions'
+  })
+);
+
 export const fetchQuestion = (id) => (
   $.ajax({
     method: 'GET',
@@ -21,6 +28,18 @@ export const createQuestion = (body, topics) => (
     data: {
       question: {
         topics: topics,
+        body
+      }
+    }
+  })
+);
+
+export const editQuestion = (body, question_id) => (
+  $.ajax({
+    method: 'PATCH',
+    url: `api/questions/${question_id}`,
+    data: {
+      question: {
         body
       }
     }

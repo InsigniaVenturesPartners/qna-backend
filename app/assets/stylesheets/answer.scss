@@ -1,3 +1,21 @@
+#answers-container {
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  background: white;
+  margin-bottom: 20px;
+
+  .ui.header {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+
+    padding: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+  }
+}
+
 .answer-list {
   border-bottom: 1px solid #efefef;
   padding-left: 20px;
@@ -42,9 +60,12 @@
 
   font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
   font-size: 16px;
-
+  h1 {
+    font-weight: normal;
+  }
   h2 {
     font-size: 13px;
+    font-weight: normal;
   }
 }
 
@@ -76,6 +97,9 @@
 
 }
 
+.answer-body a {
+  color: #0000ff
+}
 
 .ql-editor {
   min-height: 150px;
@@ -90,4 +114,8 @@
 
 .answer-form-container {
   width: 100%;
+}
+
+.answer-form-button {
+  display: flex;
 }

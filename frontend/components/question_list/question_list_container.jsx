@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
-import { allQuestions } from '../../reducers/selectors';
+import { allTopQuestions } from '../../reducers/selectors';
 import QuestionList from './question_list';
 
 // Actions
-import { fetchQuestions } from '../../actions/question_actions';
+import { fetchTopQuestions } from '../../actions/question_actions';
 
 const mapStateToProps = state => ({
-  questions: allQuestions(state),
+  questions: allTopQuestions(state),
   errors: state.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestQuestions: () => dispatch(fetchQuestions())
+  requestTopQuestions: () => dispatch(fetchTopQuestions())
 });
 
 export default connect(
