@@ -14,9 +14,4 @@ class V1::DraftPresenter < BasePresenter
 
     hash
   end
-
-  def is_followed?
-    return false unless @context[:current_user]
-    @context[:current_user].followed?(@resource)
-  end
 end

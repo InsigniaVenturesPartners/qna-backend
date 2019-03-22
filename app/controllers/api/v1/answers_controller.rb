@@ -3,13 +3,13 @@ class Api::V1::AnswersController < Api::V1::BaseController
     if params[:question_id]
       question = Question.find_by_id(params[:question_id])
       unless question
-        return render_json({error: "Question not found"}, status = 404)
+        return render_not_found(body = {error: "Question not found"})
       end
       answers = question.answers.includes(:author)
     elsif params[:topic_id]
       topic = Topic.find_by_id(params[:topic_id])
       unless topic
-        return render_json({error: "Topic not found"}, status = 404)
+        return render_not_found(body = {error: "Topic not found"})
       end
       answers = topic.answers.includes(:author)
     else

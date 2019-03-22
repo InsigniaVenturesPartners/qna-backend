@@ -47,11 +47,11 @@ Rails.application.routes.draw do
       post 'comments', :to => 'comments#create'
       post 'comments/vote', :to => 'comments#vote'
 
-      post 'drafts', :to => 'comments#create'
+      post 'drafts', :to => 'drafts#create'
       get  'drafts/me', :to => 'drafts#me'
     end
   end
 
   # Catch all return 404
-  match "*path", to: -> (env) { [404, {}, ['{"error": "not match url"}']] }, via: :all
+  match '*path', to: -> (env) { [404, {}, ['{"error": "Not match url"}']] }, via: :all
 end
