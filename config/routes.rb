@@ -47,6 +47,8 @@ Rails.application.routes.draw do
       post 'comments', :to => 'comments#create'
       post 'comments/vote', :to => 'comments#vote'
 
+      post 'drafts', :to => 'comments#create'
+      get  'drafts/me', :to => 'drafts#me'
     end
   end
 

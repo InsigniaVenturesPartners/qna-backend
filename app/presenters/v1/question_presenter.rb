@@ -18,12 +18,18 @@ class V1::QuestionPresenter < BasePresenter
       match_score: @resource.match_score(keywords),
       topic: @resource.topics.first,
       tags: @resource.topics.map{|topic| [topic.id, topic.name]},
+      is_draft: is_draft?,
       followed: is_followed?,
       downvoted: downvoted?
     }
     hash.merge!(author: presenter_json(@resource.author))
 
     hash
+  end
+
+  def is_draft?
+    return false unless @context[:current_user]
+    @resource.is_drafted_by(@current_user)
   end
 
   def is_followed?

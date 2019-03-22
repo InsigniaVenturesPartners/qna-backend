@@ -32,7 +32,7 @@ class Api::V1::BaseController < ApplicationController
       @user = User.where("access_token = ? AND updated_at > NOW() AT TIME ZONE 'UTC' - INTERVAL '1 week'", token).first
       return @user if @user
 
-      if (token != 'null')
+      if (token != "null")
         oauth2 = Google::Apis::Oauth2V2::Oauth2Service.new
         userinfo = oauth2.tokeninfo(access_token: token)
         @user = User.where(email: userinfo.email).update_all(access_token: token, updated_at: DateTime.now)
@@ -46,7 +46,7 @@ class Api::V1::BaseController < ApplicationController
   def authenticate_internal_token
     authenticate_with_http_token do |token, options|
       if (token == Rails.application.secrets.internal_api_key)
-        return 'authenticated'
+        return "authenticated"
       end
     end
   end
