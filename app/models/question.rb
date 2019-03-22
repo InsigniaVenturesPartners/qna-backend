@@ -96,4 +96,8 @@ class Question < ApplicationRecord
     matching_keywords = keywords.reduce(0){|acc, keyword| question.include?(keyword) ? acc + 1 : acc}
     return matching_keywords/keywords.count.to_f
   end
+
+  def is_drafted_by(user)
+    self.drafts.map{|draft| draft.author = user}.any?
+  end
 end
