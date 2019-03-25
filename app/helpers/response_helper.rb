@@ -1,11 +1,11 @@
 module ResponseHelper
-  NOT_FOUND={errors: 'not found', err_code: 1404}
-  FORBIDDEN_ERROR={errors: 'forbidden', err_code: 1404}
-  INTERNAL_ERROR={errors: 'internal server error', err_code: 1500}
-  UNAUTHORIZED_ACCESS = {errors: "Not authorized", err_code: 1401}
-  FORBIDDEN_ACCESS = {errors: "Forbidden", err_code: 1403}
+  PARAMETERS_ERROR = { error: 'Missing parameters', err_code: 1400 }
+  UNAUTHORIZED_ACCESS = { error: "Not authorized", err_code: 1401 }
+  FORBIDDEN_ERROR = { error: 'Forbidden', err_code: 1403 }
+  NOT_FOUND = { error: 'Not found', err_code: 1404 }
+  INTERNAL_ERROR = { error: 'Internal server error', err_code: 1500 }
+  FORBIDDEN_ACCESS = { error: "Forbidden", err_code: 1403 }
   SUCCESS_OK = { success: true }
-  PARAMETERS_ERROR={ errors: 'missing parameters', err_code: 1400 }
 
   def render_invalid(errors, err_code: nil)
     err_code = err_code || 1400
@@ -21,8 +21,8 @@ module ResponseHelper
     render json: Oj.dump(body, mode: :compat), status: status
   end
 
-  def render_not_found
-    render_error(:not_found, NOT_FOUND)
+  def render_not_found(body=NOT_FOUND)
+    render_error(:not_found, body)
   end
 
   def render_forbidden
@@ -37,8 +37,8 @@ module ResponseHelper
     render json: Oj.dump(content, mode: :compat), status: status
   end
 
-  def render_created(content, status = 201)
-    render_json(content, status = status)
+  def render_created(content)
+    render_json(content, status = 201)
   end
 
   def error_messages(errors)

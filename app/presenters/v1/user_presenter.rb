@@ -7,6 +7,9 @@ class V1::UserPresenter < BasePresenter
     hash = {
       id: @resource.id,
       email: @resource.email,
+      name: @resource.display_name,
+      pro_pic_url: @resource.pro_pic_url,
+      role: @resource.role
     }
 
     hash

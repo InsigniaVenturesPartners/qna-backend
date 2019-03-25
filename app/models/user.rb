@@ -50,6 +50,10 @@ class User < ApplicationRecord
 
   ROLES = %w[admin user moderator author banned].freeze
 
+  def display_name
+    name.present? ? name : email
+  end
+
   #I don't think there's an easy way to cancle a vote which is scoped, so follows are scoped, with a positive vote meaning follow, and a negative or nil vote meaning unfollowed.  Up and downvotes are not scoped, allowing us to use the built-in unliked by
   def follow(entity)
     entity.vote_by :voter => self, :vote_scope => 'follow'

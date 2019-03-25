@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
-    resources :answers, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:index, :show, :create, :destroy]
 
     get  'profile/questions', :to => 'questions#profile'
@@ -26,15 +25,33 @@ Rails.application.routes.draw do
       post 'topics/follow', :to => 'topics#follow'
       post 'topics/unfollow', :to => 'topics#unfollow'
 
-      get 'api/top/questions', :to => 'questions#top'
+      get  'top/questions', :to => 'questions#top'
+      get  'profile/questions', :to => 'questions#profile'
+      get  'profile/answers', :to => 'answers#profile'
 
       get 'questions', :to => 'questions#index'
+      get 'questions/top', :to => 'questions#top'
+      get 'questions/profile', :to => 'questions#profile'
       get 'questions/:id', :to => 'questions#show'
       post 'questions', :to => 'questions#create'
       patch 'questions/:id', :to => 'questions#update'
+
+      get 'answers', :to => 'answers#index'
+      get 'answers/:id', :to => 'answers#show'
+      post 'answers', :to => 'answers#create'
+      patch 'answers/:id', :to => 'answers#update'
+      post 'answers/vote', :to => 'answers#vote'
+
+      get 'comments', :to => 'comments#index'
+      get 'comments/:id', :to => 'comments#show'
+      post 'comments', :to => 'comments#create'
+      post 'comments/vote', :to => 'comments#vote'
+
+      post 'drafts', :to => 'drafts#create'
+      get  'drafts/me', :to => 'drafts#me'
     end
   end
 
   # Catch all return 404
-  match "*path", to: -> (env) { [404, {}, ['{"error": "not match url"}']] }, via: :all
+  match '*path', to: -> (env) { [404, {}, ['{"error": "Not match url"}']] }, via: :all
 end

@@ -15,6 +15,21 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     render_json_paginate(questions, root: :questions, context: { current_user: current_user, keywords: keywords })
   end
 
+  def top
+    questions = Question.all.includes(:author)
+    questions = questions.includes(:answers).where.not(answers: {author_id: current_user.id})
+
+    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    render_json_paginate(questions, root: :questions, context: { current_user: current_user })
+  end
+
+  def profile
+    questions = Question.where("author_id = ?", current_user.id)
+
+    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    render_json_paginate(questions, root: :questions, context: { current_user: current_user })
+  end
+
   def show
     question = Question.find_by_id(params[:id])
     return render_not_found unless question
@@ -38,20 +53,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     render_created(presenter_json(question))
   end
 
-  def top
-    questions = Question.all.includes(:author)
-    questions = questions.includes(:answers).where.not(answers: {author_id: current_user.id})
 
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
-    render_json_paginate(questions, root: :questions, context: { current_user: current_user })
-  end
-
-  def profile
-    questions = Question.where("author_id = ?", current_user.id)
-
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
-    render_json_paginate(questions, root: :questions, context: { current_user: current_user })
-  end
 
   def update
     question = Question.find_by_id(params[:id])
