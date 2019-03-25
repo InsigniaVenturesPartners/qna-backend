@@ -12,6 +12,7 @@ class V1::QuestionPresenter < BasePresenter
       time_posted_ago: @resource.time_posted_ago,
       updated_at: @resource.updated_at,
       answer_ids:  @resource.answers.map{|answer| answer.id},
+      num_answers: @resource.num_answers_str
       commend_ids: @resource.commentIds,
       follower_ids: @resource.follower_ids,
       upvoter_ids: @resource.upvoter_ids,
