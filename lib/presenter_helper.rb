@@ -11,8 +11,12 @@ module PresenterHelper
   end
 
   def each_serializer(resources, includes: [], context: {}, version: 1)
-    return [] unless resources.present?
-    resources.map { |r| presenter_json(r, includes: includes, context: context, version: version) }
+    return {} unless resources.present?
+
+    hash = {}
+    resources.map { |r| hash.merge!( { r.id => presenter_json(r, includes: includes, context: context, version: version) }) }
+
+    hash
   end
 
   private
