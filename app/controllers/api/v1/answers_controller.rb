@@ -61,7 +61,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
     when "cancel_vote"
       current_user.cancel_vote(answer)
     end
-    render_json(presenter_json(answer))
+    render_json(presenter_json(answer, context: { current_user: current_user }))
   end
 
   private

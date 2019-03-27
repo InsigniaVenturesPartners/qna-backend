@@ -8,7 +8,7 @@ class V1::CommentPresenter < BasePresenter
       id: @resource.id,
       body: @resource.body,
       time_posted_ago: @resource.time_posted_ago,
-      upvoter_ids: @resource.upvoter_ids,
+      upvoterIds: @resource.upvoter_ids,
       upvoted: upvoted?,
       downvoted: downvoted?
     }

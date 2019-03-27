@@ -8,8 +8,8 @@ class V1::AnswerPresenter < BasePresenter
       id: @resource.id,
       body: @resource.body,
       time_posted_ago: @resource.time_posted_ago,
-      upvoter_ids: @resource.upvoter_ids,
-      comment_ids:  @resource.comment_ids,
+      upvoterIds: @resource.upvoter_ids,
+      commentIds:  @resource.comment_ids,
       upvoted: upvoted?,
       downvoted: downvoted?
     }
