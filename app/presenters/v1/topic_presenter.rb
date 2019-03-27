@@ -10,8 +10,8 @@ class V1::TopicPresenter < BasePresenter
       description: @resource.description,
       num_followers: @resource.num_followers,
       pic_url: @resource.pic_url,
-      follower_ids:  @resource.follower_ids,
-      question_ids: @resource.questions.map{|question| question.id},
+      followerIds:  @resource.follower_ids,
+      questionIds: @resource.questions.map{|question| question.id},
       match_score: @resource.match_score(@context[:keywords]),
       followed: is_followed?
     }

@@ -53,8 +53,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     render_created(presenter_json(question))
   end
 
-
-
   def update
     question = Question.find_by_id(params[:id])
     return render_not_found unless question
@@ -86,7 +84,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def unfollow
     question = Question.find_by_id(params[:question_id])
-    current_user.unfollow( uestion)
+    current_user.unfollow( question)
     render_json(presenter_json(question))
   end
 
