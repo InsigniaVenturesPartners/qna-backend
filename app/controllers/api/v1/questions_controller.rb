@@ -2,6 +2,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   def index
     questions = Question.all.includes(:author)
     keywords = []
+
     if params[:query]
       keywords = params[:query].downcase.split(" ")
       keywords.each do |keyword|
