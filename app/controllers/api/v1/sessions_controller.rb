@@ -17,9 +17,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
   end
 
   def google_auth
-    jsonfile = Rails.env.production??
-    'client_secret_1088352541792-g5c1m9vg3u6p5ff6s17ptbqi7prp3din.apps.googleusercontent.com.json' :
-    'client_secret_1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com.json'
+    jsonfile = 'client_secret_1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com.json'
 
     auth_client =
         Google::APIClient::ClientSecrets.load(
