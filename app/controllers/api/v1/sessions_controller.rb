@@ -16,44 +16,6 @@ class Api::V1::SessionsController < Api::V1::BaseController
     end
   end
 
-  def google_auth
-    jsonfile = 'client_secret_1088352541792-g3gme4e9ol8akmus0qj5do2nb9fql373.apps.googleusercontent.com.json'
-
-    auth_client =
-        Google::APIClient::ClientSecrets.load(
-            File.join(
-                Rails.root,
-                'config',
-                jsonfile
-            )
-        ).to_authorization
-
-    auth_client.update!(
-        :redirect_uri => Rails.env.production?? 'http://qna-stage.insignia.vc/' : 'http://localhost:3000'
-    );
-
-    auth_client.code = params[:code]
-    auth_client.fetch_access_token!
-
-    oauth = Google::Apis::Oauth2V2::Oauth2Service.new
-    oauth.authorization = auth_client
-
-    user = User.find_by_google_id(oauth.get_userinfo().id)
-    partnerAuth = PartnerAuth.where(provider: "google", user_id: user.id).first
-
-    if (partnerAuth)
-      partnerAuth.update(auth_json: auth_client.to_json)
-    else
-      partnerAuth = PartnerAuth.create!(
-          user_id: user.id,
-          provider: "google",
-          auth_json: auth_client.to_json
-      )
-    end
-
-    render :json => user.to_json(:methods => :has_offline_access)
-  end
-
   def get
     user = User.find(params[:id])
     render :json => user.full(params[:time_span])

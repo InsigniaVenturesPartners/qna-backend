@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       post 'users/session', :to => 'sessions#create'
-      post 'users/auth/google', :to => 'sessions#google_auth'
 
       get 'user_whitelists', :to => 'user_whitelists#index'
       post 'user_whitelists', :to => 'user_whitelists#create'

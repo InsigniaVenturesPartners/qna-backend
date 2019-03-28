@@ -110,6 +110,7 @@ class User < ApplicationRecord
   end
 
   def self.find_or_create_from_google_auth(auth)
+    # user = find_by(google_id: auth["google_id"]
     user = find_by(email: auth["email"])
 
     if user
