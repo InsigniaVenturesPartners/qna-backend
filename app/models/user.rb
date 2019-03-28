@@ -141,7 +141,7 @@ class User < ApplicationRecord
   # attr_accessor :provider, :uid
 
   def self.find_or_create_from_google_auth(auth)
-    user = find_by(provider: auth.provider, uid: auth.uid)
+    user = find_by(email: auth.info.email)
 
     unless user
       return unless self.is_whitelisted(auth.info.email)
