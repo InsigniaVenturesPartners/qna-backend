@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get 'questions/profile', :to => 'questions#profile'
       get 'questions/:id', :to => 'questions#show'
       post 'questions', :to => 'questions#create'
-      patch 'questions/:id', :to => 'questions#update'
+      put 'questions/:id', :to => 'questions#update'
       post 'questions/vote', :to => 'questions#vote'
       post 'questions/follow', :to => 'questions#follow'
       post 'questions/unfollow', :to => 'questions#unfollow'
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
       get 'answers', :to => 'answers#index'
       get 'answers/:id', :to => 'answers#show'
       post 'answers', :to => 'answers#create'
-      patch 'answers/:id', :to => 'answers#update'
+      put 'answers/:id', :to => 'answers#update'
       post 'answers/vote', :to => 'answers#vote'
 
       get 'comments', :to => 'comments#index'

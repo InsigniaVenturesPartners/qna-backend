@@ -14,14 +14,14 @@ module Quora
 
     config.action_dispatch.default_headers = {
         'Access-Control-Allow-Origin' => '*',
-        'Access-Control-Request-Method' => %w{GET POST PUT OPTIONS DELETE}.join(","),
+        'Access-Control-Request-Method' => %w{GET POST PUT PATCH OPTIONS DELETE}.join(","),
         'Access-Control-Allow-Headers' => %w{Origin Content-Type X-Auth-Token}.join(","),
     }
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :put, :options, :delete]
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :options, :delete]
       end
     end
   end
