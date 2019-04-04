@@ -41,6 +41,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
     draft = Draft.find_by(question_id: question_id, author_id: current_user)
     draft.destroy if draft
+
     if answer.save
       return render_json(presenter_json(answer))
     else
