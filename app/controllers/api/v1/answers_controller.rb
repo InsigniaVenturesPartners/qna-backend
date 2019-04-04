@@ -33,9 +33,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def create
+    question_id = params[:question_id]
+
     answer = Answer.new(answer_params)
     answer.author = current_user
-    answer.question_id = params[:question_id]
+    answer.question_id = question_id
+
+    draft = Draft.find_by(question_id: question_id, author_id: current_user)
+    draft.destroy if draft
     if answer.save
       return render_json(presenter_json(answer))
     else
