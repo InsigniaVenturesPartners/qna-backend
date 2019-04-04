@@ -17,8 +17,8 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def top
-    questions = Question.all.includes(:author)
-    questions = questions.includes(:answers).where.not(answers: {author_id: current_user.id})
+    exclude = Question.includes(:answers).where(answers: {author_id: current_user.id}).map{|q| q.id}
+    questions = Question.all.includes(:author).where.not(id: exclude)
 
     questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user })

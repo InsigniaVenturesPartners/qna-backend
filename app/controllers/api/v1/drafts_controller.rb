@@ -1,4 +1,11 @@
 class Api::V1::DraftsController < Api::V1::BaseController
+  def index
+    drafts = Draft.where("author_id = ?", current_user)
+
+    drafts = drafts.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    render_json_paginate(drafts, root: :drafts)
+  end
+
   def create
     return render_error(422, {error: "Missing parameter question_id"}) unless params[:question_id]
     draft = Draft.find_by(question_id: params[:question_id], author_id: current_user)

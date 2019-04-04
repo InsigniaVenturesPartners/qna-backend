@@ -30,7 +30,7 @@ class V1::QuestionPresenter < BasePresenter
 
   def is_draft?
     return false unless @context[:current_user]
-    @resource.is_drafted_by(@current_user)
+    @resource.is_drafted_by(@context[:current_user])
   end
 
   def is_followed?
