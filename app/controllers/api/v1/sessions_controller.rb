@@ -40,7 +40,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
     oauth = Google::Apis::Oauth2V2::Oauth2Service.new
     oauth.authorization = auth_client
 
-    user = User.find_by_google_id(oauth.get_userinfo().id)
+    user = User.find_by_email(oauth.get_userinfo().email)
     partnerAuth = PartnerAuth.where(provider: "google", user_id: user.id).first
 
     if (partnerAuth)
