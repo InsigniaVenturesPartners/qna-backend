@@ -29,7 +29,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def show
     answer = Answer.find(params[:id])
-    render_json(presenter_json(answer))
+    render_json(presenter_json(answer, context: { current_user: current_user } ))
   end
 
   def create
