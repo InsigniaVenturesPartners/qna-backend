@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+      post 'users/register', :to => 'users#register_user'
+
       post 'users/session', :to => 'sessions#create'
       post 'users/auth/google', :to => 'sessions#google_auth'
 

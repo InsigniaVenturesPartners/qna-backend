@@ -8,8 +8,11 @@ class Api::V1::QuestionsController < Api::V1::BaseController
       keywords.each do |keyword|
         questions = questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
       end
-    else
-      questions = questions.limit(20)
+    # else
+    #   questions = questions.limit(20)
+    end
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.where(topic_id: params[:topic_id]))
     end
 
     questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
