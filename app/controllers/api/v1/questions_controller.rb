@@ -43,13 +43,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def create
     findQuestion = Question.where(body: question_params[:body]).first
-    if findQuestion
-      returnState = {
-        status: 'error',
-        message: 'DUPLICATED'
-      }
-      return render status: :unprocessable_entity, json: returnState
-    end
+    return render_error(:unprocessable_entity, {error: "DUPLICATED"}) if findQuestion
     question = Question.create do |que|
       que.body = question_params[:body]
       que.author = current_user
