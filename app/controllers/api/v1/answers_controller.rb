@@ -16,14 +16,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
       answers = current_user.answers
     end
 
-    answers = answers.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    answers = answers.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(answers, root: :answers, context: { current_user: current_user })
   end
 
   def profile
     answers = Answer.where("author_id = ?", current_user.id)
 
-    answers = answers.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    answers = answers.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(answers, root: :answers, context: { current_user: current_user })
   end
 

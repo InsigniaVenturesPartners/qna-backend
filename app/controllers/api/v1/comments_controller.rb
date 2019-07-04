@@ -21,7 +21,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
       comments = current_user.comments
     end
 
-    comments = comments.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    comments = comments.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(comments, root: :comments, context: { current_user: current_user })
   end
 

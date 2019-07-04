@@ -15,7 +15,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
       questions = questions.where(id: QuestionsTopic.where(topic_id: params[:topic_id]))
     end
 
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    questions = questions.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user, keywords: keywords })
   end
 
@@ -42,14 +42,29 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def create
+    findQuestion = Question.where(body: question_params[:body]).first
+    if findQuestion
+      returnState = {
+        status: 'error',
+        message: 'DUPLICATED'
+      }
+      return render status: :unprocessable_entity, json: returnState
+    end
     question = Question.create do |que|
       que.body = question_params[:body]
       que.author = current_user
     end
-
+    
     if(question_params[:topics])
       question_params[:topics].each do |topic|
         t = Topic.find_by(name: topic)
+        question.topics += [t] if t.present?
+      end
+    end
+
+    if(question_params[:topic_ids])
+      question_params[:topic_ids].each do |topic|
+        t = Topic.find_by(id: topic)
         question.topics += [t] if t.present?
       end
     end
@@ -95,6 +110,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   private
 
   def question_params
-    params.require(:question).permit(:body, :topics => [])
+    params.require(:question).permit(:body, :topics => [], :topic_ids => [])
   end
 end
