@@ -46,7 +46,7 @@ class V1::QuestionPresenter < BasePresenter
   
   def total_score?
     return 0 unless @resource[:total]
-    @resource[:total]
+    @resource[:total].to_i
   end
 end
 
