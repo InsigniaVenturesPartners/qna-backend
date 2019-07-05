@@ -35,18 +35,23 @@ class Api::V1::AnswersController < Api::V1::BaseController
   def create
     question_id = params[:question_id]
 
-    answer = Answer.new(answer_params)
-    answer.author = current_user
-    answer.question_id = question_id
+    answer = Answer.where(question_id: question_id).where(author: current_user).first
+    if answer
+      return render_error(422, {error: "You have answered this question"}) unless params[:update]
+      answer.update_attributes!(answer_params)
 
-    draft = Draft.find_by(question_id: question_id, author_id: current_user)
-    draft.destroy if draft
-
-    if answer.save
-      return render_json(presenter_json(answer))
+      draft = Draft.find_by(question_id: question_id, author_id: current_user)
+      draft.destroy if draft
     else
-      render_model_error(answer.errors.full_messages)
+      answer = Answer.new(answer_params)
+      answer.author = current_user
+      answer.question_id = question_id
+      answer.save
+
+      draft = Draft.find_by(question_id: question_id, author_id: current_user)
+      draft.destroy if draft
     end
+    return render_json(presenter_json(answer))
   end
 
   def update
