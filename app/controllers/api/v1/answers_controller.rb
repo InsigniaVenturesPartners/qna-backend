@@ -16,37 +16,41 @@ class Api::V1::AnswersController < Api::V1::BaseController
       answers = current_user.answers
     end
 
-    answers = answers.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    answers = answers.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(answers, root: :answers, context: { current_user: current_user })
   end
 
   def profile
-    answers = Answer.where("author_id = ?", current_user.id)
-
-    answers = answers.paginate(page: params[:page], per_page: params[:per_page] || 25)
-    render_json_paginate(answers, root: :answers, context: { current_user: current_user })
+    answers = Answer.includes(:author, :question).where(author: current_user)
+    answers = answers.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
+    render_json_paginate(answers, root: :answers, includes: [:author, :question], context: { current_user: current_user })
   end
 
   def show
     answer = Answer.find(params[:id])
-    render_json(presenter_json(answer))
+    render_json(presenter_json(answer, context: { current_user: current_user } ))
   end
 
   def create
     question_id = params[:question_id]
 
-    answer = Answer.new(answer_params)
-    answer.author = current_user
-    answer.question_id = question_id
+    answer = Answer.where(question_id: question_id).where(author: current_user).first
+    if answer
+      return render_error(422, {error: "You have answered this question"}) unless params[:update]
+      answer.update_attributes!(answer_params)
 
-    draft = Draft.find_by(question_id: question_id, author_id: current_user)
-    draft.destroy if draft
-
-    if answer.save
-      return render_json(presenter_json(answer))
+      draft = Draft.find_by(question_id: question_id, author_id: current_user)
+      draft.destroy if draft
     else
-      render_model_error(answer.errors.full_messages)
+      answer = Answer.new(answer_params)
+      answer.author = current_user
+      answer.question_id = question_id
+      answer.save
+
+      draft = Draft.find_by(question_id: question_id, author_id: current_user)
+      draft.destroy if draft
     end
+    return render_json(presenter_json(answer))
   end
 
   def update

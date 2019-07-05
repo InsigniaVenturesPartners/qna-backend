@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190305094658) do
+ActiveRecord::Schema.define(version: 20190702115129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,15 +112,29 @@ ActiveRecord::Schema.define(version: 20190305094658) do
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
     t.string "name"
-    t.string "pro_pic_url", default: "https://graph.facebook.com/123/picture"
+    t.string "pro_pic_url", default: ""
     t.string "fb_id"
+    t.string "role"
     t.string "google_id"
     t.string "given_name"
     t.string "last_name"
     t.string "access_token"
-    t.string "role"
+    t.string "encrypted_password"
+    t.string "provider"
+    t.string "uid"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "confirmation_token"
+    t.integer "sign_in_count"
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "insignia_uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["google_id"], name: "index_users_on_google_id", unique: true
+    t.index ["insignia_uid"], name: "index_users_on_insignia_uid"
   end
 
   create_table "votes", force: :cascade do |t|

@@ -1,15 +1,27 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
   def index
-    questions = Question.all.includes(:author)
+    questions = Question.includes(:author, :topics, :answers, :questions_topics, :drafts)
     keywords = []
+
+    if params[:answered]
+      orderAnswer = "SELECT question_id, SUM(COALESCE((select SUM(vote_weight) from votes where votable_type = 'Answer' and votable_id = answers.id group by votable_id), 0)) as total FROM answers GROUP BY question_id ORDER BY total desc"
+      questions = questions.select("*, sub.total as total")
+      .joins("INNER JOIN (#{orderAnswer}) sub ON questions.id = sub.question_id")
+      .order("sub.total desc")
+    else
+      questions = questions.order(created_at: :desc)
+    end
 
     if params[:query]
       keywords = params[:query].downcase.split(" ")
       keywords.each do |keyword|
         questions = questions.where("LOWER(body) ~* ?", "(^#{keyword}.*|.* #{keyword}.*)")
       end
-    else
-      questions = questions.limit(20)
+    # else
+    #   questions = questions.limit(20)
+    end
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
     end
 
     questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
@@ -17,17 +29,23 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def top
-    exclude = Question.includes(:answers).where(answers: {author_id: current_user.id}).map{|q| q.id}
-    questions = Question.all.includes(:author).where.not(id: exclude)
+    exclude = Answer.select('question_id')
+    questions = Question.all.includes(:author).where.not(id: exclude).where.not(author: current_user)
 
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
+    end
+
+    questions = questions.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user })
   end
 
   def profile
-    questions = Question.where("author_id = ?", current_user.id)
-
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    questions = Question.where(author: current_user)
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
+    end
+    questions = questions.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user })
   end
 
@@ -39,14 +57,23 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def create
+    findQuestion = Question.where(body: question_params[:body]).first
+    return render_error(:unprocessable_entity, {error: "DUPLICATED"}) if findQuestion
     question = Question.create do |que|
       que.body = question_params[:body]
       que.author = current_user
     end
-
+    
     if(question_params[:topics])
       question_params[:topics].each do |topic|
         t = Topic.find_by(name: topic)
+        question.topics += [t] if t.present?
+      end
+    end
+
+    if(question_params[:topic_ids])
+      question_params[:topic_ids].each do |topic|
+        t = Topic.find_by(id: topic)
         question.topics += [t] if t.present?
       end
     end
@@ -92,6 +119,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   private
 
   def question_params
-    params.require(:question).permit(:body, :topics => [])
+    params.require(:question).permit(:body, :topics => [], :topic_ids => [])
   end
 end
