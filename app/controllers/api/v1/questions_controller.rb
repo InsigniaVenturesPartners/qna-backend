@@ -4,7 +4,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     keywords = []
 
     if params[:answered]
-      orderAnswer = "SELECT question_id, COALESCE((select SUM(vote_weight) from votes where votable_type = 'Answer' and votable_id = answers.id group by votable_id), 0) as total FROM answers ORDER BY total desc"
+      orderAnswer = "SELECT question_id, SUM(COALESCE((select SUM(vote_weight) from votes where votable_type = 'Answer' and votable_id = answers.id group by votable_id), 0)) as total FROM answers GROUP BY question_id ORDER BY total desc"
       questions = questions.select("*, sub.total as total")
       .joins("INNER JOIN (#{orderAnswer}) sub ON questions.id = sub.question_id")
       .order("sub.total desc")
