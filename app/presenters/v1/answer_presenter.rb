@@ -13,7 +13,12 @@ class V1::AnswerPresenter < BasePresenter
       upvoted: upvoted?,
       downvoted: downvoted?
     }
-    hash.merge!(question: {id: @resource.question.id, body: @resource.question.body})
+    hash.merge!(question: {
+      id: @resource.question.id,
+      body: @resource.question.body,
+      topics: @resource.topics,
+      tags: @resource.topics.map{|topic| [topic.id, topic.name]},
+    })
     hash.merge!(author: presenter_json(@resource.author))
 
     hash
