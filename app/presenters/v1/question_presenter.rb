@@ -21,7 +21,8 @@ class V1::QuestionPresenter < BasePresenter
       tags: @resource.topics.map{|topic| [topic.id, topic.name]},
       is_draft: is_draft?,
       followed: is_followed?,
-      downvoted: downvoted?
+      downvoted: downvoted?,
+      total_score: total_score?
     }
     hash.merge!(author: presenter_json(@resource.author))
 
@@ -41,6 +42,11 @@ class V1::QuestionPresenter < BasePresenter
   def downvoted?
     return false unless @context[:current_user]
     @context[:current_user].downvoted?(@resource)
+  end
+  
+  def total_score?
+    return 0 unless @resource[:total]
+    @resource[:total]
   end
 end
 
