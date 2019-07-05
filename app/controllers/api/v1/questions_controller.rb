@@ -21,7 +21,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     #   questions = questions.limit(20)
     end
     if params[:topic_id]
-      questions = questions.where(id: QuestionsTopic.where(topic_id: params[:topic_id]))
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
     end
 
     questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
@@ -29,17 +29,23 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def top
-    exclude = Answer.where(answers: {author_id: current_user.id})
-    questions = Question.all.includes(:author).where.not(id: exclude)
+    exclude = Answer.select('question_id')
+    questions = Question.all.includes(:author).where.not(id: exclude).where.not(author: current_user)
 
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
+    end
+
+    questions = questions.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user })
   end
 
   def profile
-    questions = Question.where("author_id = ?", current_user.id)
-
-    questions = questions.paginate(page: params[:page], per_page: params[:per_page] || 25)
+    questions = Question.where(author: current_user)
+    if params[:topic_id]
+      questions = questions.where(id: QuestionsTopic.select('question_id').where(topic_id: params[:topic_id]))
+    end
+    questions = questions.order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 25)
     render_json_paginate(questions, root: :questions, context: { current_user: current_user })
   end
 
