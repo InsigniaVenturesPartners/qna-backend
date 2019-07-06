@@ -11,6 +11,7 @@ class V1::QuestionPresenter < BasePresenter
       body: @resource.body,
       time_posted_ago: @resource.time_posted_ago,
       updated_at: @resource.updated_at,
+      created_at: @resource.created_at,
       answerIds:  @resource.answers.map{|answer| answer.id},
       num_answers: @resource.num_answers_str,
       commentIds: @resource.commentIds,
