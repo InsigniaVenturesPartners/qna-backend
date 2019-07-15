@@ -41,19 +41,26 @@ class Api::V1::ReportingController < Api::V1::BaseController
   end
 
   def insignia_answer_posted
-    answer = Question.select('questions.id, questions.body,
-      answers.id as answer_id, answers.body as answer_body,
-      answers.created_at as answer_created_at, answers.updated_at as answer_updated_at, 
-      users.id as answer_author_id, users.email as answer_author_email, users.name as answer_author_name, users.pro_pic_url as answer_author_pro_pic_urls')
+    # answer = Question.select('questions.id, questions.body,
+    #   answers.id as answer_id, answers.body as answer_body,
+    #   answers.created_at as answer_created_at, answers.updated_at as answer_updated_at, 
+    #   users.id as answer_author_id, users.email as answer_author_email, users.name as answer_author_name, users.pro_pic_url as answer_author_pro_pic_url')
+    #   .joins('INNER JOIN answers ON questions.id = answers.question_id
+    #   INNER JOIN users ON users.id = answers.author_id')
+    #   .where("users.email LIKE ?", '%@insignia.vc').load
+    answer = Question.select('count(answers.id) as total_answer, max(answers.created_at) as latest_answer_date,
+      answers.author_id, users.email, users.name, users.pro_pic_url')
       .joins('INNER JOIN answers ON questions.id = answers.question_id
       INNER JOIN users ON users.id = answers.author_id')
-      .where("users.email LIKE ?", '%@insignia.vc').load
+      .where("users.email LIKE ?", '%@insignia.vc')
     if params[:ds] && params[:ds] != ''
       answer = answer.where('DATE(answers.created_at) >= ?', params[:ds])
     end
     if params[:de] && params[:de] != ''
       answer = answer.where('DATE(answers.created_at) <= ?', params[:de])
     end
+    answer = answer.group('answers.author_id, users.email, users.name, users.pro_pic_url')
+    answer = answer.load
     return render :json => {
       total: answer.size,
       data: answer
