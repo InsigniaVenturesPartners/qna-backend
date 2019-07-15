@@ -18,10 +18,10 @@ class Api::V1::ReportingController < Api::V1::BaseController
 
   def total_question_posted
     question = Question.group('DATE(created_at)').order('DATE(created_at) DESC')
-    if params[:ds]
+    if params[:ds] && params[:ds] != ''
       question = question.where('DATE(created_at) >= ?', params[:ds])
     end
-    if params[:de]
+    if params[:de] && params[:de] != ''
       question = question.where('DATE(created_at) <= ?', params[:de])
     end
     question = question.count
@@ -30,10 +30,10 @@ class Api::V1::ReportingController < Api::V1::BaseController
 
   def total_answer_posted
     answer = Answer.where(question_id: Question.select('id')).group('DATE(created_at)').order('DATE(created_at) DESC')
-    if params[:ds]
+    if params[:ds] && params[:ds] != ''
       answer = answer.where('DATE(created_at) >= ?', params[:ds])
     end
-    if params[:de]
+    if params[:de] && params[:de] != ''
       answer = answer.where('DATE(created_at) <= ?', params[:de])
     end
     answer = answer.count
@@ -48,10 +48,10 @@ class Api::V1::ReportingController < Api::V1::BaseController
       .joins('INNER JOIN answers ON questions.id = answers.question_id
       INNER JOIN users ON users.id = answers.author_id')
       .where("users.email LIKE ?", '%@insignia.vc').load
-    if params[:ds]
+    if params[:ds] && params[:ds] != ''
       answer = answer.where('DATE(answers.created_at) >= ?', params[:ds])
     end
-    if params[:de]
+    if params[:de] && params[:de] != ''
       answer = answer.where('DATE(answers.created_at) <= ?', params[:de])
     end
     return render :json => {
