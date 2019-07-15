@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       post 'users/register', :to => 'users#register_user'
+      get 'report/total_user', :to => 'reporting#total_user'
+      get 'report/total_question_posted', :to => 'reporting#total_question_posted'
+      get 'report/total_answer_posted', :to => 'reporting#total_answer_posted'
+      get 'report/insignia_answer_posted', :to => 'reporting#insignia_answer_posted'
 
       post 'users/session', :to => 'sessions#create'
       post 'users/auth/google', :to => 'sessions#google_auth'
